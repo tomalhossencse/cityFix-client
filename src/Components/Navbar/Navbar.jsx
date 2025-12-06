@@ -86,7 +86,7 @@ const Navbar = () => {
   const handleLogout = () => {
     userLogOut()
       .then(() => {
-        navigate("/");
+        navigate("/login");
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -165,7 +165,7 @@ const Navbar = () => {
                       referrerPolicy="no-referrer"
                       src={
                         user.photoURL ||
-                        "https://avatars.githubusercontent.com/u/195260435?v=4"
+                        "https://img.icons8.com/3d-fluent/100/user-2.png"
                       }
                     />
                   </div>
