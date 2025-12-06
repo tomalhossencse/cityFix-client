@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+
+@import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default
+  , dark --prefersdark;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+  --color-primary: #4CAF4F;
+  --color-secondary: #263238;
+  --color-base-300 : #e7e7e7;
+  --color-accent: #4D4D4D;
+  --color-accent-content :#F5F7FA;
+   --color-warning: #F59E0B;
+  --color-warning-content: #1F2937;
+   --color-success: #00D390;
+  --color-success-content: #052E2B;
+}
+
+
+body{
+    font-family: "Urbanist", sans-serif;
+}
+.btn-primary{
+  @apply btn bg-primary text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-warning;
+}
+.btn-primary-rounded{
+  @apply btn bg-primary rounded-xl px-8 py-6 text-xl font-bold text-secondary-content hover:bg-black hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
+}
+.btn-primary-rounded-small{
+  @apply btn bg-primary rounded-md text-lg font-bold text-secondary-content hover:bg-base-100 hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
+}
+.btn-outline{
+ @apply btn btn-outline  rounded-3xl px-8 py-6 text-xl font-bold text-primary hover:bg-primary hover:text-secondary-content
+}
+.btn-outline-small{
+ @apply w-full btn btn-outline  rounded-3xl font-semibold text-primary hover:bg-primary hover:text-secondary-content
+}
+.btn-small{
+  @apply btn btn-sm bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100
+}
+.btn-small-full{
+  @apply btn w-full text-xl font-bold bg-primary py-5 text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100
+}
+.btn-small-2{
+  @apply btn btn-sm hover:bg-primary
+}
+.btn-full{
+  @apply btn w-full bg-primary text-secondary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105 hover:text-base-100
+}
+.navbar .active {
+  @apply text-base-100 font-bold bg-primary rounded-2xl
+}
+.glass-card {
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  /* overflow: hidden; */
+}
+html {
+  scroll-behavior: smooth;
+}
