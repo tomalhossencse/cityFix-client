@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router";
-import toast from "react-hot-toast";
-import { IoLogIn } from "react-icons/io5";
+import { IoLogIn, IoLogOut } from "react-icons/io5";
 import { HiMiniArrowRightOnRectangle } from "react-icons/hi2";
 import Container from "../../Utility/Container";
+import { AuthContext } from "../../Context/AuthContext";
+import { FaUser } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const { user, userLogOut } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {
     const html = document.querySelector("html");
@@ -79,6 +82,29 @@ const Navbar = () => {
       </li>
     </>
   );
+
+  const handleLogout = () => {
+    userLogOut()
+      .then(() => {
+        navigate("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Logout Successfull!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
   return (
     <div className="shadow-md bg-base-100 fixed w-full glass-card top-0 z-20 md:px-0 px-4">
       <Container>
@@ -126,31 +152,56 @@ const Navbar = () => {
             <ul className="menu menu-horizontal px-1">{links}</ul>
           </div>
           <div className="navbar-end gap-6">
-            {/* {user ? (
-              <>
-                <div className="relative group">
-                  <img
-                    className="w-10 h-10 rounded-full border-2 border-blue-400 cursor-pointer"
-                    src={user?.photoURL}
-                  />
-                  <span className="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-gray-800 text-white text-sm rounded-md px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200 whitespace-nowrap">
-                    {user?.displayName || "Anymous User"}
-                  </span>
+            {user ? (
+              <div className="dropdown dropdown-end z-50">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost btn-circle avatar"
+                >
+                  <div className="w-9 border-2 border-gray-300 rounded-full">
+                    <img
+                      alt="Tailwind CSS Navbar component"
+                      referrerPolicy="no-referrer"
+                      src={
+                        user.photoURL ||
+                        "https://avatars.githubusercontent.com/u/195260435?v=4"
+                      }
+                    />
+                  </div>
                 </div>
-                <button onClick={logout} className="btn-small">
-                  Logout <HiMiniArrowRightOnRectangle size={16} />
-                </button>
-              </>
+                <ul
+                  tabIndex="-1"
+                  className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+                >
+                  <div className=" pb-3 border-b border-b-gray-200">
+                    <li className="text-sm font-bold">{user.displayName}</li>
+                    <li className="text-xs">{user.email}</li>
+                  </div>
+                  <li className="mt-3">
+                    <Link to={"/profile"}>
+                      <FaUser /> Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="btn-xs bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105"
+                    >
+                      <IoLogOut /> Logout
+                    </button>
+                  </li>
+                </ul>
+              </div>
             ) : (
-              <>
-                <Link to="/login" className="btn-small">
-                  <IoLogIn /> Login
-                </Link>
-                <Link to="/signup" className="btn-small">
-                  Signup
-                </Link>
-              </>
-            )} */}
+              <Link
+                to={"/login"}
+                className="btn btn-sm bg-primary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105  text-white"
+              >
+                {" "}
+                <IoLogIn /> Login
+              </Link>
+            )}
           </div>
         </div>
       </Container>

@@ -1,13 +1,68 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import Container from "../../Utility/Container";
+import Swal from "sweetalert2";
+import { AuthContext } from "../../Context/AuthContext";
+import { useForm } from "react-hook-form";
 const Login = () => {
+  const { signInwithGoogle, signIn } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const handleFormSubmit = (data) => {
+    const { email, password } = data;
+    // console.log(data);
+    signIn(email, password)
+      .then(() => {
+        navigate("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register Successfull!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
+  const googleSignin = () => {
+    signInwithGoogle()
+      .then(() => {
+        navigate("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register Successfull!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
   return (
     <Container className="my-24 flex justify-center items-center">
       <div className="card w-full max-w-md bg-base-100 shadow-xl border border-accent-content rounded-2xl p-6 hover:shadow-xl transition duration-300">
@@ -19,16 +74,18 @@ const Login = () => {
         </p>
 
         <div className="card-body">
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-4">
             <div>
               <label className="label font-semibold">Email</label>
               <input
                 type="email"
                 className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Enter your email"
-                name="email"
-                required
+                {...register("email", { required: true })}
               />
+              {errors.email?.type === "required" && (
+                <p className="text-red-500">Email Required!</p>
+              )}
             </div>
 
             <div className="relative">
@@ -37,9 +94,11 @@ const Login = () => {
                 type={show ? "text" : "password"}
                 className={`input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary `}
                 placeholder="Enter your password"
-                name="password"
-                required
+                {...register("password", { required: true })}
               />
+              {errors.password?.type === "required" && (
+                <p className="text-red-500">Password Required!</p>
+              )}
               <span
                 onClick={() => setShow(!show)}
                 className="absolute top-[34px] right-6 cursor-pointer z-50 text-gray-500"
@@ -65,7 +124,10 @@ const Login = () => {
           <div className="divider text-gray-400">OR</div>
 
           {/* Google Login */}
-          <button className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2">
+          <button
+            onClick={googleSignin}
+            className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2"
+          >
             <svg
               aria-label="Google logo"
               width="18"

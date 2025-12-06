@@ -4,10 +4,71 @@ import { IoEyeOff } from "react-icons/io5";
 import { Link, NavLink, useNavigate } from "react-router";
 import toast from "react-hot-toast";
 import Container from "../../Utility/Container";
+import { AuthContext } from "../../Context/AuthContext";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { updateProfile } from "firebase/auth";
+import { auth } from "../../Firebase/firebase.config";
 
 const Register = () => {
+  const { signInwithGoogle, signUp } = useContext(AuthContext);
   const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const handleSumitForm = (data) => {
+    const { email, password, photoURL, name: displayName } = data;
+    // console.log(data);
+    signUp(email, password)
+      .then(() => {
+        updateProfile(auth.currentUser, { displayName, photoURL }).then(() => {
+          navigate("/");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Register Successfull!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
   //   const navigate = useNavigate();
+  const googleSignin = () => {
+    signInwithGoogle()
+      .then(() => {
+        navigate("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Register Successfull!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: error.message,
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      });
+  };
 
   return (
     <Container className="my-24 flex justify-center items-center">
@@ -20,7 +81,7 @@ const Register = () => {
         </p>
 
         <div className="card-body">
-          <form className="space-y-4">
+          <form onSubmit={handleSubmit(handleSumitForm)} className="space-y-4">
             {/* name */}
             <div>
               <label className="label">Name</label>
@@ -28,9 +89,11 @@ const Register = () => {
                 type="text"
                 className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Name"
-                name="name"
-                required
+                {...register("name", { required: true })}
               />
+              {errors.name?.type === "required" && (
+                <p className="text-red-500">Name Required!</p>
+              )}
             </div>
             <div>
               <label className="label font-semibold">Email</label>
@@ -38,9 +101,11 @@ const Register = () => {
                 type="email"
                 className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Enter your email"
-                name="email"
-                required
+                {...register("email", { required: true })}
               />
+              {errors.email?.type === "required" && (
+                <p className="text-red-500">Email Required!</p>
+              )}
             </div>
 
             {/* photourl */}
@@ -50,9 +115,11 @@ const Register = () => {
                 type="text"
                 className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="PhotoURL"
-                name="photo"
-                required
+                {...register("photoURL", { required: true })}
               />
+              {errors.photoURL?.type === "required" && (
+                <p className="text-red-500">Photo Required!</p>
+              )}
             </div>
 
             <div className="relative">
@@ -61,9 +128,11 @@ const Register = () => {
                 type={show ? "text" : "password"}
                 className={`input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary `}
                 placeholder="Enter your password"
-                name="password"
-                required
+                {...register("password", { required: true })}
               />
+              {errors.password?.type === "required" && (
+                <p className="text-red-500">Password Password!</p>
+              )}
               <span
                 onClick={() => setShow(!show)}
                 className="absolute top-[34px] right-6 cursor-pointer z-50 text-gray-500"
@@ -89,7 +158,10 @@ const Register = () => {
           <div className="divider text-gray-400">OR</div>
 
           {/* Google Login */}
-          <button className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2">
+          <button
+            onClick={googleSignin}
+            className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2"
+          >
             <svg
               aria-label="Google logo"
               width="18"
