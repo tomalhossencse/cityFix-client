@@ -175,19 +175,20 @@ const AddIssue = () => {
                     <p className="text-red-500 py-2">Contact No. Required!</p>
                   )}
                 </div>
-                {/* Nid */}
-                {/* <div>
-                  <legend className="fieldset-legend">NID No</legend>
+                {/* Name */}
+                <div>
+                  <legend className="fieldset-legend">User Name</legend>
                   <input
                     type="text"
                     className="input w-full md:input-md input-sm"
-                    placeholder="NID"
-                    {...register("nid", { required: true })}
+                    placeholder="Your Name"
+                    defaultValue={user?.displayName}
+                    {...register("displayName", { required: true })}
                   />
-                  {errors.nid?.type === "required" && (
-                    <p className="text-red-500 py-2">NID No. Required!</p>
+                  {errors.displayName?.type === "required" && (
+                    <p className="text-red-500 py-2">User Name Required!</p>
                   )}
-                </div> */}
+                </div>
                 {/* region */}
                 <div>
                   <legend className="fieldset-legend">Your Region</legend>

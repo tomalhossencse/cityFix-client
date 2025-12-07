@@ -1,4 +1,7 @@
 import React from "react";
+import { GrStatusUnknown } from "react-icons/gr";
+import { FcHighPriority } from "react-icons/fc";
+import { FcLowPriority } from "react-icons/fc";
 import { FaPhoneVolume, FaRegCircleUser } from "react-icons/fa6";
 import { MdMarkEmailRead } from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
@@ -6,11 +9,14 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaMapMarkedAlt } from "react-icons/fa";
 import Container from "../../Utility/Container";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-
+import {
+  MdOutlinePendingActions,
+  MdOutlineTaskAlt,
+  MdLockOutline,
+} from "react-icons/md";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { HiCalendarDateRange } from "react-icons/hi2";
 import { IoIosTime, IoMdArrowRoundBack } from "react-icons/io";
-import { IoShareSocialSharp } from "react-icons/io5";
-import { MdBloodtype } from "react-icons/md";
 import { useNavigate, useParams } from "react-router";
 import Loading from "../../Components/Loading/Loading";
 import { DateFormat } from "../../Utility/FormateDate";
@@ -36,25 +42,40 @@ const IssueDetails = () => {
     priority,
     status,
     updateCount,
-    name,
+
+    displayName,
     number,
     email,
     _id,
     information,
+    area,
   } = issue;
+
+  const statusIcon = {
+    pending: <MdOutlinePendingActions />,
+    "in-progress": <AiOutlineLoading3Quarters />,
+    resolved: <MdOutlineTaskAlt />,
+    closed: <MdLockOutline />,
+  };
+
+  const statusColor = {
+    pending: "text-yellow-600 bg-yellow-200",
+    "in-progress": "text-blue-600 bg-blue-200",
+    resolved: "text-green-600 bg-green-200",
+    closed: "text-gray-500 bg-gray-200",
+  };
+
   return (
     <Container className="md:min-h-screen md:mt-30 mt-8 md:p-6 p-4">
       <div
-        className="md:flex justify-between gap-12 items-center bg-base-200 py-16 px rounded-xl space-y-4 shadow-md 
-            transform transition duration-300 ease-in-out 
+        className="md:flex justify-between gap-8 items-center bg-base-200 py-16 rounded-xl space-y-4 shadow-md   px-4          transform transition duration-300 ease-in-out 
             hover:scale-105  hover:-translate-y-1"
       >
-        <div className="flex-2 p-2 w-[300px]">
+        <div className="flex-2 md:pl-6 w-[300px]">
           <img className="rounded-xl w-full h-full object-cover" src={photo} />
         </div>
         <div className="flex-3 flex flex-col justify-center items-start px-2 space-y-4">
           <div className="flex gap-2 text-2xl md:text-3xl font-bold items-center justify-center text-primary">
-            <FaRegCircleUser />
             <span className="">{title}</span>
           </div>
           {/* contact */}
@@ -74,9 +95,9 @@ const IssueDetails = () => {
           </div>
           <div className="md:flex">
             {/* area */}
-            <div className="flex items-center gap-2 text-lg text-secondary md:px-4 py-4 rounded-md ">
-              <FaMapMarkedAlt size={24} />
-              {/* <span>{doner.area}</span> */}
+            <div className="flex items-center gap-2 text-lg text-accent md:px-2 py-4 rounded-md ">
+              <FaMapMarkedAlt size={20} />
+              <span>{area}</span>
             </div>
             {/* Added time */}
             <div className="rounded-md flex gap-2 items-center">
@@ -88,13 +109,13 @@ const IssueDetails = () => {
           </div>
 
           {/* contributer email */}
-          <div className="md:px-4 md:py-2 rounded-md flex gap-2 items-center">
+          <div className="md:px-2 md:py-2 rounded-md flex gap-2 items-center">
             <div className="text-primary">
-              <IoShareSocialSharp size={20} />
+              <FaRegCircleUser size={20} />
             </div>
             <p>
-              <span className="font-bold text-primary">Priority :</span>{" "}
-              {priority}
+              <span className="font-bold text-primary">User Name :</span>{" "}
+              {displayName}
             </p>
           </div>
 
@@ -103,11 +124,19 @@ const IssueDetails = () => {
             {information}
           </div>
           <div className="flex flex-wrap gap-6 items-center justify-center text-accent">
-            <div className="flex  items-center justify-center gap-1">
-              <span className="text-primary">
-                <MdBloodtype size={24} />
+            <div
+              className={`flex gap-2  items-center justify-center ${
+                priority === "normal" ? "text-primary" : "text-red-500"
+              }`}
+            >
+              <span>
+                {priority === "normal" ? (
+                  <FcLowPriority size={20} />
+                ) : (
+                  <FcHighPriority size={20} />
+                )}
               </span>
-              <span className="text-primary font-bold text-xl">{title}</span>
+              <span className={`font-bold`}>{priority.toUpperCase()}</span>
             </div>
             <div className="flex items-center justify-center gap-1">
               <span>
@@ -117,11 +146,11 @@ const IssueDetails = () => {
                 {district}, {region}
               </span>
             </div>
-            <div className="flex items-center justify-center gap-1">
-              <span>
-                <HiCalendarDateRange />
-              </span>
-              <span>{status}</span>
+            <div
+              className={`flex items-center text-md font-bold justify-center gap-2 px-2 rounded-xl ${statusColor[status]}`}
+            >
+              <span>{statusIcon[status]}</span>
+              <span>{status.toUpperCase()} </span>
             </div>
 
             <button onClick={() => navigate(-1)} className="btn-small">
