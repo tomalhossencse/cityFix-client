@@ -36,12 +36,12 @@ const Navbar = () => {
       <li className="mr-4">
         <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
-      <li className="mr-4">
+      {/* <li className="mr-4">
         <NavLink to="/register">Register</NavLink>
       </li>
       <li className="mr-4">
         <NavLink to="/login">Login</NavLink>
-      </li>
+      </li> */}
       <li className="mr-4">
         <NavLink to="/profile">Profile</NavLink>
       </li>

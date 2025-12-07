@@ -4,24 +4,77 @@ import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { data, useNavigate } from "react-router";
+import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
+import Swal from "sweetalert2";
 
 const AddIssue = () => {
   const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const axiosSecure = useAxiosSecure();
-  const { data: issues = [] } = useQuery({
-    queryKey: ["issues"],
-    queryFn: async () => {
-      axiosSecure.post("/issues").then((res) => {
-        console.log(res.data);
-      });
-    },
-  });
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
-  const handleAddIssue = () => {};
+
+  const {
+    data: locations = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["locations"],
+    queryFn: async () => {
+      const res = await axiosSecure.get("/districtbyRegion");
+      //   console.log(res.data);
+      return res.data;
+    },
+  });
+
+  const issueCategories = [
+    "Road & Potholes",
+    "Streetlights",
+    "Water Leakage",
+    "Garbage & Waste",
+    "Drainage",
+    "Footpath & Sidewalk",
+    "Electricity",
+    "Public Safety",
+    "Traffic Signal",
+    "Other",
+  ];
+
+  const dublicateRegion = locations.map((data) => data.region);
+  const regions = [...new Set(dublicateRegion)];
+  const region = watch("region");
+
+  const districtByRegion = (data) => {
+    const districtsByRegion = locations.filter((dist) => dist.region === data);
+    const districts = districtsByRegion.map((d) => d.district);
+    return districts;
+  };
+
+  const handleAddIssue = (data) => {
+    console.log(data);
+    data.createAt = new Date();
+    data.trackingId = GenerateTrackingId();
+    data.status = "pending";
+    data.updateCount = 0;
+    axiosSecure.post("/issues", data).then((res) => {
+      if (res.data.insertedId) {
+        navigate("/");
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Report Issue Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    });
+  };
   return (
     <Container className="my-26 px-6">
       <form
@@ -51,31 +104,30 @@ const AddIssue = () => {
               {/* name */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="">
-                  <legend className="fieldset-legend">Your Name</legend>
+                  <legend className="fieldset-legend">Title</legend>
                   <input
                     type="text"
                     className="input w-full md:input-md input-sm"
-                    placeholder="Your Name"
+                    placeholder="Issue title"
                     defaultValue={user?.displayName?.toUpperCase()}
-                    {...register("name", { required: true })}
+                    {...register("title", { required: true })}
                   />
                 </div>
-                {/* age */}
                 <div className="">
-                  <legend className="fieldset-legend">Your Age</legend>
+                  <legend className="fieldset-legend"> Photo Url</legend>
                   <input
-                    type="number"
+                    type="text"
                     className="input w-full md:input-md input-sm"
-                    placeholder="Your Age"
-                    {...register("age", { required: true })}
+                    placeholder="Issue photo url"
+                    {...register("photo", { required: true })}
                   />
-                  {errors.age?.type === "required" && (
-                    <p className="text-red-500 py-2">Age Required!</p>
+                  {errors.photo?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Issue Photo url Required!
+                    </p>
                   )}
                 </div>
-
                 {/* email */}
-
                 <div>
                   <legend className="fieldset-legend">Email</legend>
                   <input
@@ -83,35 +135,34 @@ const AddIssue = () => {
                     className="input w-full md:input-md input-sm"
                     placeholder="Email"
                     defaultValue={user?.email}
-                    // readOnly
+                    readOnly
                     {...register("email", { required: true })}
                   />
                 </div>
-
-                {/* blood group */}
-
+                {/* category */}
                 <div>
-                  <legend className="fieldset-legend">Blood Group</legend>
+                  <legend className="fieldset-legend">Category</legend>
                   <select
                     defaultValue={""}
                     className="select w-full md:select-md select-sm"
-                    {...register("bloodGroup", { required: true })}
+                    {...register("category", { required: true })}
                   >
                     <option value={""} disabled>
-                      Select Your BG
+                      Select a category
                     </option>
-                    {/* {bloodGroups.map((group, index) => (
-                      <option value={group} key={index}>
-                        {group}
+                    {issueCategories.map((cat, index) => (
+                      <option value={cat} key={index}>
+                        {cat}
                       </option>
-                    ))} */}
+                    ))}
                   </select>
-                  {errors.bloodGroup?.type === "required" && (
-                    <p className="text-red-500 py-2">Blood Group Required!</p>
+                  {errors.category?.type === "required" && (
+                    <p className="text-red-500 py-2">
+                      Issues Category Required!
+                    </p>
                   )}
                 </div>
                 {/* contact */}
-
                 <div>
                   <legend className="fieldset-legend">Contact No</legend>
                   <input
@@ -124,10 +175,8 @@ const AddIssue = () => {
                     <p className="text-red-500 py-2">Contact No. Required!</p>
                   )}
                 </div>
-
                 {/* Nid */}
-
-                <div>
+                {/* <div>
                   <legend className="fieldset-legend">NID No</legend>
                   <input
                     type="text"
@@ -138,8 +187,7 @@ const AddIssue = () => {
                   {errors.nid?.type === "required" && (
                     <p className="text-red-500 py-2">NID No. Required!</p>
                   )}
-                </div>
-
+                </div> */}
                 {/* region */}
                 <div>
                   <legend className="fieldset-legend">Your Region</legend>
@@ -151,9 +199,9 @@ const AddIssue = () => {
                     <option value={""} disabled>
                       Select Your Region
                     </option>
-                    {/* {bloodData.map((region, index) => (
+                    {regions.map((region, index) => (
                       <option key={index}>{region}</option>
-                    ))} */}
+                    ))}
                   </select>
                   {errors.region?.type === "required" && (
                     <p className="text-red-500 py-2">Region Required!</p>
@@ -170,20 +218,18 @@ const AddIssue = () => {
                     <option value={""} disabled>
                       Select District
                     </option>
-                    {/* {region &&
+                    {region &&
                       districtByRegion(region).map((district, index) => (
                         <option value={district} key={index}>
                           {district}
                         </option>
-                      ))} */}
+                      ))}
                   </select>
                   {errors.district?.type === "required" && (
                     <p className="text-red-500 py-2">District Required!</p>
                   )}
                 </div>
-
                 {/* area */}
-
                 <div className="col-span-2">
                   <legend className="fieldset-legend">Area</legend>
                   <input
@@ -196,16 +242,14 @@ const AddIssue = () => {
                 {errors.area?.type === "required" && (
                   <p className="text-red-500 py-2">Area Required!</p>
                 )}
-
                 {/* addional information */}
-
                 <div className="col-span-2">
                   <legend className="fieldset-legend">
                     Additional Information
                   </legend>
-                  <textarea
+                  <input
                     type="text"
-                    className="input w-full md:input-md input-sm h-30 p-2"
+                    className="input w-full md:input-md input-sm p-2"
                     placeholder="Your Additional Information"
                     {...register("information", { required: true })}
                   />
