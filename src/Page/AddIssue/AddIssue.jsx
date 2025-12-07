@@ -57,6 +57,7 @@ const AddIssue = () => {
     data.createAt = new Date();
     data.trackingId = GenerateTrackingId();
     data.status = "pending";
+    data.priority = "normal";
     data.updateCount = 0;
     axiosSecure.post("/issues", data).then((res) => {
       if (res.data.insertedId) {
@@ -105,9 +106,11 @@ const AddIssue = () => {
                     type="text"
                     className="input w-full md:input-md input-sm"
                     placeholder="Issue title"
-                    defaultValue={user?.displayName?.toUpperCase()}
                     {...register("title", { required: true })}
                   />
+                  {errors.title?.type === "required" && (
+                    <p className="text-red-500 py-2">Issue Title Required!</p>
+                  )}
                 </div>
                 <div className="">
                   <legend className="fieldset-legend"> Photo Url</legend>
@@ -130,7 +133,7 @@ const AddIssue = () => {
                     type="email"
                     className="input w-full md:input-md input-sm"
                     placeholder="Email"
-                    defaultValue={user?.email}
+                    value={user?.email}
                     readOnly
                     {...register("email", { required: true })}
                   />
@@ -178,12 +181,13 @@ const AddIssue = () => {
                     type="text"
                     className="input w-full md:input-md input-sm"
                     placeholder="Your Name"
-                    defaultValue={user?.displayName}
+                    value={user?.displayName}
+                    readOnly
                     {...register("displayName", { required: true })}
                   />
-                  {errors.displayName?.type === "required" && (
+                  {/* {errors.displayName?.type === "required" && (
                     <p className="text-red-500 py-2">User Name Required!</p>
-                  )}
+                  )} */}
                 </div>
                 {/* region */}
                 <div>
@@ -269,7 +273,7 @@ const AddIssue = () => {
             </div>
 
             <div className="flex-2 md:block hidden">
-              <img src="https://i.ibb.co.com/CpL3c0dC/Asset-1.png" />
+              <img src="https://i.ibb.co.com/4RG2H37W/Asset-2.png" />
             </div>
           </div>
         </fieldset>
