@@ -25,7 +25,7 @@ const Login = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Register Successfull!",
+          title: "Login Successfull!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -48,7 +48,7 @@ const Login = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Register Successfull!",
+          title: "Login Successfull!",
           showConfirmButton: false,
           timer: 1500,
         });

@@ -4,6 +4,7 @@ import MainLayout from "../Layout/MainLayout";
 import Register from "../Page/Register/Register";
 import Login from "../Page/Login/Login";
 import Allissues from "../Page/Allissues/Allissues";
+import AddIssue from "../Page/AddIssue/AddIssue";
 
 export const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ export const router = createBrowserRouter([
       {
         path: "all-issues",
         Component: Allissues,
+      },
+      {
+        path: "/add-issue",
+        Component: AddIssue,
       },
     ],
   },
