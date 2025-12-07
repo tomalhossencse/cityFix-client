@@ -5,6 +5,7 @@ import Register from "../Page/Register/Register";
 import Login from "../Page/Login/Login";
 import Allissues from "../Page/Allissues/Allissues";
 import AddIssue from "../Page/AddIssue/AddIssue";
+import IssueDetails from "../Page/IssueDetails/IssueDetails";
 
 export const router = createBrowserRouter([
   {
@@ -28,8 +29,12 @@ export const router = createBrowserRouter([
         Component: Allissues,
       },
       {
-        path: "/add-issue",
+        path: "add-issue",
         Component: AddIssue,
+      },
+      {
+        path: "all-issues/:id",
+        Component: IssueDetails,
       },
     ],
   },

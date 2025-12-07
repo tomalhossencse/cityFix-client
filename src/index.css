@@ -61,6 +61,9 @@ body{
   border: 1px solid rgba(255, 255, 255, 0.3);
   /* overflow: hidden; */
 }
+.section-title{
+  @apply md:text-3xl text-2xl font-bold  mx-auto text-secondary py-2 rounded-4xl text-center mb-4
+}
 html {
   scroll-behavior: smooth;
 }
