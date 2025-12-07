@@ -1,5 +1,4 @@
 import React from "react";
-import { GrStatusUnknown } from "react-icons/gr";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
 import { FaPhoneVolume, FaRegCircleUser } from "react-icons/fa6";
@@ -15,7 +14,6 @@ import {
   MdLockOutline,
 } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { HiCalendarDateRange } from "react-icons/hi2";
 import { IoIosTime, IoMdArrowRoundBack } from "react-icons/io";
 import { useNavigate, useParams } from "react-router";
 import Loading from "../../Components/Loading/Loading";
@@ -41,12 +39,12 @@ const IssueDetails = () => {
     region,
     priority,
     status,
-    updateCount,
+    // updateCount,
 
     displayName,
     number,
     email,
-    _id,
+    // _id,
     information,
     area,
   } = issue;

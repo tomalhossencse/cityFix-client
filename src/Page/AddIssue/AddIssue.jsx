@@ -4,7 +4,7 @@ import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { data, useNavigate } from "react-router";
+import { useNavigate } from "react-router";
 import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
 import Swal from "sweetalert2";
 
@@ -20,11 +20,7 @@ const AddIssue = () => {
     formState: { errors },
   } = useForm();
 
-  const {
-    data: locations = [],
-    refetch,
-    isLoading,
-  } = useQuery({
+  const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: async () => {
       const res = await axiosSecure.get("/districtbyRegion");

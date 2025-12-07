@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-import { Link, NavLink, useNavigate } from "react-router";
-import toast from "react-hot-toast";
+import { NavLink, useNavigate } from "react-router";
 import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm } from "react-hook-form";
@@ -17,7 +16,6 @@ const Register = () => {
   const {
     register,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
   const handleSumitForm = (data) => {
