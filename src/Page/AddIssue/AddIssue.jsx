@@ -100,15 +100,15 @@ const AddIssue = () => {
             <div className="flex-3">
               {/* name */}
               <div className="grid grid-cols-2 gap-4">
-                <div className="">
-                  <legend className="fieldset-legend">Title</legend>
+                <div>
+                  <legend className="fieldset-legend">Issue Title</legend>
                   <input
                     type="text"
                     className="input w-full md:input-md input-sm"
-                    placeholder="Issue title"
-                    {...register("title", { required: true })}
+                    placeholder="Issue Title"
+                    {...register("issueTitle", { required: true })}
                   />
-                  {errors.title?.type === "required" && (
+                  {errors.issueTitle?.type === "required" && (
                     <p className="text-red-500 py-2">Issue Title Required!</p>
                   )}
                 </div>
@@ -133,7 +133,7 @@ const AddIssue = () => {
                     type="email"
                     className="input w-full md:input-md input-sm"
                     placeholder="Email"
-                    value={user?.email}
+                    defaultValue={user?.email}
                     readOnly
                     {...register("email", { required: true })}
                   />
@@ -181,7 +181,7 @@ const AddIssue = () => {
                     type="text"
                     className="input w-full md:input-md input-sm"
                     placeholder="Your Name"
-                    value={user?.displayName}
+                    defaultValue={user?.displayName}
                     readOnly
                     {...register("displayName", { required: true })}
                   />

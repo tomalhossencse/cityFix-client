@@ -32,7 +32,7 @@ const IssueDetails = () => {
   console.log(issue);
   if (isLoading) return <Loading />;
   const {
-    title,
+    issueTitle,
     createAt,
     photo,
     district,
@@ -74,7 +74,7 @@ const IssueDetails = () => {
         </div>
         <div className="flex-3 flex flex-col justify-center items-start px-2 space-y-4">
           <div className="flex gap-2 text-2xl md:text-3xl font-bold items-center justify-center text-primary">
-            <span className="">{title}</span>
+            <span className="">{issueTitle}</span>
           </div>
           {/* contact */}
           <div className="md:flex gap-4">

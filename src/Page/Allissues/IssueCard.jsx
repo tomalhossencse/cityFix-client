@@ -9,7 +9,7 @@ import { Link } from "react-router";
 import { DateFormat } from "../../Utility/FormateDate";
 const IssueCard = ({ issue }) => {
   const {
-    title,
+    issueTitle,
     createAt,
     photo,
     district,
@@ -21,7 +21,7 @@ const IssueCard = ({ issue }) => {
   } = issue;
   return (
     <div
-      className="flex flex-col bg-base-200 p-6 rounded-xl space-y-4 shadow-md 
+      className="flex flex-col justify-between bg-base-200 p-6 rounded-xl space-y-4 shadow-md 
             transform transition duration-600 ease-in-out 
             hover:scale-105 hover:bg-secondary-content hover:-translate-y-1"
     >
@@ -43,12 +43,12 @@ const IssueCard = ({ issue }) => {
           </span>
         </li>
       </ul>
-      <div className="p-2">
+      <div className="w-full h-[250px]">
         <img className="rounded-xl w-full h-full object-cover" src={photo} />
       </div>
       <div className="px-2 space-y-4">
-        {/* title */}
-        <div className="text-xl font-bold text-primary">{title}</div>
+        {/* issueTitle */}
+        <div className="text-xl font-bold text-primary">{issueTitle}</div>
 
         {/* create time*/}
         <div className="flex justify-between items-center">
