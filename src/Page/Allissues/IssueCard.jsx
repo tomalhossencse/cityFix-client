@@ -1,6 +1,6 @@
 import React from "react";
 import { GrUpdate } from "react-icons/gr";
-import { MdBloodtype } from "react-icons/md";
+import { MdBloodtype, MdHowToVote } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { HiCalendarDateRange } from "react-icons/hi2";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -16,7 +16,7 @@ const IssueCard = ({ issue }) => {
     region,
     priority,
     status,
-    updateCount,
+    upvoteCount,
     _id,
   } = issue;
   return (
@@ -76,9 +76,9 @@ const IssueCard = ({ issue }) => {
           </Link>
           <button className="btn-small flex items-center justify-center gap-1">
             <span>
-              <GrUpdate />
+              <MdHowToVote size={16} />
             </span>
-            <span>Update ({updateCount})</span>
+            <span>Upvote : ({upvoteCount})</span>
           </button>
         </ul>
       </div>

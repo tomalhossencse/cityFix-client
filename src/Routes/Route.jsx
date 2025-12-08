@@ -6,6 +6,7 @@ import Login from "../Page/Login/Login";
 import Allissues from "../Page/Allissues/Allissues";
 import AddIssue from "../Page/AddIssue/AddIssue";
 import IssueDetails from "../Page/IssueDetails/IssueDetails";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -34,7 +35,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-issues/:id",
-        Component: IssueDetails,
+        element: (
+          <PrivateRoute>
+            <IssueDetails />
+          </PrivateRoute>
+        ),
       },
     ],
   },

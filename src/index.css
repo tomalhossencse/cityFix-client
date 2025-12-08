@@ -10,7 +10,7 @@
   name: "light";
   default: true;
   --color-primary: #4CAF4F;
-  --color-secondary: #263238;
+  --color-secondary: #FFFF00;
   --color-base-300 : #e7e7e7;
   --color-accent: #4D4D4D;
   --color-accent-content :#F5F7FA;
@@ -40,10 +40,10 @@ body{
  @apply w-full btn btn-outline  rounded-3xl font-semibold text-primary hover:bg-primary hover:text-secondary-content
 }
 .btn-small{
-  @apply btn btn-sm bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100
+  @apply btn btn-sm bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
 }
 .btn-small-full{
-  @apply btn w-full text-xl font-bold bg-primary py-5 text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100
+  @apply btn w-full  font-bold bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
 }
 .btn-small-2{
   @apply btn btn-sm hover:bg-primary
@@ -62,7 +62,7 @@ body{
   /* overflow: hidden; */
 }
 .section-title{
-  @apply md:text-3xl text-2xl font-bold  mx-auto text-secondary py-2 rounded-4xl text-center mb-4
+  @apply md:text-3xl text-2xl font-bold  mx-auto text-accent py-2 rounded-4xl text-center mb-4
 }
 html {
   scroll-behavior: smooth;

@@ -58,10 +58,10 @@ const AddIssue = () => {
     data.trackingId = GenerateTrackingId();
     data.status = "pending";
     data.priority = "normal";
-    data.updateCount = 0;
+    data.upvoteCount = 0;
     axiosSecure.post("/issues", data).then((res) => {
       if (res.data.insertedId) {
-        navigate("/");
+        navigate("/all-issues");
         Swal.fire({
           position: "top",
           icon: "success",
