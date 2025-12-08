@@ -1,6 +1,6 @@
 import React, { useContext, useRef } from "react";
 import { BiSolidCategoryAlt } from "react-icons/bi";
-
+import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
 import { FaPhoneVolume, FaRegCircleUser } from "react-icons/fa6";
@@ -23,18 +23,21 @@ import { DateFormat } from "../../Utility/FormateDate";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+
 const IssueDetails = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const modelRef = useRef();
   const navigate = useNavigate();
   const { id } = useParams();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
+
   const {
     data: issue,
     isLoading,
@@ -58,7 +61,9 @@ const IssueDetails = () => {
       return res.data;
     },
   });
+
   if (isLoading) return <Loading />;
+
   const {
     issueTitle,
     createAt,
@@ -121,11 +126,39 @@ const IssueDetails = () => {
         modelRef.current.close();
         refetch();
         Swal.fire({
-          position: "top-left",
+          position: "top-right",
           icon: "success",
           title: "Report Issue Upadated Successfully",
           showConfirmButton: false,
           timer: 1500,
+        });
+      }
+    });
+  };
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/issues/${_id}`).then((res) => {
+          if (res.data.deletedCount) {
+            navigate("/all-issues");
+            Swal.fire({
+              position: "top-right",
+              title: "Deleted!",
+              icon: "success",
+              text: "Your Reported Issues has been deleted.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
         });
       }
     });
@@ -242,6 +275,17 @@ const IssueDetails = () => {
                   <MdEditSquare />
                 </span>
                 <span>Edit</span>
+              </div>
+            )}
+            {user.email === email && (
+              <div
+                onClick={handleDelete}
+                className="flex items-center justify-center gap-1 btn-small-red"
+              >
+                <span>
+                  <RiDeleteBin5Fill size={16} />
+                </span>
+                <span>Delete</span>
               </div>
             )}
             <button onClick={() => navigate(-1)} className="btn-small">
