@@ -40,13 +40,19 @@ body{
  @apply w-full btn btn-outline  rounded-3xl font-semibold text-primary hover:bg-primary hover:text-secondary-content
 }
 .btn-small{
-  @apply btn btn-sm bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+  @apply btn btn-sm bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+}
+.btn-small-black{
+  @apply btn btn-sm bg-accent text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent/70
 }
 .btn-small-red{
-  @apply btn btn-sm bg-red-600 text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+  @apply btn btn-sm bg-red-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+}
+.btn-small-blue{
+  @apply btn btn-sm bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
 }
 .btn-small-full{
-  @apply btn w-full  font-bold bg-primary text-base-100 rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+  @apply btn w-full  font-bold bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
 }
 .btn-small-2{
   @apply btn btn-sm hover:bg-primary

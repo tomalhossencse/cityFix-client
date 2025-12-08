@@ -23,6 +23,7 @@ import { DateFormat } from "../../Utility/FormateDate";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
+import { IoRocket } from "react-icons/io5";
 
 const IssueDetails = () => {
   const { user } = useContext(AuthContext);
@@ -90,10 +91,10 @@ const IssueDetails = () => {
   };
 
   const statusColor = {
-    pending: "text-yellow-600 bg-yellow-200",
-    "in-progress": "text-blue-600 bg-blue-200",
-    resolved: "text-green-600 bg-green-200",
-    closed: "text-gray-500 bg-gray-200",
+    pending: "bg-yellow-600 text-white",
+    "in-progress": "bg-blue-600 text-white",
+    resolved: "bg-green-600  text-white",
+    closed: "bg-gray-500  text-white",
   };
 
   const issueCategories = [
@@ -167,11 +168,43 @@ const IssueDetails = () => {
   return (
     <Container className="md:min-h-screen md:mt-30 mt-8 md:p-6 p-4">
       <div
-        className="md:flex justify-between gap-8 items-center bg-base-200 py-16 rounded-xl space-y-4 shadow-md   px-4          transform transition duration-300 ease-in-out 
+        className="md:flex justify-center gap-6 items-base bg-base-200 py-16 rounded-xl space-y-4 shadow-md   px-4          transform transition duration-300 ease-in-out 
             hover:scale-105  hover:-translate-y-1"
       >
         <div className="flex-2 md:pl-6 w-[300px]">
           <img className="rounded-xl w-full h-full object-cover" src={photo} />
+          <div className="flex flex-wrap px-4 mt-6 items-center justify-between text-accent">
+            <div
+              className={`flex gap-2  items-center justify-center ${
+                priority === "normal" ? "text-primary" : "text-red-500"
+              }`}
+            >
+              <span>
+                {priority === "normal" ? (
+                  <FcLowPriority size={20} />
+                ) : (
+                  <FcHighPriority size={20} />
+                )}
+              </span>
+              <span className={`font-bold`}>{priority.toUpperCase()}</span>
+            </div>
+
+            <div
+              className={`flex items-center text-md font-bold justify-center gap-2 py-1 px-4 rounded-3xl ${statusColor[status]}`}
+            >
+              <span>{statusIcon[status]}</span>
+              <span>{status.toUpperCase()} </span>
+            </div>
+
+            <div className="p-4 btn btn-xs hover:bg-primary hover:text-white  flex items-center justify-center gap-1 font-bold text-[16px] bg-blue-600 text-white  rounded-3xl">
+              <span>
+                <MdHowToVote />
+              </span>
+              <span>
+                UPVOTE : <span> {upvoteCount}</span>
+              </span>
+            </div>
+          </div>
         </div>
         <div className="flex-3 flex flex-col justify-center items-start px-2 space-y-2">
           <div className="flex gap-2 text-2xl md:text-3xl font-bold items-center justify-center text-primary">
@@ -208,7 +241,7 @@ const IssueDetails = () => {
               </div>
               <span>{number}</span>
             </div>
-            <div className="bg-secondary-content text-black px-4 py-2 rounded-md my-2 flex gap-2 items-center">
+            <div className="bg-red-500 text-base-100 px-4 py-2 rounded-md my-2 flex gap-2 items-center">
               <div>
                 <MdMarkEmailRead size={20} />
               </div>
@@ -232,44 +265,14 @@ const IssueDetails = () => {
           </div>
 
           {/* information */}
-          <div className="bg-accent text-base-100 w-full md:w-4/5 px-4 py-4 rounded-md">
+          <div className="bg-accent/10 text-accent  w-full md:w-4/5 px-4 py-4 rounded-md">
             {information}
           </div>
           <div className="flex flex-wrap gap-6 items-center justify-center text-accent mt-3">
-            <div
-              className={`flex gap-2  items-center justify-center ${
-                priority === "normal" ? "text-primary" : "text-red-500"
-              }`}
-            >
-              <span>
-                {priority === "normal" ? (
-                  <FcLowPriority size={20} />
-                ) : (
-                  <FcHighPriority size={20} />
-                )}
-              </span>
-              <span className={`font-bold`}>{priority.toUpperCase()}</span>
-            </div>
-
-            <div
-              className={`flex items-center text-md font-bold justify-center gap-2 px-2 rounded-xl ${statusColor[status]}`}
-            >
-              <span>{statusIcon[status]}</span>
-              <span>{status.toUpperCase()} </span>
-            </div>
-
-            <div className="btn btn-xs hover:bg-primary hover:text-white  flex items-center justify-center gap-1 font-bold text-[16px] text-blue-600 bg-blue-100 rounded-3xl">
-              <span>
-                <MdHowToVote />
-              </span>
-              <span>
-                UPVOTE : <span> {upvoteCount}</span>
-              </span>
-            </div>
             {user.email === email && status === "pending" && (
               <div
                 onClick={() => modelRef.current.showModal()}
-                className="btn-small hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+                className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
               >
                 <span>
                   <MdEditSquare />
@@ -278,15 +281,24 @@ const IssueDetails = () => {
               </div>
             )}
             {user.email === email && (
-              <div
-                onClick={handleDelete}
-                className="flex items-center justify-center gap-1 btn-small-red"
-              >
-                <span>
-                  <RiDeleteBin5Fill size={16} />
-                </span>
-                <span>Delete</span>
-              </div>
+              <>
+                <div
+                  onClick={handleDelete}
+                  className="flex items-center justify-center gap-1 btn-small-red"
+                >
+                  <span>
+                    <RiDeleteBin5Fill size={16} />
+                  </span>
+                  <span>Delete</span>
+                </div>
+
+                <div className="flex items-center justify-center gap-1 btn-small-blue">
+                  <span>
+                    <IoRocket size={16} />
+                  </span>
+                  <span>Boost</span>
+                </div>
+              </>
             )}
             <button onClick={() => navigate(-1)} className="btn-small">
               <span>
