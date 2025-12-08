@@ -17,7 +17,7 @@ import {
 } from "react-icons/md";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { IoIosTime, IoMdArrowRoundBack } from "react-icons/io";
-import { useNavigate, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import Loading from "../../Components/Loading/Loading";
 import { DateFormat } from "../../Utility/FormateDate";
 import { AuthContext } from "../../Context/AuthContext";
@@ -292,12 +292,15 @@ const IssueDetails = () => {
                   <span>Delete</span>
                 </div>
 
-                <div className="flex items-center justify-center gap-1 btn-small-blue">
+                <Link
+                  to={`/all-issues/${_id}/payment`}
+                  className="flex items-center justify-center gap-1 btn-small-blue"
+                >
                   <span>
                     <IoRocket size={16} />
                   </span>
                   <span>Boost</span>
-                </div>
+                </Link>
               </>
             )}
             <button onClick={() => navigate(-1)} className="btn-small">
