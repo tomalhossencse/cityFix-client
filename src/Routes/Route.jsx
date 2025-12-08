@@ -8,6 +8,8 @@ import AddIssue from "../Page/AddIssue/AddIssue";
 import IssueDetails from "../Page/IssueDetails/IssueDetails";
 import PrivateRoute from "./PrivateRoute";
 import Payment from "../Page/Payment/Payment";
+import PaymentSuccess from "../Page/PaymentSuccess/PaymentSuccess";
+import PaymentCancel from "../Page/PaymentCancel/PaymentCancel";
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
             <Payment />
           </PrivateRoute>
         ),
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancel",
+        Component: PaymentCancel,
       },
     ],
   },

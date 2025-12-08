@@ -53,7 +53,7 @@ const AddIssue = () => {
   };
 
   const handleAddIssue = (data) => {
-    console.log(data);
+    // console.log(data);
     data.createAt = new Date();
     data.trackingId = GenerateTrackingId();
     data.status = "pending";

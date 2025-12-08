@@ -165,6 +165,17 @@ const IssueDetails = () => {
     });
   };
 
+  const handlePayment = async () => {
+    const paymentInfo = {
+      issueId: _id,
+      email,
+      issueTitle,
+    };
+    const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
+
   return (
     <Container className="md:min-h-screen md:mt-30 mt-8 md:p-6 p-4">
       <div
@@ -292,15 +303,15 @@ const IssueDetails = () => {
                   <span>Delete</span>
                 </div>
 
-                <Link
-                  to={`/payment/${_id}`}
+                <button
+                  onClick={handlePayment}
                   className="flex items-center justify-center gap-1 btn-small-blue"
                 >
                   <span>
                     <IoRocket size={16} />
                   </span>
                   <span>Boost</span>
-                </Link>
+                </button>
               </>
             )}
             <button onClick={() => navigate(-1)} className="btn-small">
