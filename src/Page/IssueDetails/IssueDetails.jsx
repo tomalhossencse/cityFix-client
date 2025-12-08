@@ -173,7 +173,7 @@ const IssueDetails = () => {
       >
         <div className="flex-2 md:pl-6 w-[300px]">
           <img className="rounded-xl w-full h-full object-cover" src={photo} />
-          <div className="flex flex-wrap px-4 mt-6 items-center justify-between text-accent">
+          <div className="flex px-0  md:px-4 mt-6 items-center justify-between text-accent">
             <div
               className={`flex gap-2  items-center justify-center ${
                 priority === "normal" ? "text-primary" : "text-red-500"
@@ -293,7 +293,7 @@ const IssueDetails = () => {
                 </div>
 
                 <Link
-                  to={`/all-issues/${_id}/payment`}
+                  to={`/payment/${_id}`}
                   className="flex items-center justify-center gap-1 btn-small-blue"
                 >
                   <span>
