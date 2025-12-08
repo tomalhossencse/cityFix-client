@@ -4,10 +4,15 @@ import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
 import { FaPhoneVolume, FaRegCircleUser } from "react-icons/fa6";
-import { MdEditSquare, MdHowToVote, MdMarkEmailRead } from "react-icons/md";
+import {
+  MdEditSquare,
+  MdHowToVote,
+  MdMarkEmailRead,
+  MdOutlineDownloadDone,
+} from "react-icons/md";
 import { useQuery } from "@tanstack/react-query";
 import { CiLocationOn } from "react-icons/ci";
-import { FaMapMarkedAlt } from "react-icons/fa";
+import { FaMapMarkedAlt, FaRocket } from "react-icons/fa";
 import Container from "../../Utility/Container";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import {
@@ -78,6 +83,7 @@ const IssueDetails = () => {
     displayName,
     number,
     email,
+    trackingId,
     _id,
     information,
     area,
@@ -170,6 +176,7 @@ const IssueDetails = () => {
       issueId: _id,
       email,
       issueTitle,
+      trackingId,
     };
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
     console.log(res.data);
@@ -302,16 +309,24 @@ const IssueDetails = () => {
                   </span>
                   <span>Delete</span>
                 </div>
+                {priority === "normal" ? (
+                  <div
+                    onClick={handlePayment}
+                    className="flex items-center justify-center gap-1 btn-small-blue"
+                  >
+                    <FaRocket />
 
-                <button
-                  onClick={handlePayment}
-                  className="flex items-center justify-center gap-1 btn-small-blue"
-                >
-                  <span>
-                    <IoRocket size={16} />
-                  </span>
-                  <span>Boost</span>
-                </button>
+                    <span>Boost</span>
+                  </div>
+                ) : (
+                  <div
+                    disabled
+                    className="btn btn-small-blue flex items-center justify-center gap-1"
+                  >
+                    <MdOutlineDownloadDone size={20} />
+                    <span>Boosted</span>
+                  </div>
+                )}
               </>
             )}
             <button onClick={() => navigate(-1)} className="btn-small">

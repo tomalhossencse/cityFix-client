@@ -30,7 +30,11 @@ const IssueCard = ({ issue }) => {
           <span className="text-primary">
             {/* <MdBloodtype size={24} /> */}
           </span>
-          <span className="rounded-4xl bg-primary px-2 text-base-100">
+          <span
+            className={`rounded-4xl bg-primary px-2 text-base-100 ${
+              priority === "normal" ? "bg-primary" : "bg-red-500"
+            }`}
+          >
             {priority.toUpperCase()}
           </span>
         </li>
