@@ -85,10 +85,10 @@ const AddIssue = () => {
     });
   };
   return (
-    <Container className="my-26 px-6">
+    <Container className="m-20 px-4">
       <form
         onSubmit={handleSubmit(handleAddIssue)}
-        className="bg-accent-content md:py-12 py-6 md:px-16 px-6 rounded-xl shadow-md hover:shadow-2xl hover:scale-105 transform transition duration-1000 ease-in-out hover:bg-base-200 hover:-translate-y-1"
+        className="bg-base-100 md:py-12 py-6 md:px-16 px-6 rounded-xl shadow-md hover:shadow-xl hover:scale-[1.03] transform transition duration-1000 ease-in-out  hover:-translate-y-1"
       >
         <fieldset className="fieldset">
           <h1 className="font-black text-2xl md:text-4xl text-primary">

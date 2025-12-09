@@ -13,6 +13,7 @@ import PaymentCancel from "../Page/PaymentCancel/PaymentCancel";
 import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardHome from "../Page/Dashboard/DashboarHome/DashboarHome";
 import MyIssues from "../Page/MyIssues/MyIssues";
+import Profile from "../Page/Profile/Profile";
 
 export const router = createBrowserRouter([
   {
@@ -34,10 +35,6 @@ export const router = createBrowserRouter([
       {
         path: "all-issues",
         Component: Allissues,
-      },
-      {
-        path: "add-issue",
-        Component: AddIssue,
       },
       {
         path: "all-issues/:id",
@@ -80,6 +77,14 @@ export const router = createBrowserRouter([
       {
         path: "my-issues",
         Component: MyIssues,
+      },
+      {
+        path: "report-issues",
+        Component: AddIssue,
+      },
+      {
+        path: "profile",
+        Component: Profile,
       },
     ],
   },

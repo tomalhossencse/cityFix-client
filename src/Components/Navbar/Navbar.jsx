@@ -1,15 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router";
-import { IoLogIn, IoLogOut } from "react-icons/io5";
-import { HiMiniArrowRightOnRectangle } from "react-icons/hi2";
+import React, { useEffect, useState } from "react";
+import { NavLink } from "react-router";
+
 import Container from "../../Utility/Container";
-import { AuthContext } from "../../Context/AuthContext";
-import { FaUser } from "react-icons/fa";
-import Swal from "sweetalert2";
+
+import User from "../User/User";
 
 const Navbar = () => {
-  const navigate = useNavigate();
-  const { user, userLogOut } = useContext(AuthContext);
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
   useEffect(() => {
     const html = document.querySelector("html");
@@ -28,9 +24,6 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li className="mr-4">
-        <NavLink to="/add-issue">Add New Issue</NavLink>
-      </li>
-      <li className="mr-4">
         <NavLink to="/all-issues">All Issues</NavLink>
       </li>
       <li className="mr-4">
@@ -42,9 +35,6 @@ const Navbar = () => {
       <li className="mr-4">
         <NavLink to="/login">Login</NavLink>
       </li> */}
-      <li className="mr-4">
-        <NavLink to="/profile">Profile</NavLink>
-      </li>
 
       <li className="mr-4">
         <label className="flex cursor-pointer gap-2">
@@ -86,28 +76,6 @@ const Navbar = () => {
     </>
   );
 
-  const handleLogout = () => {
-    userLogOut()
-      .then(() => {
-        navigate("/login");
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Logout Successfull!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: error.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      });
-  };
   return (
     <div className="shadow-md bg-base-100 fixed w-full glass-card top-0 z-20 md:px-0 px-4">
       <Container>
@@ -154,58 +122,7 @@ const Navbar = () => {
           <div className="navbar-center hidden lg:flex">
             <ul className="menu menu-horizontal px-1">{links}</ul>
           </div>
-          <div className="navbar-end gap-6">
-            {user ? (
-              <div className="dropdown dropdown-end z-50">
-                <div
-                  tabIndex={0}
-                  role="button"
-                  className="btn btn-ghost btn-circle avatar"
-                >
-                  <div className="w-9 border-2 border-gray-300 rounded-full">
-                    <img
-                      alt="Tailwind CSS Navbar component"
-                      referrerPolicy="no-referrer"
-                      src={
-                        user.photoURL ||
-                        "https://img.icons8.com/3d-fluent/100/user-2.png"
-                      }
-                    />
-                  </div>
-                </div>
-                <ul
-                  tabIndex="-1"
-                  className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
-                >
-                  <div className=" pb-3 border-b border-b-gray-200">
-                    <li className="text-sm font-bold">{user.displayName}</li>
-                    <li className="text-xs">{user.email}</li>
-                  </div>
-                  <li className="mt-3">
-                    <Link to={"/profile"}>
-                      <FaUser /> Profile
-                    </Link>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleLogout}
-                      className="btn-xs bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105"
-                    >
-                      <IoLogOut /> Logout
-                    </button>
-                  </li>
-                </ul>
-              </div>
-            ) : (
-              <Link
-                to={"/login"}
-                className="btn btn-sm bg-primary rounded-md shadow-md hover:bg-black transition-transform hover:scale-105  text-white"
-              >
-                {" "}
-                <IoLogIn /> Login
-              </Link>
-            )}
-          </div>
+          <User />
         </div>
       </Container>
     </div>
