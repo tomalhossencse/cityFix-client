@@ -27,7 +27,9 @@ const MyIssues = () => {
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
         <div>
-          <div className="flex px-4 section-title">My Issues</div>
+          <div className="flex px-4 section-title">
+            My Issues : ({issues.length})
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="table border-2 border-base-200 table-zebra">

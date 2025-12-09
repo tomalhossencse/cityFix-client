@@ -10,9 +10,15 @@ import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { RiDeleteBin5Fill } from "react-icons/ri";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { useNavigate } from "react-router";
 
 const IssueRow = ({ issue, index, refetch }) => {
   const modelRef = useRef();
+  const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
@@ -39,7 +45,37 @@ const IssueRow = ({ issue, index, refetch }) => {
     number,
     email,
     trackingId,
+    _id,
   } = issue;
+
+  const handleDelete = () => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/issues/${_id}`).then((res) => {
+          if (res.data.deletedCount) {
+            refetch();
+            // navigate("/all-issues");
+            Swal.fire({
+              position: "top-right",
+              title: "Deleted!",
+              icon: "success",
+              text: "Your Reported Issues has been deleted.",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+        });
+      }
+    });
+  };
   return (
     <tr>
       <th>{index + 1}</th>
@@ -91,7 +127,15 @@ const IssueRow = ({ issue, index, refetch }) => {
             <span>Edit</span>
           </div>
         )}
-        <button className="btn-small-red">Delete</button>
+        <div
+          onClick={handleDelete}
+          className="flex items-center justify-center gap-1 btn-small-red"
+        >
+          <span>
+            <RiDeleteBin5Fill size={16} />
+          </span>
+          <span>Delete</span>
+        </div>
       </td>
       <IssueEdit issue={issue} modelRef={modelRef} refetch={refetch} />
     </tr>
