@@ -59,6 +59,18 @@ const AddIssue = () => {
     data.status = "pending";
     data.priority = "normal";
     data.upvoteCount = 0;
+    data.timeline = [
+      {
+        status: "pending",
+        message: "Issue reported",
+        updatedBy: {
+          role: "citizen",
+          name: user.displayName,
+          email: user.email,
+        },
+        createdAt: new Date(),
+      },
+    ];
     axiosSecure.post("/issues", data).then((res) => {
       if (res.data.insertedId) {
         navigate("/all-issues");

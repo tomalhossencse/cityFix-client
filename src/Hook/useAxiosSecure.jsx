@@ -3,7 +3,7 @@ import React from "react";
 
 const useAxiosSecure = () => {
   const axiosSecure = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "http://localhost:5000",
   });
   return axiosSecure;
 };

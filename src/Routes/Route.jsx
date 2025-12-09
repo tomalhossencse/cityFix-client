@@ -10,6 +10,8 @@ import PrivateRoute from "./PrivateRoute";
 import Payment from "../Page/Payment/Payment";
 import PaymentSuccess from "../Page/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Page/PaymentCancel/PaymentCancel";
+import DashboardLayout from "../Layout/DashboardLayout";
+import DashboardHome from "../Page/Dashboard/DashboarHome/DashboarHome";
 
 export const router = createBrowserRouter([
   {
@@ -59,6 +61,20 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancel",
         Component: PaymentCancel,
+      },
+    ],
+  },
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
+    children: [
+      {
+        index: true,
+        Component: DashboardHome,
       },
     ],
   },
