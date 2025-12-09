@@ -1,12 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useRef, useState } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/AuthContext";
 import Loading from "../../Components/Loading/Loading";
 import IssueRow from "./IssueRow";
+import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 
 const MyIssues = () => {
   const { user } = useContext(AuthContext);
+  const modelRef = useRef();
+  const [editIssue, setEditIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
   const {
     data: issues = [],
@@ -48,14 +51,25 @@ const MyIssues = () => {
             <tbody>
               {issues.map((issue, index) => (
                 <IssueRow
+                  setEditIssue={setEditIssue}
                   key={issue._id}
                   issue={issue}
                   index={index}
+                  modelRef={modelRef}
                   refetch={refetch}
+                  setIs
                 />
               ))}
             </tbody>
           </table>
+
+          {editIssue && (
+            <IssueEdit
+              issue={editIssue}
+              modelRef={modelRef}
+              refetch={refetch}
+            />
+          )}
         </div>
       </div>
     </>

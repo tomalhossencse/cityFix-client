@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
 import {
   MdEditSquare,
@@ -6,7 +6,6 @@ import {
   MdOutlinePendingActions,
   MdOutlineTaskAlt,
 } from "react-icons/md";
-import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
@@ -15,8 +14,7 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
-const IssueRow = ({ issue, index, refetch }) => {
-  const modelRef = useRef();
+const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
@@ -113,15 +111,18 @@ const IssueRow = ({ issue, index, refetch }) => {
       </td>
       <td className="space-x-2">
         {status === "pending" && (
-          <div
-            onClick={() => modelRef.current.showModal()}
+          <button
+            onClick={() => {
+              setEditIssue(issue);
+              modelRef.current.showModal();
+            }}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >
             <span>
               <MdEditSquare />
             </span>
             <span>Edit</span>
-          </div>
+          </button>
         )}
         <div
           onClick={handleDelete}
@@ -140,7 +141,6 @@ const IssueRow = ({ issue, index, refetch }) => {
           </button>
         </Link>
       </td>
-      <IssueEdit issue={issue} modelRef={modelRef} refetch={refetch} />
     </tr>
   );
 };

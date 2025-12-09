@@ -121,6 +121,7 @@ const IssueDetails = () => {
       email,
       issueTitle,
       trackingId,
+      displayName: user.displayName,
     };
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
     console.log(res.data);

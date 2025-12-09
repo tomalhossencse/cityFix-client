@@ -19,19 +19,7 @@ const Payment = () => {
   if (isLoading) {
     return <Loading />;
   }
-  const {
-    issueTitle,
-    createAt,
-    photo,
-    email,
-    district,
-    region,
-    priority,
-    status,
-    upvoteCount,
-    trackingId,
-    _id,
-  } = issue;
+  const { issueTitle, email, trackingId, _id } = issue;
 
   const handlePayment = async () => {
     const paymentInfo = {
