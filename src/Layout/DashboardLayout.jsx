@@ -55,7 +55,11 @@ const DashboardLayout = () => {
             <li className="p-2 mt-2">
               <NavLink
                 to={"/dashboard"}
-                className={`gap-2   is-drawer-close:tooltip is-drawer-close:tooltip-right`}
+                end
+                className={({ isActive }) =>
+                  `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                }
                 data-tip="Homepage"
               >
                 {/* DashboardHome icon */}
@@ -64,11 +68,15 @@ const DashboardLayout = () => {
                 <span className="is-drawer-close:hidden">Dashboard</span>
               </NavLink>
             </li>
+
             {/* my issues */}
             <li className="p-2">
               <NavLink
-                to={"/my-issues"}
-                className={`gap-2  is-drawer-close:tooltip is-drawer-close:tooltip-right`}
+                to={"/dashboard/my-issues"}
+                className={({ isActive }) =>
+                  `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                }
                 data-tip="My Issues "
               >
                 {/* DashboardHome icon */}

@@ -63,9 +63,9 @@ body{
 .navbar .active {
   @apply text-base-100 font-bold bg-primary rounded-2xl
 }
-li .active {
+/* li .active {
   @apply text-base-100 font-bold bg-primary rounded-lg
-}
+} */
 .glass-card {
   background: rgba(255, 255, 255, 0.14);
   backdrop-filter: blur(6px);
