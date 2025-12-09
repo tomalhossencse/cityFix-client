@@ -1,16 +1,16 @@
 import React, { useContext, useState } from "react";
 import { FaEye } from "react-icons/fa";
 import { IoEyeOff } from "react-icons/io5";
-import { Link, NavLink, useLocation, useNavigate } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import Container from "../../Utility/Container";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useForm } from "react-hook-form";
+import SocialSign from "../../Components/SocialSign/SocialSign";
 const Login = () => {
-  const { signInwithGoogle, signIn } = useContext(AuthContext);
+  const { signIn } = useContext(AuthContext);
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
-  const location = useLocation();
   const {
     register,
     handleSubmit,
@@ -21,7 +21,7 @@ const Login = () => {
     // console.log(data);
     signIn(email, password)
       .then(() => {
-        navigate("/");
+        navigate("/dashboard");
         Swal.fire({
           position: "top-end",
           icon: "success",
@@ -41,28 +41,6 @@ const Login = () => {
       });
   };
 
-  const googleSignin = () => {
-    signInwithGoogle()
-      .then(() => {
-        navigate("/");
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login Successfull!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: error.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      });
-  };
   return (
     <Container className="my-24 flex justify-center items-center">
       <div className="card w-full max-w-md bg-base-100 shadow-xl border border-accent-content rounded-2xl p-6 hover:shadow-xl transition duration-300">
@@ -124,39 +102,7 @@ const Login = () => {
           <div className="divider text-gray-400">OR</div>
 
           {/* Google Login */}
-          <button
-            onClick={googleSignin}
-            className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2"
-          >
-            <svg
-              aria-label="Google logo"
-              width="18"
-              height="18"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 512 512"
-            >
-              <g>
-                <path d="m0 0H512V512H0" fill="#fff"></path>
-                <path
-                  fill="#34a853"
-                  d="M153 292c30 82 118 95 171 60h62v48A192 192 0 0190 341"
-                ></path>
-                <path
-                  fill="#4285f4"
-                  d="m386 400a140 175 0 0053-179H260v74h102q-7 37-38 57"
-                ></path>
-                <path
-                  fill="#fbbc02"
-                  d="m90 341a208 200 0 010-171l63 49q-12 37 0 73"
-                ></path>
-                <path
-                  fill="#ea4335"
-                  d="m153 219c22-69 116-109 179-50l55-54c-78-75-230-72-297 55"
-                ></path>
-              </g>
-            </svg>
-            Login with Google
-          </button>
+          <SocialSign />
 
           {/* Register Link */}
           <div className="text-center text-sm mt-6">

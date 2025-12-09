@@ -13,12 +13,11 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { useNavigate } from "react-router";
-
+import { Link } from "react-router";
+import { FaEye } from "react-icons/fa";
 const IssueRow = ({ issue, index, refetch }) => {
   const modelRef = useRef();
   const axiosSecure = useAxiosSecure();
-  const navigate = useNavigate();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
@@ -35,15 +34,12 @@ const IssueRow = ({ issue, index, refetch }) => {
     issueTitle,
     createAt,
     photo,
-    district,
     region: Region,
     priority,
     status,
     upvoteCount,
     category,
-    displayName,
-    number,
-    email,
+
     trackingId,
     _id,
   } = issue;
@@ -136,6 +132,13 @@ const IssueRow = ({ issue, index, refetch }) => {
           </span>
           <span>Delete</span>
         </div>
+
+        <Link to={`/all-issues/${_id}`}>
+          <button className="btn-small-blue">
+            <FaEye size={15} />
+            <span>View</span>
+          </button>
+        </Link>
       </td>
       <IssueEdit issue={issue} modelRef={modelRef} refetch={refetch} />
     </tr>

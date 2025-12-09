@@ -73,7 +73,7 @@ const AddIssue = () => {
     ];
     axiosSecure.post("/issues", data).then((res) => {
       if (res.data.insertedId) {
-        navigate("/all-issues");
+        navigate("/dashboard/my-issues");
         Swal.fire({
           position: "top",
           icon: "success",
