@@ -1,16 +1,24 @@
-import React from "react";
+import React, { useContext } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { AuthContext } from "../../Context/AuthContext";
+import Loading from "../../Components/Loading/Loading";
+import IssueRow from "./IssueRow";
 
 const MyIssues = () => {
+  const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
-  const { data: myIssues = [] } = useQuery({
-    queryKey: ["myIssues"],
+  const { data: issues = [], isLoading } = useQuery({
+    queryKey: ["issues"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/issues");
+      const res = await axiosSecure.get(`/issues?email=${user?.email}`);
       return res.data;
     },
   });
+  if (isLoading) {
+    <Loading />;
+  }
+  //   console.log(issues);
   return (
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
@@ -23,33 +31,17 @@ const MyIssues = () => {
             <thead className="bg-base-200">
               <tr>
                 <th></th>
-                <th>Name</th>
-                <th>Job</th>
-                <th>Favorite Color</th>
+                <th>Issue Title</th>
+                <th>Tracking Id</th>
+                <th>Created Time</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>1</th>
-                <td>Cy Ganderton</td>
-                <td>Quality Control Specialist</td>
-                <td>Blue</td>
-              </tr>
-              {/* row 2 */}
-              <tr>
-                <th>2</th>
-                <td>Hart Hagerty</td>
-                <td>Desktop Support Technician</td>
-                <td>Purple</td>
-              </tr>
-              {/* row 3 */}
-              <tr>
-                <th>3</th>
-                <td>Brice Swyre</td>
-                <td>Tax Accountant</td>
-                <td>Red</td>
-              </tr>
+              {issues.map((issue, index) => (
+                <IssueRow key={issue._id} issue={issue} index={index} />
+              ))}
             </tbody>
           </table>
         </div>
