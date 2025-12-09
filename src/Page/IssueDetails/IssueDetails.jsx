@@ -28,6 +28,7 @@ import { DateFormat } from "../../Utility/FormateDate";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
+import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 
 const IssueDetails = () => {
   const { user } = useContext(AuthContext);
@@ -147,14 +148,16 @@ const IssueDetails = () => {
                   <FcHighPriority size={20} />
                 )}
               </span>
-              <span className={`font-bold`}>{priority.toUpperCase()}</span>
+              <span className={`font-bold`}>
+                {CapitalizeFirstLetter(priority)}
+              </span>
             </div>
 
             <div
               className={`flex items-center text-md font-bold justify-center gap-2 py-1 px-4 rounded-3xl ${statusColor[status]}`}
             >
               <span>{statusIcon[status]}</span>
-              <span>{status.toUpperCase()} </span>
+              <span>{CapitalizeFirstLetter(status)} </span>
             </div>
 
             <div className="p-4 btn btn-xs hover:bg-primary hover:text-white  flex items-center justify-center gap-1 font-bold text-[16px] bg-blue-600 text-white  rounded-3xl">

@@ -48,7 +48,7 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
   };
 
   const handleUpdateIssue = (data) => {
-    console.log(data);
+    // console.log(data);
     axiosSecure.patch(`/issues/${_id}`, data).then((res) => {
       if (res.data.modifiedCount) {
         modelRef.current.close();

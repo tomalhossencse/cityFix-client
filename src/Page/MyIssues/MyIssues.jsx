@@ -8,7 +8,11 @@ import IssueRow from "./IssueRow";
 const MyIssues = () => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
-  const { data: issues = [], isLoading } = useQuery({
+  const {
+    data: issues = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["issues"],
     queryFn: async () => {
       const res = await axiosSecure.get(`/issues?email=${user?.email}`);
@@ -35,12 +39,18 @@ const MyIssues = () => {
                 <th>Tracking Id</th>
                 <th>Created Time</th>
                 <th>Status</th>
+                <th>Priority</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {issues.map((issue, index) => (
-                <IssueRow key={issue._id} issue={issue} index={index} />
+                <IssueRow
+                  key={issue._id}
+                  issue={issue}
+                  index={index}
+                  refetch={refetch}
+                />
               ))}
             </tbody>
           </table>
