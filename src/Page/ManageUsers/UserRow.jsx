@@ -1,28 +1,19 @@
 import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
-import {
-  MdAdminPanelSettings,
-  MdLockOutline,
-  MdOutlinePendingActions,
-  MdOutlineTaskAlt,
-  MdWorkspacePremium,
-} from "react-icons/md";
+import { MdAdminPanelSettings, MdWorkspacePremium } from "react-icons/md";
 import { LuShieldPlus } from "react-icons/lu";
 import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { LuShieldOff } from "react-icons/lu";
-
+import { ImBlocked } from "react-icons/im";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { FaRegUser, FaUserAstronaut } from "react-icons/fa";
+import { FaCheckCircle, FaRegUser, FaUserAstronaut } from "react-icons/fa";
 const UserRow = ({ user, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
-    pending: <MdOutlinePendingActions size={20} />,
-    "in-progress": <AiOutlineLoading3Quarters size={20} />,
-    resolved: <MdOutlineTaskAlt size={20} />,
-    closed: <MdLockOutline size={20} />,
+    active: <FaCheckCircle size={24} />,
+    blocked: <ImBlocked size={24} />,
   };
   const roleIcon = {
     citizen: <FaUserAstronaut size={20} />,
@@ -61,7 +52,7 @@ const UserRow = ({ user, index, refetch }) => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
+      confirmButtonText: "Yes, Change Status!",
     }).then((result) => {
       if (result.isConfirmed) {
         const updateinfo = {
@@ -76,7 +67,7 @@ const UserRow = ({ user, index, refetch }) => {
               position: "top-right",
               title: "Status Updated!",
               icon: "success",
-              text: "Users Status has been deleted.",
+              text: "Users status has been changed.",
               showConfirmButton: false,
               timer: 1500,
             });
@@ -114,7 +105,7 @@ const UserRow = ({ user, index, refetch }) => {
           className={`flex items-center text-md font-bold justify-start gap-1 ${statusColor[accountStatus]}`}
         >
           <span>{statusIcon[accountStatus]}</span>
-          <span>{CapitalizeFirstLetter(accountStatus)} </span>
+          {/* <span>{CapitalizeFirstLetter(accountStatus)} </span> */}
         </div>
       </td>
 
