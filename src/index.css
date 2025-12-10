@@ -27,6 +27,9 @@ body{
 .btn-primary{
   @apply btn bg-primary text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-warning;
 }
+.btn-yellow{
+  @apply btn bg-warning text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-primary;
+}
 .btn-primary-rounded{
   @apply btn bg-primary rounded-xl px-8 py-6 text-xl font-bold text-secondary-content hover:bg-black hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
 }

@@ -16,6 +16,7 @@ import MyIssues from "../Page/MyIssues/MyIssues";
 import Profile from "../Page/Profile/Profile";
 import AllIssuesDashboard from "../Page/AllIssuesDashboard/AllIssuesDashboard";
 import ManageUsers from "../Page/ManageUsers/ManageUsers";
+import PremuimSuccess from "../Page/premuimSuccess/premuimSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -61,6 +62,10 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancel",
         Component: PaymentCancel,
+      },
+      {
+        path: "premuim-success",
+        Component: PremuimSuccess,
       },
     ],
   },

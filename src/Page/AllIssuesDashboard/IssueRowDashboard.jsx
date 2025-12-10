@@ -45,34 +45,34 @@ const IssueRowDashboard = ({
     _id,
   } = issue;
 
-  const handleDelete = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        axiosSecure.delete(`/issues/${_id}`).then((res) => {
-          if (res.data.deletedCount) {
-            refetch();
-            // navigate("/all-issues");
-            Swal.fire({
-              position: "top-right",
-              title: "Deleted!",
-              icon: "success",
-              text: "Your Reported Issues has been deleted.",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-      }
-    });
-  };
+  //   const handleDelete = () => {
+  //     Swal.fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to revert this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonColor: "#3085d6",
+  //       cancelButtonColor: "#d33",
+  //       confirmButtonText: "Yes, delete it!",
+  //     }).then((result) => {
+  //       if (result.isConfirmed) {
+  //         axiosSecure.delete(`/issues/${_id}`).then((res) => {
+  //           if (res.data.deletedCount) {
+  //             refetch();
+  //             // navigate("/all-issues");
+  //             Swal.fire({
+  //               position: "top-right",
+  //               title: "Deleted!",
+  //               icon: "success",
+  //               text: "Your Reported Issues has been deleted.",
+  //               showConfirmButton: false,
+  //               timer: 1500,
+  //             });
+  //           }
+  //         });
+  //       }
+  //     });
+  //   };
   return (
     <tr>
       <th>{index + 1}</th>

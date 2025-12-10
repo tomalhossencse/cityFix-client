@@ -8,6 +8,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { TbReport } from "react-icons/tb";
 import { FaRegUser, FaUser, FaUserCircle, FaUsersCog } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa6";
+import { CapitalizeFirstLetter } from "../Utility/CapitalizeFirstLetter";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
@@ -27,18 +28,17 @@ const DashboardLayout = () => {
               <RiMenu2Line size="22" />
             </label>
 
-            <label className="flex items-center justify-start mr-20">
+            <div className="flex items-center justify-start mr-[10%]">
               <div>
                 <User />
               </div>
               <div>
-                <p className="text-primary text-md font-bold">
-                  {" "}
-                  {user.displayName}
+                <p className="text-primary text-xl font-bold">
+                  {CapitalizeFirstLetter(user.displayName)}
                 </p>
                 <p className="text-[12px]">{user.email}</p>
               </div>
-            </label>
+            </div>
           </nav>
           {/* Page content here  */}
           <Outlet />

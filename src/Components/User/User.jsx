@@ -59,7 +59,7 @@ const User = () => {
               <li className="text-xs">{user?.email}</li>
             </div>
             <li className="mt-3">
-              <Link to={"/profile"}>
+              <Link to={"/dashboard/profile"}>
                 <FaUser /> Profile
               </Link>
             </li>

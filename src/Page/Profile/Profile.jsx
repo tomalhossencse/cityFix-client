@@ -3,12 +3,30 @@ import Swal from "sweetalert2";
 import { AuthContext } from "../../Context/AuthContext";
 import { useNavigate } from "react-router";
 import Container from "../../Utility/Container";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../Components/Loading/Loading";
+import { FaRocket } from "react-icons/fa";
+import { MdOutlineDownloadDone } from "react-icons/md";
 
 const Profile = () => {
+  const axiosSecure = useAxiosSecure();
   const { user, userLogOut } = useContext(AuthContext);
   const navigate = useNavigate();
   const { displayName, email, photoURL } = user;
   const name = displayName?.toUpperCase();
+  const { data: myuser, isLoading } = useQuery({
+    queryKey: ["/users", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${email}`);
+      return res.data;
+    },
+  });
+  if (isLoading) {
+    return <Loading />;
+  }
+
+  const { isSubscribed, _id } = myuser;
 
   const handleLogout = () => {
     userLogOut()
@@ -33,6 +51,19 @@ const Profile = () => {
       });
   };
 
+  const handlePayment = async () => {
+    const boostInfo = {
+      userId: _id,
+      email,
+      displayName,
+      isSubscribed: true,
+      planType: "premium",
+    };
+    const res = await axiosSecure.post("/premium-checkout-session", boostInfo);
+    console.log(res.data);
+    window.location.href = res.data.url;
+  };
+
   return (
     <Container className="flex flex-col items-center justify-center mt-24 mb-10 mx-12 px-4">
       <div className="card w-full max-w-md bg-base-100 shadow-xl rounded-2xl p-8 hover:shadow-primary/40 hover:scale-[1.02] transition-all duration-300 border border-gray-100">
@@ -45,22 +76,24 @@ const Profile = () => {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-md">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M5 13l4 4L19 7"
-                />
-              </svg>
-            </div>
+            {isSubscribed && (
+              <div className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-md">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            )}
           </div>
 
           <div className="text-center">
@@ -69,12 +102,19 @@ const Profile = () => {
           </div>
 
           <div className="flex gap-3">
-            <button
-              className="btn btn-primary btn-sm px-5"
-              onClick={() => navigate("/")}
-            >
-              Back Home
-            </button>
+            {/* <button className="btn btn-primary btn-sm px-5">Boost Now</button> */}
+            {!isSubscribed ? (
+              <div onClick={handlePayment} className="btn-yellow px-5">
+                <FaRocket />
+
+                <span>Boost</span>
+              </div>
+            ) : (
+              <div disabled className="btn btn-primary btn-sm px-5">
+                <MdOutlineDownloadDone size={20} />
+                <span>Boosted</span>
+              </div>
+            )}
             <button
               onClick={handleLogout}
               className="btn btn-outline btn-sm px-5"

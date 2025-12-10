@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
 import {
   MdAdminPanelSettings,
@@ -11,12 +11,11 @@ import { GrUserWorker } from "react-icons/gr";
 import { LuShieldOff } from "react-icons/lu";
 
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
-import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { FaUserAstronaut } from "react-icons/fa";
-const UserRow = ({ user, index, refetch, setEditIssue, modelRef }) => {
+const UserRow = ({ user, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
@@ -48,6 +47,9 @@ const UserRow = ({ user, index, refetch, setEditIssue, modelRef }) => {
     displayName,
     email,
     _id,
+    transactionId,
+    paidAt,
+    paymentStatus,
   } = user;
 
   const handleChangeStatus = () => {
@@ -125,7 +127,17 @@ const UserRow = ({ user, index, refetch, setEditIssue, modelRef }) => {
         {CapitalizeFirstLetter(planType)}
       </td>
 
-      <td>{isSubscribed ? <></> : <h1>Not Sub</h1>}</td>
+      <td>
+        {isSubscribed ? (
+          <>
+            <p>{transactionId}</p>
+            <p>{paidAt}</p>
+            <p>{paymentStatus}</p>
+          </>
+        ) : (
+          <h1>Not Sub</h1>
+        )}
+      </td>
       <td className="space-x-2">
         {accountStatus === "active" ? (
           <button
