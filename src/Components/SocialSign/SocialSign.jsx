@@ -16,7 +16,12 @@ const SocialSign = () => {
           displayName: result.user.displayName,
           photoURL: result.user.photoURL,
           createdAt: new Date(),
+          role: "citizen",
+          accountStatus: "active",
+          planType: "free",
+          isSubscribed: false,
         };
+
         axiosSecure.post("/users", userInfo);
         navigate("/dashboard");
         Swal.fire({

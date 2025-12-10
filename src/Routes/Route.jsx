@@ -15,6 +15,7 @@ import DashboardHome from "../Page/Dashboard/DashboarHome/DashboarHome";
 import MyIssues from "../Page/MyIssues/MyIssues";
 import Profile from "../Page/Profile/Profile";
 import AllIssuesDashboard from "../Page/AllIssuesDashboard/AllIssuesDashboard";
+import ManageUsers from "../Page/ManageUsers/ManageUsers";
 
 export const router = createBrowserRouter([
   {
@@ -90,6 +91,10 @@ export const router = createBrowserRouter([
       {
         path: "all-issues",
         Component: AllIssuesDashboard,
+      },
+      {
+        path: "manage-users",
+        Component: ManageUsers,
       },
     ],
   },

@@ -6,7 +6,7 @@ import { Link, NavLink, Outlet } from "react-router";
 import User from "../Components/User/User";
 import { AuthContext } from "../Context/AuthContext";
 import { TbReport } from "react-icons/tb";
-import { FaRegUser, FaUser, FaUserCircle } from "react-icons/fa";
+import { FaRegUser, FaUser, FaUserCircle, FaUsersCog } from "react-icons/fa";
 import { FaUserCheck } from "react-icons/fa6";
 
 const DashboardLayout = () => {
@@ -50,7 +50,7 @@ const DashboardLayout = () => {
             aria-label="close sidebar"
             className="drawer-overlay"
           ></label>
-          <div className="flex min-h-full is-drawer-open:px-2 is-drawer-close:px-0 items-start flex-col text-accent bg-base-100 is-drawer-close:w-20 is-drawer-open:w-48">
+          <div className="flex min-h-full is-drawer-open:px-2 is-drawer-close:px-0 items-start flex-col text-accent bg-base-100 is-drawer-close:w-20 is-drawer-open:w-56">
             {/* Sidebar content here */}
             <ul className="menu w-full grow">
               {/* List item */}
@@ -105,6 +105,7 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">My Issues </span>
                 </NavLink>
               </li>
+
               {/* report issues */}
               <li className="p-2">
                 <NavLink
@@ -121,6 +122,7 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Report Issue</span>
                 </NavLink>
               </li>
+
               {/* profile */}
               <li className="p-2">
                 <NavLink
@@ -154,6 +156,22 @@ const DashboardLayout = () => {
                   <RiCheckboxMultipleFill size={20} />
 
                   <span className="is-drawer-close:hidden">All Issues</span>
+                </NavLink>
+              </li>
+
+              {/* Manage Users */}
+              <li className="p-2">
+                <NavLink
+                  to={"/dashboard/manage-users"}
+                  className={({ isActive }) =>
+                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                  }
+                  data-tip="Manage Users"
+                >
+                  {/* report icon */}
+                  <FaUsersCog size={24} />
+                  <span className="is-drawer-close:hidden">Manage Users</span>
                 </NavLink>
               </li>
             </ul>

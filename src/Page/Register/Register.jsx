@@ -32,6 +32,10 @@ const Register = () => {
             displayName,
             photoURL,
             createdAt: new Date(),
+            role: "citizen",
+            accountStatus: "active",
+            planType: "free",
+            isSubscribed: false,
           };
           axiosSecure.post("/users", userInfo);
           navigate("/dashboard");
