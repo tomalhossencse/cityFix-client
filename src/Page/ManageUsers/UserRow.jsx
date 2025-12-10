@@ -5,16 +5,17 @@ import {
   MdLockOutline,
   MdOutlinePendingActions,
   MdOutlineTaskAlt,
+  MdWorkspacePremium,
 } from "react-icons/md";
 import { LuShieldPlus } from "react-icons/lu";
-import { GrUserWorker } from "react-icons/gr";
+import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
 import { LuShieldOff } from "react-icons/lu";
 
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { FaUserAstronaut } from "react-icons/fa";
+import { FaRegUser, FaUserAstronaut } from "react-icons/fa";
 const UserRow = ({ user, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
@@ -91,7 +92,9 @@ const UserRow = ({ user, index, refetch }) => {
       <td className="flex items-center justify-start gap-4">
         <img src={photoURL} className="w-12 rounded-full" alt="" />
         <div>
-          <p className="font-semibold text-[16px]">{displayName}</p>
+          <p className="font-semibold text-[16px]">
+            {CapitalizeFirstLetter(displayName)}
+          </p>
           <p className="font-semibold text-primary">{email}</p>
         </div>
       </td>
@@ -115,27 +118,48 @@ const UserRow = ({ user, index, refetch }) => {
         </div>
       </td>
 
-      <td
-        className={`font-bold text-lg ${
-          planType === "admin"
-            ? "text-red-600"
-            : planType === "boosted"
-            ? "text-blue-600"
-            : ""
-        }`}
-      >
-        {CapitalizeFirstLetter(planType)}
+      <td>
+        {planType === "premium" ? (
+          <MdWorkspacePremium
+            size={28}
+            title="Premium User"
+            className="text-red-600"
+          />
+        ) : planType === "admin" ? (
+          <GrUserAdmin size={24} className="text-accent" title="Admin" />
+        ) : (
+          <FaRegUser className="text" title="Free user" size={24} />
+        )}
       </td>
 
       <td>
         {isSubscribed ? (
           <>
-            <p>{transactionId}</p>
-            <p>{paidAt}</p>
-            <p>{paymentStatus}</p>
+            <div
+              tabIndex={0}
+              className="collapse collapse-arrow bg-base-100 border-base-200 border"
+            >
+              <div className="collapse-title font-semibold text-primary">
+                status : {CapitalizeFirstLetter(paymentStatus)}
+              </div>
+              <div className="collapse-content text-md text-accent">
+                <p className="text-[12px]">Tnxid : {transactionId}</p>
+                <p>PaidAt : {DateFormat(paidAt)}</p>
+              </div>
+            </div>
           </>
         ) : (
-          <h1>Not Sub</h1>
+          <div
+            tabIndex={0}
+            className="collapse collapse-arrow bg-base-100 border-base-200 border"
+          >
+            <div className="collapse-title font-semibold text-red-500">
+              status : Unpaid
+            </div>
+            <div className="collapse-content text-md text-accent">
+              <p>No premium subscription.</p>
+            </div>
+          </div>
         )}
       </td>
       <td className="space-x-2">
