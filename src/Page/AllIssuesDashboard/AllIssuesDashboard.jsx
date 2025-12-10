@@ -1,10 +1,9 @@
 import React, { useRef, useState } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { AuthContext } from "../../Context/AuthContext";
 import Loading from "../../Components/Loading/Loading";
-import IssueRow from "../MyIssues/IssueRow";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
+import IssueRowDashboard from "./IssueRowDashboard";
 const AllIssuesDashboard = () => {
   const modelRef = useRef();
   const [editIssue, setEditIssue] = useState(null);
@@ -14,9 +13,9 @@ const AllIssuesDashboard = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["issues"],
+    queryKey: ["allIssues"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues`);
+      const res = await axiosSecure.get(`/allIssues`);
       return res.data;
     },
   });
@@ -29,7 +28,7 @@ const AllIssuesDashboard = () => {
       <div className="p-8 bg-base-100 m-8 rounded-xl">
         <div>
           <div className="flex px-4 section-title">
-            My Issues : ({issues.length})
+            All Issues : ({issues.length})
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -48,7 +47,7 @@ const AllIssuesDashboard = () => {
             </thead>
             <tbody>
               {issues.map((issue, index) => (
-                <IssueRow
+                <IssueRowDashboard
                   setEditIssue={setEditIssue}
                   key={issue._id}
                   issue={issue}
