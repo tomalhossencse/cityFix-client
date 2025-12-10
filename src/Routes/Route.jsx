@@ -14,6 +14,7 @@ import DashboardLayout from "../Layout/DashboardLayout";
 import DashboardHome from "../Page/Dashboard/DashboarHome/DashboarHome";
 import MyIssues from "../Page/MyIssues/MyIssues";
 import Profile from "../Page/Profile/Profile";
+import AllIssuesDashboard from "../Page/AllIssuesDashboard/AllIssuesDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +86,10 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         Component: Profile,
+      },
+      {
+        path: "all-issues",
+        Component: AllIssuesDashboard,
       },
     ],
   },

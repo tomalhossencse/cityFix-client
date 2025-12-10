@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { AiOutlineIssuesClose } from "react-icons/ai";
 import { MdOutlineDashboardCustomize } from "react-icons/md";
-import { RiMenu2Line } from "react-icons/ri";
+import { RiCheckboxMultipleFill, RiMenu2Line } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
 import User from "../Components/User/User";
 import { AuthContext } from "../Context/AuthContext";
@@ -55,7 +55,7 @@ const DashboardLayout = () => {
             <ul className="menu w-full grow">
               {/* List item */}
               {/* home */}
-              <li className="pb-2 border-b-2 border-base-300">
+              <li className="pb-2">
                 <Link
                   to={"/"}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-2"
@@ -73,7 +73,7 @@ const DashboardLayout = () => {
                 </Link>
               </li>
               {/* dashboard home */}
-              <li className="p-2 mt-2">
+              <li className="p-2">
                 <NavLink
                   to={"/dashboard"}
                   end
@@ -113,7 +113,7 @@ const DashboardLayout = () => {
                     `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
                   }
-                  data-tip="My Issues "
+                  data-tip="Report Issues "
                 >
                   {/* report icon */}
                   <TbReport size={20} />
@@ -135,6 +135,25 @@ const DashboardLayout = () => {
                   <FaRegUser size={20} />
 
                   <span className="is-drawer-close:hidden">My Profile</span>
+                </NavLink>
+              </li>
+
+              {/* ----------------Admin dashboard navlink--------------- */}
+
+              {/* All Issues */}
+              <li className="p-2">
+                <NavLink
+                  to={"/dashboard/all-issues"}
+                  className={({ isActive }) =>
+                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                  }
+                  data-tip="All Issues"
+                >
+                  {/* report icon */}
+                  <RiCheckboxMultipleFill size={20} />
+
+                  <span className="is-drawer-close:hidden">All Issues</span>
                 </NavLink>
               </li>
             </ul>
