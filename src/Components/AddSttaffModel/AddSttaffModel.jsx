@@ -22,6 +22,7 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
     register,
     handleSubmit,
     watch,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -48,42 +49,54 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
     return districts;
   };
 
-  const handleAddSttaf = (data) => {
-    data.createdAt = new Date();
-    data.role = "sttaf";
-    //   console.log(data);
-    const { email, password, photo, sttafName } = data;
-    signUp(email, password).then(() => {
-      updateProfile(auth.currentUser, {
+  const handleAddSttaf = async (data) => {
+    try {
+      data.createdAt = new Date();
+      data.role = "staff";
+      const { email, password, photo, sttafName } = data;
+
+      await signUp(email, password);
+
+      await updateProfile(auth.currentUser, {
         displayName: sttafName,
         photoURL: photo,
-      }).then(() => {
-        const userInfo = {
-          email,
-          displayName: sttafName,
-          photoURL: photo,
-          createdAt: new Date(),
-          role: "citizen",
-          accountStatus: "active",
-          planType: "free",
-          isSubscribed: false,
-        };
-        axiosSecure.post("/users", userInfo);
-        axiosSecure.post(`/sttafs`, data).then((res) => {
-          if (res.data.insertedId) {
-            refetch();
-            modelRef.current.close();
-            Swal.fire({
-              position: "top-right",
-              icon: "success",
-              title: "New Staff Added Successfully",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
       });
-    });
+
+      const userInfo = {
+        email,
+        displayName: sttafName,
+        photoURL: photo,
+        createdAt: new Date(),
+        role: "staff",
+        accountStatus: "active",
+        planType: "free",
+        isSubscribed: false,
+      };
+
+      await axiosSecure.post("/users", userInfo);
+
+      const res = await axiosSecure.post(`/sttafs`, data);
+
+      if (res.data.insertedId) {
+        refetch();
+        modelRef.current.close();
+        Swal.fire({
+          position: "top-right",
+          icon: "success",
+          title: "New Staff Added Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      }
+    } catch (error) {
+      console.error("Error adding staff:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong while adding the staff!",
+      });
+    }
+    reset();
   };
 
   return (
@@ -152,7 +165,7 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">Password</legend>
                     <input
-                      type="text"
+                      type="password"
                       className="input w-full md:input-md input-sm"
                       placeholder="Password"
                       {...register("password", { required: true })}
