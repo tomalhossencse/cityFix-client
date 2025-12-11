@@ -16,9 +16,9 @@ const MyIssues = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["issues"],
+    queryKey: ["my-issues"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues?email=${user?.email}`);
+      const res = await axiosSecure.get(`/my-issues?email=${user?.email}`);
       return res.data;
     },
   });
