@@ -17,6 +17,7 @@ import Profile from "../Page/Profile/Profile";
 import AllIssuesDashboard from "../Page/AllIssuesDashboard/AllIssuesDashboard";
 import ManageUsers from "../Page/ManageUsers/ManageUsers";
 import PremuimSuccess from "../Page/premuimSuccess/premuimSuccess";
+import ManageStaffs from "../Page/ManageStaffs/ManageStaffs";
 
 export const router = createBrowserRouter([
   {
@@ -100,6 +101,10 @@ export const router = createBrowserRouter([
       {
         path: "manage-users",
         Component: ManageUsers,
+      },
+      {
+        path: "manage-sttafs",
+        Component: ManageStaffs,
       },
     ],
   },

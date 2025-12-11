@@ -107,12 +107,12 @@ const Profile = () => {
               <div onClick={handlePayment} className="btn-yellow px-5">
                 <FaRocket />
 
-                <span>Boost</span>
+                <span>Subscribe</span>
               </div>
             ) : (
               <div disabled className="btn btn-primary btn-sm px-5">
                 <MdOutlineDownloadDone size={20} />
-                <span>Boosted</span>
+                <span>Subscribed</span>
               </div>
             )}
             <button

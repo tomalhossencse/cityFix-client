@@ -6,9 +6,9 @@ import { Link, NavLink, Outlet } from "react-router";
 import User from "../Components/User/User";
 import { AuthContext } from "../Context/AuthContext";
 import { TbReport } from "react-icons/tb";
-import { FaRegUser, FaUser, FaUserCircle, FaUsersCog } from "react-icons/fa";
-import { FaUserCheck } from "react-icons/fa6";
+import { FaRegUser, FaUsersCog } from "react-icons/fa";
 import { CapitalizeFirstLetter } from "../Utility/CapitalizeFirstLetter";
+import { IoPersonAdd } from "react-icons/io5";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
@@ -172,6 +172,23 @@ const DashboardLayout = () => {
                   {/* report icon */}
                   <FaUsersCog size={24} />
                   <span className="is-drawer-close:hidden">Manage Users</span>
+                </NavLink>
+              </li>
+
+              {/* Manages Sttaf */}
+              <li className="p-2">
+                <NavLink
+                  to={"/dashboard/manage-sttafs"}
+                  className={({ isActive }) =>
+                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                  }
+                  data-tip="Manage Sttafs"
+                >
+                  {/* report icon */}
+                  <IoPersonAdd size={20} />
+
+                  <span className="is-drawer-close:hidden">Manage Sttafs</span>
                 </NavLink>
               </li>
             </ul>

@@ -1,7 +1,5 @@
 import React from "react";
-import Container from "../../../Utility/Container";
 import { FaRegUser } from "react-icons/fa";
-
 const DashboardHome = () => {
   return (
     <div className="p-6">
