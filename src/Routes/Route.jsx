@@ -18,6 +18,8 @@ import AllIssuesDashboard from "../Page/AllIssuesDashboard/AllIssuesDashboard";
 import ManageUsers from "../Page/ManageUsers/ManageUsers";
 import PremuimSuccess from "../Page/premuimSuccess/premuimSuccess";
 import ManageStaffs from "../Page/ManageStaffs/ManageStaffs";
+import AdminRoute from "./AdminRoute";
+import CitizenRoute from "./CitizenRoute";
 
 export const router = createBrowserRouter([
   {
@@ -84,11 +86,19 @@ export const router = createBrowserRouter([
       },
       {
         path: "my-issues",
-        Component: MyIssues,
+        element: (
+          <CitizenRoute>
+            <MyIssues />
+          </CitizenRoute>
+        ),
       },
       {
         path: "report-issues",
-        Component: AddIssue,
+        element: (
+          <CitizenRoute>
+            <AddIssue />
+          </CitizenRoute>
+        ),
       },
       {
         path: "profile",
@@ -96,15 +106,27 @@ export const router = createBrowserRouter([
       },
       {
         path: "all-issues",
-        Component: AllIssuesDashboard,
+        element: (
+          <AdminRoute>
+            <AllIssuesDashboard />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-users",
-        Component: ManageUsers,
+        element: (
+          <AdminRoute>
+            <ManageUsers />
+          </AdminRoute>
+        ),
       },
       {
         path: "manage-sttafs",
-        Component: ManageStaffs,
+        element: (
+          <AdminRoute>
+            <ManageStaffs />
+          </AdminRoute>
+        ),
       },
     ],
   },

@@ -9,9 +9,14 @@ import { TbReport } from "react-icons/tb";
 import { FaRegUser, FaUsersCog } from "react-icons/fa";
 import { CapitalizeFirstLetter } from "../Utility/CapitalizeFirstLetter";
 import { IoPersonAdd } from "react-icons/io5";
+import useRole from "../Hook/useRole";
+import Loading from "../Components/Loading/Loading";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
+  const { role } = useRole();
+
+  console.log(role);
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -53,7 +58,6 @@ const DashboardLayout = () => {
           <div className="flex min-h-full is-drawer-open:px-2 is-drawer-close:px-0 items-start flex-col text-accent bg-base-100 is-drawer-close:w-20 is-drawer-open:w-56">
             {/* Sidebar content here */}
             <ul className="menu w-full grow">
-              {/* List item */}
               {/* home */}
               <li className="pb-2">
                 <Link
@@ -89,39 +93,47 @@ const DashboardLayout = () => {
                   <span className="is-drawer-close:hidden">Dashboard</span>
                 </NavLink>
               </li>
-              {/* my issues */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/my-issues"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+              {/* -------------Citizen----------------- */}
+
+              {role === "citizen" && (
+                <>
+                  {/* my issues */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/my-issues"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="My Issues "
-                >
-                  {/* dashboard icon */}
-                  <AiOutlineIssuesClose size={20} />
+                      }
+                      data-tip="My Issues "
+                    >
+                      {/* dashboard icon */}
+                      <AiOutlineIssuesClose size={20} />
 
-                  <span className="is-drawer-close:hidden">My Issues </span>
-                </NavLink>
-              </li>
+                      <span className="is-drawer-close:hidden">My Issues </span>
+                    </NavLink>
+                  </li>
 
-              {/* report issues */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/report-issues"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+                  {/* report issues */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/report-issues"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="Report Issues "
-                >
-                  {/* report icon */}
-                  <TbReport size={20} />
+                      }
+                      data-tip="Report Issues "
+                    >
+                      {/* report icon */}
+                      <TbReport size={20} />
 
-                  <span className="is-drawer-close:hidden">Report Issue</span>
-                </NavLink>
-              </li>
+                      <span className="is-drawer-close:hidden">
+                        Report Issue
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
 
               {/* profile */}
               <li className="p-2">
@@ -142,55 +154,63 @@ const DashboardLayout = () => {
 
               {/* ----------------Admin dashboard navlink--------------- */}
 
-              {/* All Issues */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/all-issues"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+              {role === "admin" && (
+                <>
+                  {/* All Issues */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/all-issues"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="All Issues"
-                >
-                  {/* report icon */}
-                  <RiCheckboxMultipleFill size={20} />
+                      }
+                      data-tip="All Issues"
+                    >
+                      {/* report icon */}
+                      <RiCheckboxMultipleFill size={20} />
 
-                  <span className="is-drawer-close:hidden">All Issues</span>
-                </NavLink>
-              </li>
+                      <span className="is-drawer-close:hidden">All Issues</span>
+                    </NavLink>
+                  </li>
 
-              {/* Manage Users */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/manage-users"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+                  {/* Manage Users */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/manage-users"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="Manage Users"
-                >
-                  {/* report icon */}
-                  <FaUsersCog size={24} />
-                  <span className="is-drawer-close:hidden">Manage Users</span>
-                </NavLink>
-              </li>
+                      }
+                      data-tip="Manage Users"
+                    >
+                      {/* report icon */}
+                      <FaUsersCog size={24} />
+                      <span className="is-drawer-close:hidden">
+                        Manage Users
+                      </span>
+                    </NavLink>
+                  </li>
 
-              {/* Manages Sttaf */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/manage-sttafs"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+                  {/* Manages Sttaf */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/manage-sttafs"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="Manage Sttafs"
-                >
-                  {/* report icon */}
-                  <IoPersonAdd size={20} />
+                      }
+                      data-tip="Manage Sttafs"
+                    >
+                      {/* report icon */}
+                      <IoPersonAdd size={20} />
 
-                  <span className="is-drawer-close:hidden">Manage Sttafs</span>
-                </NavLink>
-              </li>
+                      <span className="is-drawer-close:hidden">
+                        Manage Sttafs
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>
