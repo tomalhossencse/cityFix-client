@@ -1,40 +1,12 @@
 import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
-import {
-  MdEditSquare,
-  MdLockOutline,
-  MdOutlinePendingActions,
-  MdOutlineTaskAlt,
-} from "react-icons/md";
-import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
-import { FcHighPriority, FcLowPriority } from "react-icons/fc";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { Link } from "react-router";
-import { FaEye } from "react-icons/fa";
-const SttafsRow = ({
-  sttaf,
-  index,
-  refetch,
-  setEditStaff,
-  modelUpdateRef,
-  modelRef,
-}) => {
+const SttafsRow = ({ sttaf, index, refetch, setEditStaff, modelUpdateRef }) => {
   const axiosSecure = useAxiosSecure();
-  const statusIcon = {
-    pending: <MdOutlinePendingActions size={20} />,
-    "in-progress": <AiOutlineLoading3Quarters size={20} />,
-    resolved: <MdOutlineTaskAlt size={20} />,
-    closed: <MdLockOutline size={20} />,
-  };
-  const statusColor = {
-    pending: "text-yellow-600",
-    "in-progress": "text-blue-600",
-    resolved: "text-green-600",
-    closed: "text-gray-500",
-  };
+
   const { email, photo, sttafName, district, region, createdAt, _id } = sttaf;
 
   const handleDelete = () => {
@@ -79,31 +51,7 @@ const SttafsRow = ({
         {district}, {region}
       </td>
       <td>{DateFormat(createdAt)}</td>
-      {/* <td>
-        <div
-          className={`flex items-center text-md font-bold justify-start gap-1 ${statusColor[status]}`}
-        >
-          <span>{statusIcon[status]}</span>
-          <span>{CapitalizeFirstLetter(status)} </span>
-        </div>
-      </td> */}
 
-      {/* <td> */}
-      {/* <div
-          className={`flex gap-1 items-center justify-start ${
-            priority === "normal" ? "text-primary" : "text-red-500"
-          }`}
-        >
-          <span>
-            {priority === "normal" ? (
-              <FcLowPriority size={20} />
-            ) : (
-              <FcHighPriority size={20} />
-            )}
-          </span>
-          <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
-        </div> */}
-      {/* </td> */}
       <td className="space-x-2">
         <button
           onClick={() => {

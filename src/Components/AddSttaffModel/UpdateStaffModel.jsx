@@ -20,7 +20,7 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ defaultValues: sttaf });
 
   const issueCategories = [
     "Road & Potholes",
@@ -45,61 +45,13 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
     return districts;
   };
 
-  //   const handleAddSttaf = (data) => {
-  //     data.createdAt = new Date();
-  //     data.role = "sttaf";
-  //     //   console.log(data);
-  //     const { email, password, photo, sttafName } = data;
-  //     signUp(email, password).then(() => {
-  //       updateProfile(auth.currentUser, {
-  //         displayName: sttafName,
-  //         photoURL: photo,
-  //       }).then(() => {
-  //         const userInfo = {
-  //           email,
-  //           displayName: sttafName,
-  //           photoURL: photo,
-  //           createdAt: new Date(),
-  //           role: "citizen",
-  //           accountStatus: "active",
-  //           planType: "free",
-  //           isSubscribed: false,
-  //         };
-  //         axiosSecure.post("/users", userInfo);
-  //         axiosSecure.post(`/sttafs`, data).then((res) => {
-  //           if (res.data.insertedId) {
-  //             refetch();
-  //             modelRef.current.close();
-  //             Swal.fire({
-  //               position: "top-right",
-  //               icon: "success",
-  //               title: "New Staff Added Successfully",
-  //               showConfirmButton: false,
-  //               timer: 1500,
-  //             });
-  //           }
-  //         });
-  //       });
-  //     });
-  //   };
-
-  const {
-    email,
-    photo,
-    sttafName,
-    information,
-    password,
-    area,
-    number,
-    category,
-    _id,
-  } = sttaf;
+  const { _id } = sttaf;
   const handleUpdateSttaf = (data) => {
     // console.log(data);
-    axiosSecure.patch(`/staffs/${_id}`, data).then((res) => {
+    axiosSecure.patch(`/sttafs/${_id}`, data).then((res) => {
       if (res.data.modifiedCount) {
-        modelUpdateRef.current.close();
         refetch();
+        modelUpdateRef.current.close();
         Swal.fire({
           position: "top-right",
           icon: "success",
@@ -140,15 +92,13 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Sttaf Name"
-                      defaultValue={sttafName}
-                      readOnly
                       {...register("sttafName", { required: true })}
                     />
-                    {/* {errors.sttafName?.type === "required" && (
+                    {errors.sttafName?.type === "required" && (
                       <p className="text-red-500 py-2">
                         Sttaf Name is Required!
                       </p>
-                    )} */}
+                    )}
                   </div>
                   <div className="">
                     <legend className="fieldset-legend">Profile Photo</legend>
@@ -156,15 +106,13 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Profile Photo"
-                      defaultValue={photo}
-                      readOnly
                       {...register("photo", { required: true })}
                     />
-                    {/* {errors.photo?.type === "required" && (
+                    {errors.photo?.type === "required" && (
                       <p className="text-red-500 py-2">
                         Profile Photo url Required!
                       </p>
-                    )} */}
+                    )}
                   </div>
                   {/* email */}
                   <div>
@@ -173,8 +121,6 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="email"
                       className="input w-full md:input-md input-sm"
                       placeholder="Email"
-                      defaultValue={email}
-                      readOnly
                       {...register("email", { required: true })}
                     />
                   </div>
@@ -186,8 +132,6 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Password"
-                      defaultValue={password}
-                      readOnly
                       {...register("password", { required: true })}
                     />
                     {/* {errors.password?.type === "required" && (
@@ -198,7 +142,6 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">Category</legend>
                     <select
-                      defaultChecked={category}
                       className="select w-full md:select-md select-sm"
                       {...register("category", { required: true })}
                     >
@@ -222,7 +165,6 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Contact No."
-                      defaultValue={number}
                       {...register("number", { required: true })}
                     />
                     {errors.number?.type === "required" && (
@@ -279,13 +221,12 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Sttaf Address"
-                      defaultValue={area}
                       {...register("area", { required: true })}
                     />
                   </div>
-                  {/* {errors.area?.type === "required" && (
+                  {errors.area?.type === "required" && (
                     <p className="text-red-500 py-2">Area Required!</p>
-                  )} */}
+                  )}
                   {/* addional information */}
                   <div className="col-span-2">
                     <legend className="fieldset-legend">
@@ -293,15 +234,14 @@ const UpdateStaffModel = ({ sttaf, modelUpdateRef, refetch }) => {
                     </legend>
                     <input
                       type="text"
-                      defaultValue={information}
                       className="input w-full md:input-md input-sm p-2"
                       placeholder="Add your bio"
                       {...register("information", { required: true })}
                     />
 
-                    {/* {errors.information?.type === "required" && (
+                    {errors.information?.type === "required" && (
                       <p className="text-red-500 py-2">Bio Required!</p>
-                    )} */}
+                    )}
                   </div>
                 </div>
 
