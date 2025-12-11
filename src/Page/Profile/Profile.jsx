@@ -12,7 +12,7 @@ import { MdOutlineDownloadDone } from "react-icons/md";
 const Profile = () => {
   const axiosSecure = useAxiosSecure();
   const { user, userLogOut } = useContext(AuthContext);
-  console.log(user);
+  // console.log(user);
   const navigate = useNavigate();
   const { displayName, email, photoURL } = user;
   const name = displayName?.toUpperCase();
