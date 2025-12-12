@@ -15,8 +15,8 @@ const IssueRowDashboard = ({
   issue,
   index,
   refetch,
-  setEditIssue,
-  modelRef,
+  setSelectedIssue,
+  assignModelRef,
 }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
@@ -40,7 +40,7 @@ const IssueRowDashboard = ({
     status,
     upvoteCount,
     category,
-
+    district,
     trackingId,
     _id,
   } = issue;
@@ -73,6 +73,10 @@ const IssueRowDashboard = ({
   //       }
   //     });
   //   };
+  const handleOpenModel = (issue) => {
+    setSelectedIssue(issue);
+    assignModelRef.current.showModal();
+  };
   return (
     <tr>
       <th>{index + 1}</th>
@@ -85,7 +89,14 @@ const IssueRowDashboard = ({
           </p>
         </div>
       </td>
-      <td>{trackingId}</td>
+      <td>
+        <div>
+          <p>{trackingId}</p>
+          <p>
+            {district}, {Region}
+          </p>
+        </div>
+      </td>
       <td>{DateFormat(createAt)}</td>
       <td>
         <div
@@ -115,10 +126,7 @@ const IssueRowDashboard = ({
       <td className="space-x-2">
         {status === "pending" && (
           <button
-            onClick={() => {
-              setEditIssue(issue);
-              modelRef.current.showModal();
-            }}
+            onClick={() => handleOpenModel(issue)}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >
             <span>

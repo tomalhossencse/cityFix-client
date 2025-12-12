@@ -14,8 +14,10 @@ import Loading from "../Components/Loading/Loading";
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
-  const { role } = useRole();
-
+  const { role, isLoading: roleLoading } = useRole();
+  if (roleLoading) {
+    return <Loading />;
+  }
   console.log(role);
   return (
     <div>

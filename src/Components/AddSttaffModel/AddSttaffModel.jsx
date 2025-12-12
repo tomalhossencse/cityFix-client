@@ -1,15 +1,11 @@
-import React, { useContext } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
-import { updateProfile } from "firebase/auth";
-import { auth } from "../../Firebase/firebase.config";
 
 const AddSttaffModel = ({ modelRef, refetch }) => {
   const axiosSecure = useAxiosSecure();
-  const { signUp } = useContext(AuthContext);
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: async () => {
@@ -53,11 +49,12 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
     try {
       data.createdAt = new Date();
       data.role = "staff";
+      data.workStatus = "available";
       const { email, password, photo, sttafName } = data;
 
-      await signUp(email, password);
-
-      await updateProfile(auth.currentUser, {
+      const authRes = await axiosSecure.post("/create-staff-auth", {
+        email,
+        password,
         displayName: sttafName,
         photoURL: photo,
       });
@@ -71,6 +68,7 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
         accountStatus: "active",
         planType: "free",
         isSubscribed: false,
+        uid: authRes.data.uid,
       };
 
       await axiosSecure.post("/users", userInfo);
