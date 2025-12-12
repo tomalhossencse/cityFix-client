@@ -8,26 +8,25 @@ import {
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { GrUserWorker } from "react-icons/gr";
+import { FaPersonRunning } from "react-icons/fa6";
 const IssueRowDashboard = ({
   issue,
   index,
-  refetch,
   setSelectedIssue,
   assignModelRef,
 }) => {
-  const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
+    working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt size={20} />,
     closed: <MdLockOutline size={20} />,
   };
   const statusColor = {
     pending: "text-yellow-600",
     "in-progress": "text-blue-600",
+    working: "text-pink-600",
     resolved: "text-green-600",
     closed: "text-gray-500",
   };
@@ -42,37 +41,10 @@ const IssueRowDashboard = ({
     category,
     district,
     trackingId,
+    assignedStaff,
     _id,
   } = issue;
 
-  //   const handleDelete = () => {
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, delete it!",
-  //     }).then((result) => {
-  //       if (result.isConfirmed) {
-  //         axiosSecure.delete(`/issues/${_id}`).then((res) => {
-  //           if (res.data.deletedCount) {
-  //             refetch();
-  //             // navigate("/all-issues");
-  //             Swal.fire({
-  //               position: "top-right",
-  //               title: "Deleted!",
-  //               icon: "success",
-  //               text: "Your Reported Issues has been deleted.",
-  //               showConfirmButton: false,
-  //               timer: 1500,
-  //             });
-  //           }
-  //         });
-  //       }
-  //     });
-  //   };
   const handleOpenModel = (issue) => {
     setSelectedIssue(issue);
     assignModelRef.current.showModal();
@@ -124,7 +96,17 @@ const IssueRowDashboard = ({
         </div>
       </td>
       <td className="space-x-2">
-        {status === "pending" && (
+        {assignedStaff ? (
+          <button
+            disabled
+            className="btn-small-blue hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+          >
+            <span>
+              <GrUserWorker size={16} />
+            </span>
+            <span>Assigned</span>
+          </button>
+        ) : (
           <button
             onClick={() => handleOpenModel(issue)}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"

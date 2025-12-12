@@ -14,17 +14,20 @@ import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
+import { FaPersonRunning } from "react-icons/fa6";
 const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
+    working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt size={20} />,
     closed: <MdLockOutline size={20} />,
   };
   const statusColor = {
     pending: "text-yellow-600",
     "in-progress": "text-blue-600",
+    working: "text-pink-600",
     resolved: "text-green-600",
     closed: "text-gray-500",
   };
@@ -40,6 +43,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
 
     trackingId,
     _id,
+    assignedStaff,
   } = issue;
 
   const handleDelete = () => {
@@ -93,6 +97,35 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
         </div>
       </td>
 
+      {/* sttaf info */}
+
+      <td>
+        {assignedStaff ? (
+          <>
+            <div
+              tabIndex={0}
+              className="collapse collapse-arrow bg-base-100 border-base-200 border"
+            >
+              <div className="collapse-title font-semibold text-primary">
+                {CapitalizeFirstLetter(assignedStaff?.status)}
+              </div>
+              <div className="collapse-content text-md text-accent">
+                <p className="text-[14px]">{assignedStaff?.staffName}</p>
+                <p>{assignedStaff?.sttafContact}</p>
+              </div>
+            </div>
+          </>
+        ) : (
+          <div
+            tabIndex={0}
+            className="collapse collapse-arrow bg-base-100 border-base-200 border"
+          >
+            <div className="collapse-title font-semibold text-red-500">
+              Not Assigned
+            </div>
+          </div>
+        )}
+      </td>
       <td>
         <div
           className={`flex gap-1 items-center justify-start ${
@@ -109,6 +142,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
           <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
         </div>
       </td>
+
       <td className="space-x-2">
         {status === "pending" && (
           <button

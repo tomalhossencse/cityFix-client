@@ -1,50 +1,10 @@
-import React, { useContext } from "react";
-import { DateFormat } from "../../Utility/FormateDate";
-import { MdAdminPanelSettings, MdWorkspacePremium } from "react-icons/md";
-import { LuShieldPlus } from "react-icons/lu";
-import { GrUserAdmin, GrUserWorker } from "react-icons/gr";
-import { LuShieldOff } from "react-icons/lu";
-import { ImBlocked } from "react-icons/im";
-import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
-import Swal from "sweetalert2";
-import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { FaCheckCircle, FaRegUser, FaUserAstronaut } from "react-icons/fa";
-import { AuthContext } from "../../Context/AuthContext";
-const AssignStaffRow = ({ sttaf, index, refetch, handleAssignSttaf }) => {
-  const axiosSecure = useAxiosSecure();
+import React from "react";
 
-  const handleChangeStatus = () => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Change Status!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        const updateinfo = {
-          accountStatus: accountStatus === "active" ? "blocked" : "active", // toggle
-        };
-        axiosSecure.patch(`/users/${_id}`, updateinfo).then((res) => {
-          console.log(res.data);
-          if (res.data.modifiedCount) {
-            refetch();
-            // navigate("/all-issues");
-            Swal.fire({
-              position: "top-right",
-              title: "Status Updated!",
-              icon: "success",
-              text: "Users status has been changed.",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
-      }
-    });
-  };
+import { LuShieldOff } from "react-icons/lu";
+
+import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
+
+const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
   return (
     <tr>
       <th>{index + 1}</th>

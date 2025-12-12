@@ -44,6 +44,7 @@ const MyIssues = () => {
                 <th>Tracking Id</th>
                 <th>Created Time</th>
                 <th>Status</th>
+                <th>Staff Info</th>
                 <th>Priority</th>
                 <th>Actions</th>
               </tr>

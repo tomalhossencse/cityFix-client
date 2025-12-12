@@ -1,25 +1,27 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
-import IssueRowDashboard from "./IssueRowDashboard";
-import AssignStaffRow from "./AssignStaffRow";
 import Swal from "sweetalert2";
-const AllIssuesDashboard = () => {
-  const modelRef = useRef();
+import AssignStaffRow from "../AllIssuesDashboard/AssignStaffRow";
+import { AuthContext } from "../../Context/AuthContext";
+import AssigndIssueRow from "./AssigndIssueRow";
+const AssignedIssues = () => {
   const assignModelRef = useRef();
-  const [editIssue, setEditIssue] = useState(null);
   const [selectedIssue, setSelectedIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
+  const { user } = useContext(AuthContext);
   const {
     data: issues = [],
-    isLoading,
     refetch,
+    isLoading,
   } = useQuery({
-    queryKey: ["allIssues"],
+    queryKey: ["issues", user?.email, "closed"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/allIssues`);
+      const res = await axiosSecure.get(
+        `/issues/sttafs?email=${user?.email}&status=closed`
+      );
       return res.data;
     },
   });
@@ -38,42 +40,64 @@ const AllIssuesDashboard = () => {
     <Loading />;
   }
 
-  const handleAssignSttaf = async (staff) => {
-    console.log(staff);
+  const handleChangeStatus = async (issue, updateStatus, workStatus) => {
+    // console.log(issue);
     try {
-      const staffInfo = {
-        workStatus: "unavailable",
+      const statusMessages = {
+        assigned: `Staff ${issue.assignedStaff?.staffName} has been assigned to this issue.`,
+        "in-progress": `Staff ${issue.assignedStaff?.staffName} is working on this issue.`,
+        resolved: `Issue has been resolved by ${issue.assignedStaff?.staffName}.`,
+        closed: `Issue has been closed.`,
       };
-      console.log(staffInfo);
-      await axiosSecure.patch(`/sttafs/${staff._id}/workStatus`, staffInfo);
-      const { number, email, photo, _id, sttafName } = staff;
+
+      const successTexts = {
+        assigned: "Issue assigned successfully",
+        "in-progress": "Work started",
+        resolved: "Issue resolved",
+        closed: "Issue closed",
+      };
+      const {
+        staffId,
+        staffName,
+        staffEmail,
+        staffPhoto,
+        sttafContact,
+        status,
+      } = issue.assignedStaff;
       const updateData = {
         assignedStaff: {
-          staffId: _id,
-          staffName: sttafName,
-          staffEmail: email,
-          staffPhoto: photo,
-          sttafContact: number,
-          status: "assigned",
+          staffId,
+          staffName,
+          staffEmail,
+          staffPhoto,
+          sttafContact,
+          status,
         },
-        status: "pending",
-        message: `Staff ${staff?.staffName} assigned to this issue`,
-        role: "admin",
+        status: updateStatus,
+        message: statusMessages[updateStatus] || "status updated",
+        role: "staff",
       };
-      console.log(updateData);
+      //   console.log(updateData);
+
+      const staffInfo = {
+        workStatus: workStatus,
+      };
+      await axiosSecure.patch(
+        `/sttafs/${issue?.assignedStaff?.staffId}/workStatus`,
+        staffInfo
+      );
 
       const res = await axiosSecure.patch(
-        `/issues/${selectedIssue._id}/timeline`,
+        `/issues/${issue._id}/timeline`,
         updateData
       );
 
       if (res.data.modifiedCount) {
         refetch();
-        assignModelRef.current.close();
         Swal.fire({
           icon: "success",
-          title: "Staff assigned successfully",
-          position: "top-left",
+          title: successTexts[updateStatus],
+          position: "top-right",
           timer: 1200,
           showConfirmButton: false,
         });
@@ -82,7 +106,10 @@ const AllIssuesDashboard = () => {
       Swal.fire({
         icon: "error",
         title: "Something went wrong",
-        text: error.response?.data?.message || error.message,
+        text:
+          error.response?.data?.message ||
+          error.message ||
+          "Failed to update status",
       });
     }
   };
@@ -92,7 +119,7 @@ const AllIssuesDashboard = () => {
       <div className="p-8 bg-base-100 m-8 rounded-xl">
         <div>
           <div className="flex px-4 section-title">
-            All Issues : ({issues.length})
+            Assigned issues : ({issues.length})
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -105,34 +132,22 @@ const AllIssuesDashboard = () => {
                 <th>Tracking Id</th>
                 <th>Created Time</th>
                 <th>Status</th>
-                <th>Priority</th>
                 <th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {issues.map((issue, index) => (
-                <IssueRowDashboard
-                  setEditIssue={setEditIssue}
-                  assignModelRef={assignModelRef}
+                <AssigndIssueRow
                   setSelectedIssue={setSelectedIssue}
-                  key={issue._id}
                   issue={issue}
-                  selectedIssue={issue}
+                  handleChangeStatus={handleChangeStatus}
+                  key={issue._id}
                   index={index}
-                  modelRef={modelRef}
                   refetch={refetch}
                 />
               ))}
             </tbody>
           </table>
-
-          {editIssue && (
-            <IssueEdit
-              issue={editIssue}
-              modelRef={modelRef}
-              refetch={refetch}
-            />
-          )}
 
           {/* assign model */}
 
@@ -156,7 +171,6 @@ const AllIssuesDashboard = () => {
                   <tbody>
                     {sttafs.map((sttaf, index) => (
                       <AssignStaffRow
-                        handleAssignSttaf={handleAssignSttaf}
                         key={sttaf._id}
                         sttaf={sttaf}
                         index={index}
@@ -179,4 +193,4 @@ const AllIssuesDashboard = () => {
   );
 };
 
-export default AllIssuesDashboard;
+export default AssignedIssues;

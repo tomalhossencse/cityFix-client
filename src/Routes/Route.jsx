@@ -20,6 +20,7 @@ import PremuimSuccess from "../Page/premuimSuccess/premuimSuccess";
 import ManageStaffs from "../Page/ManageStaffs/ManageStaffs";
 import AdminRoute from "./AdminRoute";
 import CitizenRoute from "./CitizenRoute";
+import AssignedIssues from "../Page/AssignedIssues/AssignedIssues";
 
 export const router = createBrowserRouter([
   {
@@ -103,6 +104,10 @@ export const router = createBrowserRouter([
       {
         path: "profile",
         Component: Profile,
+      },
+      {
+        path: "assigned-issues",
+        Component: AssignedIssues,
       },
       {
         path: "all-issues",

@@ -1,6 +1,9 @@
 import React, { useContext } from "react";
 import { AiOutlineIssuesClose } from "react-icons/ai";
-import { MdOutlineDashboardCustomize } from "react-icons/md";
+import {
+  MdOutlineAssignmentReturned,
+  MdOutlineDashboardCustomize,
+} from "react-icons/md";
 import { RiCheckboxMultipleFill, RiMenu2Line } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
 import User from "../Components/User/User";
@@ -213,6 +216,25 @@ const DashboardLayout = () => {
                   </li>
                 </>
               )}
+
+              {/* ------------Staff dashboardlink -------------------- */}
+              <li className="p-2">
+                <NavLink
+                  to={"/dashboard/assigned-issues"}
+                  className={({ isActive }) =>
+                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                  }
+                  data-tip="Assigned Issues"
+                >
+                  {/* report icon */}
+                  <MdOutlineAssignmentReturned size={20} />
+
+                  <span className="is-drawer-close:hidden">
+                    Assigned Issues
+                  </span>
+                </NavLink>
+              </li>
             </ul>
           </div>
         </div>

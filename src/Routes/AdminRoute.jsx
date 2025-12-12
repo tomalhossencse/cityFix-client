@@ -1,11 +1,8 @@
 import React, { useContext } from "react";
-import Container from "../Utility/Container";
 import { AuthContext } from "../Context/AuthContext";
 import useRole from "../Hook/useRole";
 import Loading from "../Components/Loading/Loading";
 import { useNavigate } from "react-router";
-import Navbar from "../Components/Navbar/Navbar";
-import Footer from "../Components/Footer/Footer";
 
 const AdminRoute = ({ children }) => {
   const { loading } = useContext(AuthContext);
