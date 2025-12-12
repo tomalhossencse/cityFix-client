@@ -21,6 +21,7 @@ import ManageStaffs from "../Page/ManageStaffs/ManageStaffs";
 import AdminRoute from "./AdminRoute";
 import CitizenRoute from "./CitizenRoute";
 import AssignedIssues from "../Page/AssignedIssues/AssignedIssues";
+import StaffRoute from "./StaffRoute";
 
 export const router = createBrowserRouter([
   {
@@ -107,7 +108,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "assigned-issues",
-        Component: AssignedIssues,
+        element: (
+          <StaffRoute>
+            <AssignedIssues />
+          </StaffRoute>
+        ),
       },
       {
         path: "all-issues",
