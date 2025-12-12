@@ -1,6 +1,7 @@
 import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
 import {
+  MdCancel,
   MdLockOutline,
   MdOutlinePendingActions,
   MdOutlineTaskAlt,
@@ -12,6 +13,7 @@ import { FaPersonRunning } from "react-icons/fa6";
 const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
+    rejected: <MdCancel size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
     working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt size={20} />,
@@ -19,6 +21,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
   };
   const statusColor = {
     pending: "text-yellow-600",
+    rejected: "text-red-500",
     "in-progress": "text-blue-600",
     working: "text-pink-600",
     resolved: "text-green-600",

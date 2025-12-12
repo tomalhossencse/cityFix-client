@@ -1,6 +1,7 @@
 import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
 import {
+  MdCancel,
   MdLockOutline,
   MdOutlinePendingActions,
   MdOutlineTaskAlt,
@@ -15,9 +16,11 @@ const IssueRowDashboard = ({
   index,
   setSelectedIssue,
   assignModelRef,
+  handleReject,
 }) => {
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
+    rejected: <MdCancel size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
     working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt size={20} />,
@@ -25,6 +28,7 @@ const IssueRowDashboard = ({
   };
   const statusColor = {
     pending: "text-yellow-600",
+    rejected: "text-red-500",
     "in-progress": "text-blue-600",
     working: "text-pink-600",
     resolved: "text-green-600",
@@ -96,26 +100,44 @@ const IssueRowDashboard = ({
         </div>
       </td>
       <td className="space-x-2">
-        {assignedStaff ? (
+        {assignedStaff || status === "rejected" ? (
           <button
             disabled
-            className="btn-small-blue hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+            className={`${
+              status === "rejected" ? "btn-small-red" : "btn-small-blue"
+            } hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg  rounded-3xl px-3`}
           >
             <span>
-              <GrUserWorker size={16} />
+              {status === "rejected" ? (
+                <MdCancel size={16} />
+              ) : (
+                <GrUserWorker size={16} />
+              )}
             </span>
-            <span>Assigned</span>
+            <span>{status === "rejected" ? "Rejected" : "Assigned"}</span>
           </button>
         ) : (
-          <button
-            onClick={() => handleOpenModel(issue)}
-            className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
-          >
-            <span>
-              <GrUserWorker size={16} />
-            </span>
-            <span>Assign Staff</span>
-          </button>
+          <>
+            <button
+              onClick={() => handleOpenModel(issue)}
+              className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+            >
+              <span>
+                <GrUserWorker size={16} />
+              </span>
+              <span>Assign Staff</span>
+            </button>
+
+            <button
+              onClick={() => handleReject(issue)}
+              className="btn-small-red hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+            >
+              <span>
+                <MdCancel size={16} />
+              </span>
+              <span>Reject</span>
+            </button>
+          </>
         )}
       </td>
     </tr>

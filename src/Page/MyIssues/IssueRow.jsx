@@ -1,6 +1,7 @@
 import React from "react";
 import { DateFormat } from "../../Utility/FormateDate";
 import {
+  MdCancel,
   MdEditSquare,
   MdLockOutline,
   MdOutlinePendingActions,
@@ -19,6 +20,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
+    rejected: <MdCancel size={20} />,
     "in-progress": <AiOutlineLoading3Quarters size={20} />,
     working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt size={20} />,
@@ -26,6 +28,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   };
   const statusColor = {
     pending: "text-yellow-600",
+    rejected: "text-red-500",
     "in-progress": "text-blue-600",
     working: "text-pink-600",
     resolved: "text-green-600",

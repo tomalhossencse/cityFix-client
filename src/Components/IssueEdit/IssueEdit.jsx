@@ -268,11 +268,9 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
 
                 {/* button */}
 
-                <div className="py-6 w-full">
-                  <button type="submit" className="btn-small-full">
-                    Submit
-                  </button>
-                </div>
+                <button type="submit" className="mt-4 btn-small-full">
+                  Submit
+                </button>
               </div>
             </>
           </fieldset>

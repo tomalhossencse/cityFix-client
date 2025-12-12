@@ -218,23 +218,27 @@ const DashboardLayout = () => {
               )}
 
               {/* ------------Staff dashboardlink -------------------- */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/assigned-issues"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+              {role === "staff" && (
+                <>
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/assigned-issues"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
      ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="Assigned Issues"
-                >
-                  {/* report icon */}
-                  <MdOutlineAssignmentReturned size={20} />
+                      }
+                      data-tip="Assigned Issues"
+                    >
+                      {/* report icon */}
+                      <MdOutlineAssignmentReturned size={20} />
 
-                  <span className="is-drawer-close:hidden">
-                    Assigned Issues
-                  </span>
-                </NavLink>
-              </li>
+                      <span className="is-drawer-close:hidden">
+                        Assigned Issues
+                      </span>
+                    </NavLink>
+                  </li>
+                </>
+              )}
             </ul>
           </div>
         </div>

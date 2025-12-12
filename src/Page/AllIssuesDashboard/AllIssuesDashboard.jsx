@@ -57,7 +57,7 @@ const AllIssuesDashboard = () => {
           status: "assigned",
         },
         status: "pending",
-        message: `Staff ${staff?.staffName} assigned to this issue`,
+        message: `Staff : ${sttafName} assigned to this issue`,
         role: "admin",
       };
       console.log(updateData);
@@ -72,8 +72,8 @@ const AllIssuesDashboard = () => {
         assignModelRef.current.close();
         Swal.fire({
           icon: "success",
-          title: "Staff assigned successfully",
-          position: "top-left",
+          title: "Issue successfully",
+          position: "top-right",
           timer: 1200,
           showConfirmButton: false,
         });
@@ -85,6 +85,68 @@ const AllIssuesDashboard = () => {
         text: error.response?.data?.message || error.message,
       });
     }
+  };
+
+  // const handleReject = async (issue) => {
+  //   // console.log(staff);
+  //   try {
+  //     const updateData = {
+  //       status: "rejected",
+  //       message: `Admin Reject this issue`,
+  //       role: "admin",
+  //     };
+
+  //     const res = await axiosSecure.patch(
+  //       `/issues/${issue._id}/timeline`,
+  //       updateData
+  //     );
+
+  //     if (res.data.modifiedCount) {
+  //       refetch();
+  //       Swal.fire({
+  //         icon: "success",
+  //         title: "Issue",
+  //         position: "top-left",
+  //         timer: 1200,
+  //         showConfirmButton: false,
+  //       });
+  //     }
+  //   } catch (error) {}
+  // };
+
+  const handleReject = (issue) => {
+    const updateData = {
+      status: "rejected",
+      message: `Admin Reject this issue`,
+      role: "admin",
+    };
+    Swal.fire({
+      title: "Are you sure to Reject?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Reject it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure
+          .patch(`/issues/${issue._id}/timeline`, updateData)
+          .then((res) => {
+            if (res.data.modifiedCount) {
+              refetch();
+              Swal.fire({
+                position: "top-right",
+                title: "Rejected!",
+                icon: "success",
+                text: "Issue has been Rejected.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+      }
+    });
   };
   //   console.log(issues);
   return (
@@ -112,6 +174,7 @@ const AllIssuesDashboard = () => {
             <tbody>
               {issues.map((issue, index) => (
                 <IssueRowDashboard
+                  handleReject={handleReject}
                   setEditIssue={setEditIssue}
                   assignModelRef={assignModelRef}
                   setSelectedIssue={setSelectedIssue}
