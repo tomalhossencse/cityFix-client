@@ -38,10 +38,14 @@ const IssueCard = ({ issue }) => {
   const handleUpvoteCount = async (issue) => {
     const upvoteData = {
       issueId: issue._id,
-      upvoterName: user.email,
+      upvoterEmail: user.email,
       citzenEmail: issue.email,
       upvoteAt: new Date(),
     };
+    if (upvoteData.citzenEmail === upvoteData.upvoterEmail) {
+      toast.error("You can’t upvote your own issue.");
+      return;
+    }
 
     const res = await axiosSecure.post("/upvotes", upvoteData);
     if (res.data.insertedId) {
