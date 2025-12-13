@@ -75,7 +75,7 @@ body{
   /* overflow: hidden; */
 }
 .section-title{
-  @apply md:text-3xl text-2xl font-bold  text-accent py-2 rounded-4xl  mb-4
+  @apply md:text-3xl text-center text-2xl font-bold  text-accent py-2 rounded-4xl  mb-4
 }
 html {
   scroll-behavior: smooth;

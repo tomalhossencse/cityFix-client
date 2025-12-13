@@ -19,7 +19,7 @@ const Allissues = () => {
 
       <div className="grid gap-4 mb-6 md:flex  grid-cols-3 md:mt-8  justify-center items-center">
         <p className="text-2xl text-primary font-semibold flex-1 col-span-3">
-          Doners found : ({issues.length})
+          Issues found : ({issues.length})
         </p>
 
         {/* age Search */}

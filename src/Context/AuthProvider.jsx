@@ -32,17 +32,20 @@ const AuthProvider = ({ children }) => {
   //   password SignUp
 
   const signUp = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   //password signIN
   const signIn = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   // logout
 
   const userLogOut = () => {
+    setLoading(true);
     return signOut(auth);
   };
   const authInfo = {
