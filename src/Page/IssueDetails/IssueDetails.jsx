@@ -3,8 +3,13 @@ import { BiSolidCategoryAlt } from "react-icons/bi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FcHighPriority } from "react-icons/fc";
 import { FcLowPriority } from "react-icons/fc";
-import { FaPhoneVolume, FaRegCircleUser } from "react-icons/fa6";
 import {
+  FaPersonRunning,
+  FaPhoneVolume,
+  FaRegCircleUser,
+} from "react-icons/fa6";
+import {
+  MdCancel,
   MdEditSquare,
   MdHowToVote,
   MdMarkEmailRead,
@@ -29,6 +34,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
+import toast from "react-hot-toast";
 
 const IssueDetails = () => {
   const { user } = useContext(AuthContext);
@@ -48,6 +54,15 @@ const IssueDetails = () => {
       return res.data;
     },
     enabled: !!id,
+  });
+
+  const { data: upvotes = [], refetch: refetchUpvote } = useQuery({
+    queryKey: ["upvotes", issue?._id],
+    enabled: !!issue?._id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/upvotes/${issue?._id}`);
+      return res.data;
+    },
   });
 
   // console.log(issue);
@@ -75,13 +90,17 @@ const IssueDetails = () => {
 
   const statusIcon = {
     pending: <MdOutlinePendingActions />,
+    rejected: <MdCancel size={20} />,
     "in-progress": <AiOutlineLoading3Quarters />,
+    working: <FaPersonRunning size={20} />,
     resolved: <MdOutlineTaskAlt />,
     closed: <MdLockOutline />,
   };
 
   const statusColor = {
     pending: "bg-yellow-600 text-white",
+    rejected: "text-red-500",
+    working: "text-pink-600",
     "in-progress": "bg-blue-600 text-white",
     resolved: "bg-green-600  text-white",
     closed: "bg-gray-500  text-white",
@@ -128,6 +147,31 @@ const IssueDetails = () => {
     window.location.href = res.data.url;
   };
 
+  // console.log(upvotes);
+
+  const handleUpvoteCount = async () => {
+    const upvoteData = {
+      issueId: issue._id,
+      upvoterEmail: user.email,
+      citzenEmail: issue.email,
+      upvoteAt: new Date(),
+    };
+    if (!user) {
+      toast.error("Please login to upvote this issue.");
+      return;
+    }
+    if (upvoteData.citzenEmail === upvoteData.upvoterEmail) {
+      toast.error("You can’t upvote your own issue.");
+      return;
+    }
+
+    const res = await axiosSecure.post("/upvotes", upvoteData);
+    if (res.data.insertedId) {
+      refetchUpvote();
+      toast.success("Upvote Successfully!");
+    }
+  };
+
   return (
     <Container className="md:min-h-screen md:mt-30 mt-8 md:p-6 p-4">
       <div
@@ -161,21 +205,23 @@ const IssueDetails = () => {
               <span>{CapitalizeFirstLetter(status)} </span>
             </div>
 
-            <div className="p-4 btn btn-xs hover:bg-primary hover:text-white  flex items-center justify-center gap-1 font-bold text-[16px] bg-blue-600 text-white  rounded-3xl">
+            <button
+              disabled={user?.email === issue.email}
+              onClick={handleUpvoteCount}
+              className="p-4 btn-outline hover:bg-primary hover:text-white  flex items-center justify-center gap-1 font-bold text-[16px] bg-blue-600 text-white  rounded-3xl"
+            >
               <span>
-                <MdHowToVote />
+                <MdHowToVote size={24} />
               </span>
-              <span>
-                UPVOTE : <span> {upvoteCount}</span>
-              </span>
-            </div>
+              <span className="text-[24px]">{upvotes.length}</span>
+            </button>
           </div>
         </div>
         <div className="flex-3 flex flex-col justify-center items-start px-2 space-y-2">
           <div className="flex gap-2 text-2xl md:text-3xl font-bold items-center justify-center text-primary">
             <span>{issueTitle}</span>
           </div>
-          <div className="flex items-center justify-center gap-2 bg-primary rounded-2xl text-secondary font-bold px-4 py-1">
+          <div className="flex items-center justify-center gap-2 bg-primary rounded-2xl text-base-100 font-bold px-4 py-1">
             <BiSolidCategoryAlt />
 
             <span>{category}</span>

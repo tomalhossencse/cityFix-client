@@ -22,7 +22,6 @@ const IssueCard = ({ issue }) => {
     region,
     priority,
     status,
-    upvoteCount,
     _id,
   } = issue;
 
@@ -33,7 +32,7 @@ const IssueCard = ({ issue }) => {
       return res.data;
     },
   });
-  console.log(upvotes);
+  // console.log(upvotes);
 
   const handleUpvoteCount = async (issue) => {
     const upvoteData = {
@@ -42,6 +41,7 @@ const IssueCard = ({ issue }) => {
       citzenEmail: issue.email,
       upvoteAt: new Date(),
     };
+
     if (upvoteData.citzenEmail === upvoteData.upvoterEmail) {
       toast.error("You can’t upvote your own issue.");
       return;
@@ -50,7 +50,7 @@ const IssueCard = ({ issue }) => {
     const res = await axiosSecure.post("/upvotes", upvoteData);
     if (res.data.insertedId) {
       refetch();
-      toast("Upvote Successfully!");
+      toast.success("Upvote Successfully!");
     }
   };
   return (
@@ -113,13 +113,14 @@ const IssueCard = ({ issue }) => {
             <FaArrowRightLong size={15} />
           </Link>
           <button
+            disabled={user?.email === issue.email}
             onClick={() => handleUpvoteCount(issue)}
-            className="btn-outline flex items-center justify-center gap-1"
+            className="btn-outline flex items-center justify-center"
           >
             <span>
               <MdHowToVote size={24} />
             </span>
-            <span className="text-2xl">({upvotes.length})</span>
+            <span className="text-[24px] font-bold">({upvotes.length})</span>
           </button>
         </ul>
       </div>
