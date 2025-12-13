@@ -49,7 +49,7 @@ const AddSttaffModel = ({ modelRef, refetch }) => {
     try {
       data.createdAt = new Date();
       data.role = "staff";
-      data.workStatus = "available";
+      // data.workStatus = "available";
       const { email, password, photo, sttafName } = data;
 
       const authRes = await axiosSecure.post("/create-staff-auth", {

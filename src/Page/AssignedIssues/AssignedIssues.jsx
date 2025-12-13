@@ -17,21 +17,23 @@ const AssignedIssues = () => {
     refetch,
     isLoading,
   } = useQuery({
-    queryKey: ["issues", user?.email, "closed"],
+    queryKey: ["issues", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/issues/sttafs?email=${user?.email}&status=closed`
-      );
+      const res = await axiosSecure.get(`/issues/sttafs?email=${user?.email}`);
       return res.data;
     },
   });
 
   const { data: sttafs = [] } = useQuery({
-    queryKey: ["sttafs-filter", selectedIssue?.district, "available"],
+    queryKey: [
+      "sttafs-filter",
+      selectedIssue?.district,
+      selectedIssue?.category,
+    ],
     enabled: !!selectedIssue,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/sttafs-filter?district=${selectedIssue?.district}&workStatus=available`
+        `/sttafs-filter?district=${selectedIssue?.district}&category=${selectedIssue?.category}`
       );
       return res.data;
     },
@@ -40,7 +42,7 @@ const AssignedIssues = () => {
     <Loading />;
   }
 
-  const handleChangeStatus = async (issue, updateStatus, workStatus) => {
+  const handleChangeStatus = async (issue, updateStatus) => {
     // console.log(issue);
     try {
       const statusMessages = {
@@ -79,13 +81,13 @@ const AssignedIssues = () => {
       };
       //   console.log(updateData);
 
-      const staffInfo = {
-        workStatus: workStatus,
-      };
-      await axiosSecure.patch(
-        `/sttafs/${issue?.assignedStaff?.staffId}/workStatus`,
-        staffInfo
-      );
+      // const staffInfo = {
+      //   workStatus: workStatus,
+      // };
+      // await axiosSecure.patch(
+      //   `/sttafs/${issue?.assignedStaff?.staffId}/workStatus`,
+      //   staffInfo
+      // );
 
       const res = await axiosSecure.patch(
         `/issues/${issue._id}/timeline`,

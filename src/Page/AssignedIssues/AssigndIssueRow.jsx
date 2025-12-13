@@ -80,9 +80,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           <div className="collapse-content text-md text-accent">
             {status === "pending" && (
               <button
-                onClick={() =>
-                  handleChangeStatus(issue, "in-progress", "unavailable")
-                }
+                onClick={() => handleChangeStatus(issue, "in-progress")}
                 className={`btn-small-red hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3 `}
               >
                 <span>
@@ -94,9 +92,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
 
             {status === "in-progress" && (
               <button
-                onClick={() =>
-                  handleChangeStatus(issue, "working", "unavailable")
-                }
+                onClick={() => handleChangeStatus(issue, "working")}
                 className="btn-small-blue hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
               >
                 <span>
@@ -107,9 +103,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
             )}
             {status === "working" && (
               <button
-                onClick={() =>
-                  handleChangeStatus(issue, "resolved", "unavailable")
-                }
+                onClick={() => handleChangeStatus(issue, "resolved")}
                 className="btn-small hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
               >
                 <span>
@@ -120,7 +114,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
             )}
             {status === "resolved" && (
               <button
-                onClick={() => handleChangeStatus(issue, "closed", "available")}
+                onClick={() => handleChangeStatus(issue, "closed")}
                 className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
               >
                 <span>

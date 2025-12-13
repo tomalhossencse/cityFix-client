@@ -25,11 +25,11 @@ const AllIssuesDashboard = () => {
   });
 
   const { data: sttafs = [] } = useQuery({
-    queryKey: ["sttafs-filter", selectedIssue?.district, "available"],
+    queryKey: ["sttafs-filter", selectedIssue?.district],
     enabled: !!selectedIssue,
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/sttafs-filter?district=${selectedIssue?.district}&workStatus=available`
+        `/sttafs-filter?district=${selectedIssue?.district}&category=${selectedIssue?.category}`
       );
       return res.data;
     },
@@ -41,11 +41,11 @@ const AllIssuesDashboard = () => {
   const handleAssignSttaf = async (staff) => {
     console.log(staff);
     try {
-      const staffInfo = {
-        workStatus: "unavailable",
-      };
-      console.log(staffInfo);
-      await axiosSecure.patch(`/sttafs/${staff._id}/workStatus`, staffInfo);
+      // const staffInfo = {
+      //   workStatus: "unavailable",
+      // };
+      // console.log(staffInfo);
+      // await axiosSecure.patch(`/sttafs/${staff._id}/workStatus`, staffInfo);
       const { number, email, photo, _id, sttafName } = staff;
       const updateData = {
         assignedStaff: {
