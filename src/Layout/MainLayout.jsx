@@ -3,6 +3,7 @@ import Navbar from "../Components/Navbar/Navbar";
 import { Outlet } from "react-router";
 import Footer from "../Components/Footer/Footer";
 import ScrollToTop from "../Utility/ScrollTop";
+import { Toaster } from "react-hot-toast";
 
 const MainLayout = () => {
   return (
@@ -13,6 +14,7 @@ const MainLayout = () => {
         <Outlet />
       </main>
       <Footer />
+      <Toaster />
     </div>
   );
 };

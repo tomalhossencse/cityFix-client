@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import Container from "../../Utility/Container";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import IssueCard from "./IssueCard";
+import { AuthContext } from "../../Context/AuthContext";
 
 const Allissues = () => {
+  const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const { data: issues = [] } = useQuery({
     queryKey: ["issues"],
@@ -14,6 +16,16 @@ const Allissues = () => {
     },
   });
   // console.log(issues);
+  const handleUpvoteCount = (issue) => {
+    const upvoteData = {
+      issueId: issue._id,
+      upvoterName: user.email,
+      citzenEmail: issue.email,
+      upvoteAt: new Date(),
+    };
+
+    axiosSecure.post("/upvotes", upvoteData);
+  };
   return (
     <Container className="mt-24 min-h-screen px-6">
       <div className="section-title">All Public Issues</div>
@@ -82,7 +94,11 @@ const Allissues = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-0 p-4 my-12">
         {" "}
         {issues.map((issue) => (
-          <IssueCard issue={issue} key={issue._id} />
+          <IssueCard
+            handleUpvoteCount={handleUpvoteCount}
+            issue={issue}
+            key={issue._id}
+          />
         ))}
       </div>
     </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { GrUpdate } from "react-icons/gr";
 import { MdBloodtype, MdHowToVote } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
@@ -7,7 +7,13 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import { IoShareSocialSharp, IoTime } from "react-icons/io5";
 import { Link } from "react-router";
 import { DateFormat } from "../../Utility/FormateDate";
+import { AuthContext } from "../../Context/AuthContext";
+import useAxiosSecure from "../../Hook/useAxiosSecure";
+import toast from "react-hot-toast";
+import { useQuery } from "@tanstack/react-query";
 const IssueCard = ({ issue }) => {
+  const { user } = useContext(AuthContext);
+  const axiosSecure = useAxiosSecure();
   const {
     issueTitle,
     createAt,
@@ -19,11 +25,35 @@ const IssueCard = ({ issue }) => {
     upvoteCount,
     _id,
   } = issue;
+
+  const { data: upvotes = [], refetch } = useQuery({
+    queryKey: ["upvotes", issue._id],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/upvotes/${issue._id}`);
+      return res.data;
+    },
+  });
+  console.log(upvotes);
+
+  const handleUpvoteCount = async (issue) => {
+    const upvoteData = {
+      issueId: issue._id,
+      upvoterName: user.email,
+      citzenEmail: issue.email,
+      upvoteAt: new Date(),
+    };
+
+    const res = await axiosSecure.post("/upvotes", upvoteData);
+    if (res.data.insertedId) {
+      refetch();
+      toast("Upvote Successfully!");
+    }
+  };
   return (
     <div
       className="flex flex-col justify-between bg-base-200 p-6 rounded-xl space-y-4 shadow-md 
             transform transition duration-600 ease-in-out 
-            hover:scale-105 hover:bg-secondary-content hover:-translate-y-1"
+            hover:scale-105 hover:bg-base-100 hover:-translate-y-1"
     >
       <ul className="flex justify-between text-accent">
         <li className="flex items-center justify-center gap-1">
@@ -78,11 +108,14 @@ const IssueCard = ({ issue }) => {
             <span>See Details</span>
             <FaArrowRightLong size={15} />
           </Link>
-          <button className="btn-small flex items-center justify-center gap-1">
+          <button
+            onClick={() => handleUpvoteCount(issue)}
+            className="btn-outline flex items-center justify-center gap-1"
+          >
             <span>
-              <MdHowToVote size={16} />
+              <MdHowToVote size={24} />
             </span>
-            <span>Upvote : ({upvoteCount})</span>
+            <span className="text-2xl">({upvotes.length})</span>
           </button>
         </ul>
       </div>
