@@ -4,6 +4,14 @@ import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Context/AuthContext";
 import Loading from "../../../Components/Loading/Loading";
+import {
+  Bar,
+  BarChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
 const CitizenDashboard = () => {
   const { user } = useContext(AuthContext);
 
@@ -20,10 +28,20 @@ const CitizenDashboard = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  const chartData = [
+    { name: "Pending", count: stats?.issues?.pending || 0 },
+    { name: "Processing", count: stats?.issues?.procesing || 0 },
+    { name: "Working", count: stats?.issues?.working || 0 },
+    { name: "Resolved", count: stats?.issues?.resloved || 0 },
+    { name: "Closed", count: stats?.issues?.closed || 0 },
+    { name: "Rejected", count: stats?.issues?.rejected || 0 },
+  ];
+
   return (
-    <div className="p-6">
-      <h1>This Citzen dashboard home</h1>
-      <div className="grid grid-cols-3 gap-6">
+    <div className="m-8">
+      <h1 className="section-title my-4">Your Dashboard Overview</h1>
+      <div className="grid grid-cols-4 gap-4">
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
           <div className="bg-gray-100 p-4 rounded-full">
             <FaRegUser size={32} />
@@ -34,7 +52,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Pending Issues</p>
             <h1 className="text-4xl font-black  ">{stats?.issues?.pending}</h1>
@@ -42,7 +62,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">
               Total In-Procesing
@@ -54,7 +76,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Total Working</p>
             <h1 className="text-4xl font-black  ">{stats?.issues?.working}</h1>
@@ -62,7 +86,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Total Resloved</p>
             <h1 className="text-4xl font-black  ">{stats?.issues?.resloved}</h1>
@@ -70,7 +96,9 @@ const CitizenDashboard = () => {
         </div>
 
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Total Closed</p>
             <h1 className="text-4xl font-black  ">{stats?.issues?.closed}</h1>
@@ -78,7 +106,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Total Rejected</p>
             <h1 className="text-4xl font-black  ">{stats?.issues?.rejected}</h1>
@@ -86,7 +116,9 @@ const CitizenDashboard = () => {
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <FaRegUser size={32} />
+          <div className="bg-gray-100 p-4 rounded-full">
+            <FaRegUser size={32} />
+          </div>
           <div>
             <p className="text-xl font-semibold text-accent">Total Payments</p>
             <h1 className="text-4xl font-black  ">
@@ -96,8 +128,46 @@ const CitizenDashboard = () => {
           </div>
         </div>
       </div>
+
+      {/* charts of stats */}
+
+      <div className="my-12 p-10  border-t-2 border-accent/10 bg-base-100">
+        <h2 className="text-accent font-bold text-2xl">Stats </h2>
+        <ResponsiveContainer width="100%" height={400}>
+          <BarChart
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            data={chartData}
+            layout="vertical"
+          >
+            <YAxis
+              stroke="#FF9C00"
+              dataKey="name"
+              axisLine={false}
+              tickLine={false}
+              type="category"
+            ></YAxis>
+            <XAxis
+              stroke="#FF9C00"
+              type="number"
+              axisLine={false}
+              tickLine={false}
+            ></XAxis>
+            <Tooltip />
+            <Bar fill="#FF9C00" dataKey="count" barSize={30}></Bar>
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 };
 
 export default CitizenDashboard;
+
+// <ResponsiveContainer width="100%" height={320}>
+//   <BarChart layout="vertical" data={chartData}>
+//     <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} />
+//     <XAxis type="number" axisLine={false} tickLine={false} />
+//     <Tooltip />
+//     <Bar dataKey="count" barSize={30} fill="#FF9C00" />
+//   </BarChart>
+// </ResponsiveContainer>;
