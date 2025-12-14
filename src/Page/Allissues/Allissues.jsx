@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState } from "react";
 import Container from "../../Utility/Container";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import IssueCard from "./IssueCard";
 import { useForm } from "react-hook-form";
+import { FaSearch } from "react-icons/fa";
 
 const Allissues = () => {
+  const [searchText, setSearchText] = useState("");
   const statusCollection = [
     "pending",
     "rejected",
@@ -22,10 +24,10 @@ const Allissues = () => {
   const priority = watch("priority");
 
   const { data: issues = [] } = useQuery({
-    queryKey: [`issues`, status, priority],
+    queryKey: [`issues`, status, priority, searchText],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/issues?status=${status}&priority=${priority}`
+        `/issues?status=${status}&priority=${priority}&search=${searchText}`
       );
       return res.data;
     },
@@ -39,6 +41,17 @@ const Allissues = () => {
           Issues found : ({issues.length})
         </p>
 
+        {/* search */}
+        <label className="input w-[120px]">
+          <FaSearch />
+
+          <input
+            type="text"
+            placeholder="Search Title"
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </label>
+
         {/* status filter */}
 
         <select
@@ -46,7 +59,7 @@ const Allissues = () => {
           {...register("status")}
           defaultValue={""}
         >
-          <option value={""}>All</option>
+          <option value={""}>All (Status)</option>
           {statusCollection.map((status, index) => (
             <option key={index}>{status}</option>
           ))}
@@ -59,7 +72,7 @@ const Allissues = () => {
           {...register("priority")}
           defaultValue={""}
         >
-          <option value={""}>Priority(All)</option>
+          <option value={""}>All (Priority)</option>
           {priorityCollection.map((priority, index) => (
             <option key={index}>{priority}</option>
           ))}

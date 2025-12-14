@@ -1,11 +1,10 @@
 import React, { useContext } from "react";
-import { GrUpdate } from "react-icons/gr";
-import { MdBloodtype, MdHowToVote } from "react-icons/md";
+import { MdHowToVote } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { HiCalendarDateRange } from "react-icons/hi2";
 import { FaArrowRightLong } from "react-icons/fa6";
-import { IoShareSocialSharp, IoTime } from "react-icons/io5";
-import { Link } from "react-router";
+import { IoTime } from "react-icons/io5";
+import { Link, useNavigate } from "react-router";
 import { DateFormat } from "../../Utility/FormateDate";
 import { AuthContext } from "../../Context/AuthContext";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
@@ -14,6 +13,7 @@ import { useQuery } from "@tanstack/react-query";
 const IssueCard = ({ issue }) => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
   const {
     issueTitle,
     createAt,
@@ -36,11 +36,14 @@ const IssueCard = ({ issue }) => {
 
   const handleUpvoteCount = async (issue) => {
     const upvoteData = {
-      issueId: issue._id,
-      upvoterEmail: user.email,
-      citzenEmail: issue.email,
+      issueId: issue?._id,
+      upvoterEmail: user?.email,
+      citzenEmail: issue?.email,
       upvoteAt: new Date(),
     };
+    if (!user) {
+      navigate("/login");
+    }
 
     if (upvoteData.citzenEmail === upvoteData.upvoterEmail) {
       toast.error("You can’t upvote your own issue.");
@@ -61,9 +64,7 @@ const IssueCard = ({ issue }) => {
     >
       <ul className="flex justify-between text-accent">
         <li className="flex items-center justify-center gap-1">
-          <span className="text-primary">
-            {/* <MdBloodtype size={24} /> */}
-          </span>
+          <span className="text-primary"></span>
           <span
             className={`rounded-4xl bg-primary px-2 text-base-100 ${
               priority === "normal" ? "bg-primary" : "bg-red-500"
@@ -113,14 +114,14 @@ const IssueCard = ({ issue }) => {
             <FaArrowRightLong size={15} />
           </Link>
           <button
-            disabled={user?.email === issue.email}
+            disabled={user?.email === issue?.email}
             onClick={() => handleUpvoteCount(issue)}
             className="btn-outline flex items-center justify-center"
           >
             <span>
               <MdHowToVote size={24} />
             </span>
-            <span className="text-[24px] font-bold">({upvotes.length})</span>
+            <span className="text-[24px] font-bold">({upvotes?.length})</span>
           </button>
         </ul>
       </div>
