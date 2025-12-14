@@ -12,7 +12,7 @@ import { FaRocket } from "react-icons/fa6";
 import Loading from "../../Components/Loading/Loading";
 
 const AddIssue = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const axiosSecure = useAxiosSecure();
@@ -109,7 +109,7 @@ const AddIssue = () => {
       }
     });
   };
-  if (isLoading || dashboardLoading) {
+  if (loading || isLoading || dashboardLoading) {
     return <Loading />;
   }
   return (
@@ -127,7 +127,7 @@ const AddIssue = () => {
             authorities respond faster, improve transparency, and deliver better
             city services.
           </p>
-          {stats?.issues?.total >= 2 && !userDetails.isSubscribed && (
+          {stats?.issues?.total >= 3 && !userDetails.isSubscribed && (
             <p className="text-2xl font-bold text-red-600">
               Please Subscribe to Add More Report
             </p>
@@ -309,7 +309,7 @@ const AddIssue = () => {
 
               <div className="py-6 w-full">
                 {" "}
-                {stats?.issues?.total >= 2 && !userDetails.isSubscribed ? (
+                {stats?.issues?.total >= 3 && !userDetails.isSubscribed ? (
                   <Link to={"/dashboard/profile"}>
                     <div className="btn-yellow px-5">
                       <FaRocket />

@@ -8,6 +8,12 @@ import Loading from "../Loading/Loading";
 import toast from "react-hot-toast";
 
 const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
+  useEffect(() => {
+    if (issue && modelRef?.current) {
+      modelRef.current.showModal();
+    }
+  }, [issue, modelRef]);
+
   const {
     register,
     handleSubmit,
@@ -18,18 +24,24 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
 
   useEffect(() => {
     if (issue) {
-      reset({
-        issueTitle: issue.issueTitle || "",
-        photo: issue.photo || "",
-        email: issue.email || "",
-        category: issue.category || "",
-        number: issue.number || "",
-        displayName: issue.displayName || "",
-        region: issue.region || "",
-        district: issue.district || "",
-        area: issue.area || "",
-        information: issue.information || "",
-      });
+      reset(
+        {
+          issueTitle: issue.issueTitle,
+          photo: issue.photo,
+          email: issue.email,
+          category: issue.category,
+          number: issue.number,
+          displayName: issue.displayName,
+          region: issue.region,
+          district: issue.district,
+          area: issue.area,
+          information: issue.information,
+        },
+        {
+          keepDirty: false,
+          keepTouched: false,
+        }
+      );
     }
   }, [issue, reset]);
 
@@ -161,6 +173,7 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
                   <div>
                     <legend className="fieldset-legend">Category</legend>
                     <select
+                      key={issue?._id}
                       className="select w-full md:select-md select-sm"
                       {...register("category", { required: true })}
                     >

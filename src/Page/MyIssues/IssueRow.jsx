@@ -149,12 +149,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
       <td className="space-x-2">
         {status === "pending" && (
           <button
-            onClick={() => {
-              setEditIssue(issue);
-              setTimeout(() => {
-                modelRef.current.showModal();
-              }, 0);
-            }}
+            onClick={() => setEditIssue(issue)}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >
             <span>

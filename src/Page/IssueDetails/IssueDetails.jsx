@@ -315,7 +315,9 @@ const IssueDetails = () => {
                   </span>
                   <span>Delete</span>
                 </div>
-                {priority === "normal" ? (
+                {priority === "normal" &&
+                status !== "closed" &&
+                status !== "rejected" ? (
                   <div
                     onClick={handlePayment}
                     className="flex items-center justify-center gap-1 btn-small-blue"
@@ -324,7 +326,7 @@ const IssueDetails = () => {
 
                     <span>Boost</span>
                   </div>
-                ) : (
+                ) : status === "high" ? (
                   <div
                     disabled
                     className="btn btn-small-blue flex items-center justify-center gap-1"
@@ -332,6 +334,8 @@ const IssueDetails = () => {
                     <MdOutlineDownloadDone size={20} />
                     <span>Boosted</span>
                   </div>
+                ) : (
+                  ""
                 )}
               </>
             )}

@@ -61,7 +61,7 @@ const Profile = () => {
       planType: "premium",
     };
     const res = await axiosSecure.post("/premium-checkout-session", boostInfo);
-    console.log(res.data);
+    // console.log(res.data);
     window.location.href = res.data.url;
   };
 
