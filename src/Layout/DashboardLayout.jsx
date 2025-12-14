@@ -14,6 +14,7 @@ import { CapitalizeFirstLetter } from "../Utility/CapitalizeFirstLetter";
 import { IoPersonAdd } from "react-icons/io5";
 import useRole from "../Hook/useRole";
 import Loading from "../Components/Loading/Loading";
+import { Toaster } from "react-hot-toast";
 
 const DashboardLayout = () => {
   const { user, loading } = useContext(AuthContext);
@@ -243,6 +244,7 @@ const DashboardLayout = () => {
           </div>
         </div>
       </div>
+      <Toaster />
     </div>
   );
 };

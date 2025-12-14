@@ -20,7 +20,7 @@ const AllIssuesDashboard = () => {
     },
   });
   if (isLoading) {
-    <Loading />;
+    return <Loading />;
   }
   //   console.log(issues);
   return (

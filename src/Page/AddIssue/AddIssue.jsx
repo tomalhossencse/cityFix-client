@@ -4,9 +4,11 @@ import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { useNavigate } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
 import Swal from "sweetalert2";
+import Loading from "../../Components/Loading/Loading";
+import toast from "react-hot-toast";
 
 const AddIssue = () => {
   const { user } = useContext(AuthContext);
@@ -19,6 +21,13 @@ const AddIssue = () => {
     watch,
     formState: { errors },
   } = useForm();
+  const { data: userDetails } = useQuery({
+    queryKey: ["users", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
 
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
@@ -53,6 +62,10 @@ const AddIssue = () => {
   };
 
   const handleAddIssue = (data) => {
+    const { accountStatus } = userDetails;
+    if (accountStatus === "blocked") {
+      return toast.error("Your Account is Blocked By Admin");
+    }
     // console.log(data);
     data.createAt = new Date();
     data.trackingId = GenerateTrackingId();

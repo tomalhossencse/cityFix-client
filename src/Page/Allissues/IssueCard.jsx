@@ -33,7 +33,18 @@ const IssueCard = ({ issue }) => {
     },
   });
 
+  const { data: userDetails } = useQuery({
+    queryKey: ["users", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
+
   const handleUpvoteCount = async (issue) => {
+    if (userDetails?.accountStatus === "blocked") {
+      return toast.error("Your Account is Blocked By Admin");
+    }
     const upvoteData = {
       issueId: issue?._id,
       upvoterEmail: user?.email,

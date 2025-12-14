@@ -1,12 +1,37 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
 import Loading from "../Loading/Loading";
+import toast from "react-hot-toast";
 
-const IssueEdit = ({ issue, modelRef, refetch }) => {
+const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  useEffect(() => {
+    if (issue) {
+      reset({
+        issueTitle: issue.issueTitle || "",
+        photo: issue.photo || "",
+        email: issue.email || "",
+        category: issue.category || "",
+        number: issue.number || "",
+        displayName: issue.displayName || "",
+        region: issue.region || "",
+        district: issue.district || "",
+        area: issue.area || "",
+        information: issue.information || "",
+      });
+    }
+  }, [issue, reset]);
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useContext(AuthContext);
   const { data: locations = [] } = useQuery({
@@ -18,12 +43,13 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
     },
   });
 
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
+  const { data: userDetails } = useQuery({
+    queryKey: ["users", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
 
   const issueCategories = [
     "Road & Potholes",
@@ -37,18 +63,21 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
     "Traffic Signal",
     "Other",
   ];
-
   const dublicateRegion = locations.map((data) => data.region);
   const regions = [...new Set(dublicateRegion)];
-  const region = watch("region");
 
   const districtByRegion = (data) => {
     const districtsByRegion = locations.filter((dist) => dist.region === data);
     const districts = districtsByRegion.map((d) => d.district);
     return districts;
   };
+  const region = watch("region");
 
   const handleUpdateIssue = (data) => {
+    if (userDetails?.accountStatus === "blocked") {
+      modelRef.current.close();
+      return toast.error("Account is Blocked By Admin");
+    }
     // console.log(data);
     axiosSecure.patch(`/issues/${_id}`, data).then((res) => {
       if (res.data.modifiedCount) {
@@ -65,6 +94,10 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
     });
   };
 
+  if (loading || issueLoading) {
+    return <Loading />;
+  }
+
   const {
     issueTitle,
     photo,
@@ -75,9 +108,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
     information,
     area,
   } = issue;
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <dialog
       ref={modelRef}
@@ -107,7 +137,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Issue Title"
-                      defaultValue={issueTitle}
                       {...register("issueTitle", { required: true })}
                     />
                     {errors.issueTitle?.type === "required" && (
@@ -120,7 +149,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Issue photo url"
-                      defaultValue={photo}
                       {...register("photo", { required: true })}
                     />
                     {errors.photo?.type === "required" && (
@@ -136,7 +164,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                       type="email"
                       className="input w-full md:input-md input-sm"
                       placeholder="Email"
-                      defaultValue={user?.email}
                       readOnly
                       {...register("email", { required: true })}
                     />
@@ -145,7 +172,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">Category</legend>
                     <select
-                      defaultValue={category}
                       className="select w-full md:select-md select-sm"
                       {...register("category", { required: true })}
                     >
@@ -171,7 +197,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Contact No."
-                      defaultValue={number}
                       {...register("number", { required: true })}
                     />
                     {errors.number?.type === "required" && (
@@ -185,7 +210,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                       type="text"
                       className="input w-full md:input-md input-sm"
                       placeholder="Your Name"
-                      defaultValue={user?.displayName}
                       readOnly
                       {...register("displayName", { required: true })}
                     />
@@ -197,7 +221,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">Your Region</legend>
                     <select
-                      defaultValue={issue?.region}
                       className="select w-full md:select-md select-sm"
                       {...register("region", { required: true })}
                     >
@@ -216,7 +239,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">District</legend>
                     <select
-                      defaultValue={issue?.district}
                       className="select w-full md:select-md select-sm"
                       {...register("district", { required: true })}
                     >
@@ -239,7 +261,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                     <legend className="fieldset-legend">Area</legend>
                     <input
                       type="text"
-                      defaultValue={area}
                       className="input w-full md:input-md input-sm"
                       placeholder="Your Area"
                       {...register("area", { required: true })}
@@ -255,7 +276,6 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                     </legend>
                     <input
                       type="text"
-                      defaultValue={information}
                       className="input w-full md:input-md input-sm p-2"
                       placeholder="Your Additional Information"
                       {...register("information", { required: true })}

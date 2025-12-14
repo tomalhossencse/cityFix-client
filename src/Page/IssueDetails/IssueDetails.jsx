@@ -56,6 +56,14 @@ const IssueDetails = () => {
     enabled: !!id,
   });
 
+  const { data: userDetails } = useQuery({
+    queryKey: ["users", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user?.email}`);
+      return res.data;
+    },
+  });
+
   const { data: upvotes = [], refetch: refetchUpvote } = useQuery({
     queryKey: ["upvotes", issue?._id],
     enabled: !!issue?._id,
@@ -64,8 +72,6 @@ const IssueDetails = () => {
       return res.data;
     },
   });
-
-  // console.log(issue);
 
   if (isLoading || loading) return <Loading />;
 
@@ -77,7 +83,6 @@ const IssueDetails = () => {
     region: Region,
     priority,
     status,
-    upvoteCount,
     category,
     displayName,
     number,
@@ -135,6 +140,10 @@ const IssueDetails = () => {
   };
 
   const handlePayment = async () => {
+    const { accountStatus } = userDetails;
+    if (accountStatus === "blocked") {
+      return toast.error("Your Account is Blocked By Admin");
+    }
     const paymentInfo = {
       issueId: _id,
       email,
@@ -150,6 +159,10 @@ const IssueDetails = () => {
   // console.log(upvotes);
 
   const handleUpvoteCount = async () => {
+    const { accountStatus } = userDetails;
+    if (accountStatus === "blocked") {
+      return toast.error("Your Account is Blocked By Admin");
+    }
     const upvoteData = {
       issueId: issue._id,
       upvoterEmail: user.email,

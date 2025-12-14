@@ -23,7 +23,7 @@ const MyIssues = () => {
     },
   });
   if (isLoading) {
-    <Loading />;
+    return <Loading />;
   }
   //   console.log(issues);
   return (
@@ -66,6 +66,7 @@ const MyIssues = () => {
 
           {editIssue && (
             <IssueEdit
+              isLoading={isLoading}
               issue={editIssue}
               modelRef={modelRef}
               refetch={refetch}

@@ -9,6 +9,7 @@ import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { FaCheckCircle, FaRegUser, FaUserAstronaut } from "react-icons/fa";
+import Loading from "../../Components/Loading/Loading";
 const UserRow = ({ user, index, refetch }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
