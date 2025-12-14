@@ -4,10 +4,12 @@ import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import { FaRocket } from "react-icons/fa6";
+import Loading from "../../Components/Loading/Loading";
 
 const AddIssue = () => {
   const { user } = useContext(AuthContext);
@@ -20,7 +22,18 @@ const AddIssue = () => {
     watch,
     formState: { errors },
   } = useForm();
-  const { data: userDetails } = useQuery({
+
+  const { data: stats = [], isLoading: dashboardLoading } = useQuery({
+    queryKey: ["dashboard", user?.email],
+    queryFn: async () => {
+      const res = await axiosSecure.get(
+        `/dashboard/stats?email=${user?.email}`
+      );
+      return res.data;
+    },
+  });
+
+  const { data: userDetails, isLoading } = useQuery({
     queryKey: ["users", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/users/${user?.email}`);
@@ -77,8 +90,8 @@ const AddIssue = () => {
         message: "Issue reported",
         updatedBy: {
           role: "citizen",
-          name: user.displayName,
-          email: user.email,
+          name: user?.displayName,
+          email: user?.email,
         },
         createdAt: new Date(),
       },
@@ -96,6 +109,9 @@ const AddIssue = () => {
       }
     });
   };
+  if (isLoading || dashboardLoading) {
+    return <Loading />;
+  }
   return (
     <Container className="m-20 px-4">
       <form
@@ -111,6 +127,11 @@ const AddIssue = () => {
             authorities respond faster, improve transparency, and deliver better
             city services.
           </p>
+          {stats?.issues?.total >= 2 && !userDetails.isSubscribed && (
+            <p className="text-2xl font-bold text-red-600">
+              Please Subscribe to Add More Report
+            </p>
+          )}
 
           {/* divider */}
           <div className="divider"></div>
@@ -287,9 +308,22 @@ const AddIssue = () => {
               {/* button */}
 
               <div className="py-6 w-full">
-                <button type="submit" className="btn-full">
-                  Submit
-                </button>
+                {" "}
+                {stats?.issues?.total >= 2 && !userDetails.isSubscribed ? (
+                  <Link to={"/dashboard/profile"}>
+                    <div className="btn-yellow px-5">
+                      <FaRocket />
+
+                      <span>
+                        Please Go to Profile Page Subscribe to Add More Report
+                      </span>
+                    </div>
+                  </Link>
+                ) : (
+                  <button type="submit" className="btn-full">
+                    Submit
+                  </button>
+                )}
               </div>
             </div>
 

@@ -30,7 +30,7 @@ const MyIssues = () => {
   ];
 
   const priorityCollection = ["normal", "high"];
-  const { user, loading } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const modelRef = useRef();
   const [editIssue, setEditIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
