@@ -3,13 +3,30 @@ import Container from "../../Utility/Container";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import IssueCard from "./IssueCard";
+import { useForm } from "react-hook-form";
 
 const Allissues = () => {
+  const statusCollection = [
+    "pending",
+    "rejected",
+    "in-progress",
+    "working",
+    "resolved",
+    "closed",
+  ];
+  const priorityCollection = ["normal", "high"];
   const axiosSecure = useAxiosSecure();
+  const { register, watch } = useForm();
+
+  const status = watch("status");
+  const priority = watch("priority");
+
   const { data: issues = [] } = useQuery({
-    queryKey: ["issues"],
+    queryKey: [`issues`, status, priority],
     queryFn: async () => {
-      const res = await axiosSecure.get("/issues");
+      const res = await axiosSecure.get(
+        `/issues?status=${status}&priority=${priority}`
+      );
       return res.data;
     },
   });
@@ -22,60 +39,31 @@ const Allissues = () => {
           Issues found : ({issues.length})
         </p>
 
-        {/* age Search */}
+        {/* status filter */}
 
-        {/* <label className="input w-[120px]">
-          <FaSearch />
-          <input type="number" placeholder="Min Age" {...register("minAge")} />
-        </label> */}
-
-        {/* <label className="input w-[120px]">
-          <FaSearch />
-          <input type="number" placeholder="Max Age" {...register("maxAge")} />
-        </label> */}
-
-        {/* Region Filter */}
-        {/* <select
+        <select
           className="select select-bordered w-[120px] md:w-[180px]"
-          {...register("region")}
+          {...register("status")}
           defaultValue={""}
         >
-          <option value={""}>All Region</option>
-          {bloodData.map((region, index) => (
-            <option key={index}>{region}</option>
+          <option value={""}>All</option>
+          {statusCollection.map((status, index) => (
+            <option key={index}>{status}</option>
           ))}
-        </select> */}
+        </select>
 
-        {/* District Filter */}
+        {/* priority filter */}
 
-        {/* <select
+        <select
+          className="select select-bordered w-[120px] md:w-[180px]"
+          {...register("priority")}
           defaultValue={""}
-          className="select select-bordered md:w-[180px] md:col-span-2"
-          // disabled={!selectedRegion}
-          {...register("district")}
-        > */}
-        {/* <option value={""}>All District</option>
-          {selectedRegion &&
-            districtByRegion(selectedRegion).map((district, index) => (
-              <option value={district} key={index}>
-                {district}
-              </option>
-            ))}
-        </select> */}
-
-        {/* Blood Group Filter */}
-        {/* <select
-          className="select select-bordered w-[120px]"
-          {...register("bloodGroup")}
-          defaultValue=""
         >
-          <option value="">All BG</option>
-          {bloodGroups.map((bg, index) => (
-            <option key={index} value={bg}>
-              {bg}
-            </option>
+          <option value={""}>Priority(All)</option>
+          {priorityCollection.map((priority, index) => (
+            <option key={index}>{priority}</option>
           ))}
-        </select> */}
+        </select>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-0 p-4 my-12">
