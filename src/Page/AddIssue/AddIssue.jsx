@@ -4,10 +4,9 @@ import Container from "../../Utility/Container";
 import { AuthContext } from "../../Context/AuthContext";
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-import { useNavigate, useParams } from "react-router";
+import { useNavigate } from "react-router";
 import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
 import Swal from "sweetalert2";
-import Loading from "../../Components/Loading/Loading";
 import toast from "react-hot-toast";
 
 const AddIssue = () => {
@@ -210,9 +209,6 @@ const AddIssue = () => {
                     readOnly
                     {...register("displayName", { required: true })}
                   />
-                  {/* {errors.displayName?.type === "required" && (
-                    <p className="text-red-500 py-2">User Name Required!</p>
-                  )} */}
                 </div>
                 {/* region */}
                 <div>

@@ -32,13 +32,13 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
       });
     }
   }, [issue, reset]);
+
   const axiosSecure = useAxiosSecure();
   const { user, loading } = useContext(AuthContext);
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: async () => {
       const res = await axiosSecure.get("/districtbyRegion");
-      //   console.log(res.data);
       return res.data;
     },
   });
@@ -79,7 +79,7 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
       return toast.error("Account is Blocked By Admin");
     }
     // console.log(data);
-    axiosSecure.patch(`/issues/${_id}`, data).then((res) => {
+    axiosSecure.patch(`/issues/${issue._id}`, data).then((res) => {
       if (res.data.modifiedCount) {
         modelRef.current.close();
         refetch();
@@ -97,17 +97,6 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
   if (loading || issueLoading) {
     return <Loading />;
   }
-
-  const {
-    issueTitle,
-    photo,
-    region: Region,
-    category,
-    number,
-    _id,
-    information,
-    area,
-  } = issue;
   return (
     <dialog
       ref={modelRef}
