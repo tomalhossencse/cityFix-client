@@ -5,6 +5,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import IssueCard from "./IssueCard";
 import { useForm } from "react-hook-form";
 import { FaSearch } from "react-icons/fa";
+import Loading from "../../Components/Loading/Loading";
 
 const Allissues = () => {
   const [searchText, setSearchText] = useState("");
@@ -16,22 +17,36 @@ const Allissues = () => {
     "resolved",
     "closed",
   ];
+  const categoriesCollections = [
+    "Road & Potholes",
+    "Streetlights",
+    "Water Leakage",
+    "Garbage & Waste",
+    "Drainage",
+    "Footpath & Sidewalk",
+    "Electricity",
+    "Public Safety",
+    "Traffic Signal",
+    "Other",
+  ];
   const priorityCollection = ["normal", "high"];
   const axiosSecure = useAxiosSecure();
   const { register, watch } = useForm();
 
   const status = watch("status");
   const priority = watch("priority");
+  const category = watch("category");
 
   const { data: issues = [] } = useQuery({
-    queryKey: [`issues`, status, priority, searchText],
+    queryKey: [`issues`, status, priority, searchText, category],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/issues?status=${status}&priority=${priority}&search=${searchText}`
+        `/issues?status=${status}&priority=${priority}&category=${category}&search=${searchText}`
       );
       return res.data;
     },
   });
+
   return (
     <Container className="mt-24 min-h-screen px-6">
       <div className="section-title">All Public Issues</div>
@@ -75,6 +90,19 @@ const Allissues = () => {
           <option value={""}>All (Priority)</option>
           {priorityCollection.map((priority, index) => (
             <option key={index}>{priority}</option>
+          ))}
+        </select>
+
+        {/* category filter */}
+
+        <select
+          className="select select-bordered w-[120px] md:w-[180px]"
+          {...register("category")}
+          defaultValue={""}
+        >
+          <option value={""}>All (Category)</option>
+          {categoriesCollections.map((cat, index) => (
+            <option key={index}>{cat}</option>
           ))}
         </select>
       </div>

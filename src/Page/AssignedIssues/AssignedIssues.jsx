@@ -2,7 +2,6 @@ import React, { useContext, useRef, useState } from "react";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
-import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import Swal from "sweetalert2";
 import AssignStaffRow from "../AllIssuesDashboard/AssignStaffRow";
 import { AuthContext } from "../../Context/AuthContext";

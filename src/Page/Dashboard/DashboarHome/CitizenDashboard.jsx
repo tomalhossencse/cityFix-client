@@ -162,12 +162,3 @@ const CitizenDashboard = () => {
 };
 
 export default CitizenDashboard;
-
-// <ResponsiveContainer width="100%" height={320}>
-//   <BarChart layout="vertical" data={chartData}>
-//     <YAxis dataKey="name" type="category" axisLine={false} tickLine={false} />
-//     <XAxis type="number" axisLine={false} tickLine={false} />
-//     <Tooltip />
-//     <Bar dataKey="count" barSize={30} fill="#FF9C00" />
-//   </BarChart>
-// </ResponsiveContainer>;
