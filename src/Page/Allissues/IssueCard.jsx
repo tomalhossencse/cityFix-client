@@ -26,11 +26,12 @@ const IssueCard = ({ issue }) => {
   } = issue;
 
   const { data: upvotes = [], refetch } = useQuery({
-    queryKey: ["upvotes", issue._id],
+    queryKey: ["upvotes", issue?._id],
     queryFn: async () => {
       const res = await axiosSecure.get(`/upvotes/${issue._id}`);
       return res.data;
     },
+    g,
   });
   // console.log(upvotes);
 
