@@ -85,6 +85,16 @@ const CitizenDashboard = () => {
             <p></p>
           </div>
         </div>
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+          <FaRegUser size={32} />
+          <div>
+            <p className="text-xl font-semibold text-accent">Total Payments</p>
+            <h1 className="text-4xl font-black  ">
+              BDT {stats?.issues?.totalPayments}
+            </h1>
+            <p></p>
+          </div>
+        </div>
       </div>
     </div>
   );
