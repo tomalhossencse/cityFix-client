@@ -7,7 +7,6 @@ import Allissues from "../Page/Allissues/Allissues";
 import AddIssue from "../Page/AddIssue/AddIssue";
 import IssueDetails from "../Page/IssueDetails/IssueDetails";
 import PrivateRoute from "./PrivateRoute";
-import Payment from "../Page/Payment/Payment";
 import PaymentSuccess from "../Page/PaymentSuccess/PaymentSuccess";
 import PaymentCancel from "../Page/PaymentCancel/PaymentCancel";
 import DashboardLayout from "../Layout/DashboardLayout";
@@ -49,14 +48,6 @@ export const router = createBrowserRouter([
         element: (
           <PrivateRoute>
             <IssueDetails />
-          </PrivateRoute>
-        ),
-      },
-      {
-        path: "payment/:id",
-        element: (
-          <PrivateRoute>
-            <Payment />
           </PrivateRoute>
         ),
       },

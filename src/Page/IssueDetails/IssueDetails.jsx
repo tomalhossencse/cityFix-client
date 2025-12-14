@@ -37,7 +37,7 @@ import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import toast from "react-hot-toast";
 
 const IssueDetails = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const modelRef = useRef();
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
@@ -67,7 +67,7 @@ const IssueDetails = () => {
 
   // console.log(issue);
 
-  if (isLoading) return <Loading />;
+  if (isLoading || loading) return <Loading />;
 
   const {
     issueTitle,

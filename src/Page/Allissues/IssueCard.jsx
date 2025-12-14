@@ -31,9 +31,7 @@ const IssueCard = ({ issue }) => {
       const res = await axiosSecure.get(`/upvotes/${issue._id}`);
       return res.data;
     },
-    g,
   });
-  // console.log(upvotes);
 
   const handleUpvoteCount = async (issue) => {
     const upvoteData = {
@@ -46,13 +44,13 @@ const IssueCard = ({ issue }) => {
       navigate("/login");
     }
 
-    if (upvoteData.citzenEmail === upvoteData.upvoterEmail) {
+    if (upvoteData?.citzenEmail === upvoteData?.upvoterEmail) {
       toast.error("You can’t upvote your own issue.");
       return;
     }
 
     const res = await axiosSecure.post("/upvotes", upvoteData);
-    if (res.data.insertedId) {
+    if (res?.data?.insertedId) {
       refetch();
       toast.success("Upvote Successfully!");
     }

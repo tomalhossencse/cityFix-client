@@ -151,7 +151,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
           <button
             onClick={() => {
               setEditIssue(issue);
-              modelRef.current.showModal();
+              modelRef?.current?.showModal();
             }}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >

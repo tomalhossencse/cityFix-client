@@ -25,7 +25,11 @@ const AllIssuesDashboard = () => {
   });
 
   const { data: sttafs = [] } = useQuery({
-    queryKey: ["sttafs-filter", selectedIssue?.district],
+    queryKey: [
+      "sttafs-filter",
+      selectedIssue?.district,
+      selectedIssue?.category,
+    ],
     enabled: !!selectedIssue,
     queryFn: async () => {
       const res = await axiosSecure.get(
@@ -35,7 +39,7 @@ const AllIssuesDashboard = () => {
     },
   });
   if (isLoading) {
-    <Loading />;
+    return <Loading />;
   }
 
   const handleAssignSttaf = async (staff) => {
@@ -86,33 +90,6 @@ const AllIssuesDashboard = () => {
       });
     }
   };
-
-  // const handleReject = async (issue) => {
-  //   // console.log(staff);
-  //   try {
-  //     const updateData = {
-  //       status: "rejected",
-  //       message: `Admin Reject this issue`,
-  //       role: "admin",
-  //     };
-
-  //     const res = await axiosSecure.patch(
-  //       `/issues/${issue._id}/timeline`,
-  //       updateData
-  //     );
-
-  //     if (res.data.modifiedCount) {
-  //       refetch();
-  //       Swal.fire({
-  //         icon: "success",
-  //         title: "Issue",
-  //         position: "top-left",
-  //         timer: 1200,
-  //         showConfirmButton: false,
-  //       });
-  //     }
-  //   } catch (error) {}
-  // };
 
   const handleReject = (issue) => {
     const updateData = {

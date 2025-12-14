@@ -13,13 +13,13 @@ const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
         <img src={sttaf.photo} className="w-8 rounded-full" alt="" />
         <div>
           <p className="font-semibold text-[14px]">
-            {CapitalizeFirstLetter(sttaf.sttafName)}
+            {CapitalizeFirstLetter(sttaf?.sttafName)}
           </p>
           {/* <p className="font-semibold text-sm text-primary">{sttaf.email}</p> */}
         </div>
       </td>
       <td className="text-[12px]">
-        {sttaf.district}, {sttaf.region}
+        {sttaf?.district}, {sttaf?.region}
       </td>
       <td>
         {" "}
@@ -33,7 +33,6 @@ const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
           <span>Assign</span>
         </button>
       </td>
-      {/* role */}
     </tr>
   );
 };

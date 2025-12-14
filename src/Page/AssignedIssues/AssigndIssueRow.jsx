@@ -74,8 +74,12 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           tabIndex={0}
           className="collapse collapse-arrow bg-base-100 border-base-200 border"
         >
-          <div className="btn-small-red collapse-title font-semibold text-primary">
-            Change Status
+          <div
+            className={`${
+              status === "closed" ? "btn-small" : "btn-small-red"
+            } collapse-title font-semibold text-primary`}
+          >
+            {status === "closed" ? "Closed" : "Change Status"}
           </div>
           <div className="collapse-content text-md text-accent">
             {status === "pending" && (

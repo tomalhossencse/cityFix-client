@@ -4,10 +4,11 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../Context/AuthContext";
 import Swal from "sweetalert2";
+import Loading from "../Loading/Loading";
 
 const IssueEdit = ({ issue, modelRef, refetch }) => {
   const axiosSecure = useAxiosSecure();
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const { data: locations = [] } = useQuery({
     queryKey: ["locations"],
     queryFn: async () => {
@@ -74,7 +75,9 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
     information,
     area,
   } = issue;
-
+  if (loading) {
+    return <Loading />;
+  }
   return (
     <dialog
       ref={modelRef}
@@ -194,7 +197,7 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">Your Region</legend>
                     <select
-                      defaultValue={""}
+                      defaultValue={issue?.region}
                       className="select w-full md:select-md select-sm"
                       {...register("region", { required: true })}
                     >
@@ -213,7 +216,7 @@ const IssueEdit = ({ issue, modelRef, refetch }) => {
                   <div>
                     <legend className="fieldset-legend">District</legend>
                     <select
-                      defaultValue={""}
+                      defaultValue={issue?.district}
                       className="select w-full md:select-md select-sm"
                       {...register("district", { required: true })}
                     >

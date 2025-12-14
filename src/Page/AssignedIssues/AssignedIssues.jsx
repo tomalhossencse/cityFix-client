@@ -39,7 +39,7 @@ const AssignedIssues = () => {
     },
   });
   if (isLoading) {
-    <Loading />;
+    return <Loading />;
   }
 
   const handleChangeStatus = async (issue, updateStatus) => {
@@ -79,15 +79,6 @@ const AssignedIssues = () => {
         message: statusMessages[updateStatus] || "status updated",
         role: "staff",
       };
-      //   console.log(updateData);
-
-      // const staffInfo = {
-      //   workStatus: workStatus,
-      // };
-      // await axiosSecure.patch(
-      //   `/sttafs/${issue?.assignedStaff?.staffId}/workStatus`,
-      //   staffInfo
-      // );
 
       const res = await axiosSecure.patch(
         `/issues/${issue._id}/timeline`,
@@ -115,7 +106,6 @@ const AssignedIssues = () => {
       });
     }
   };
-  //   console.log(issues);
   return (
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">

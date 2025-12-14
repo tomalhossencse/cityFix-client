@@ -16,9 +16,9 @@ import useRole from "../Hook/useRole";
 import Loading from "../Components/Loading/Loading";
 
 const DashboardLayout = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const { role, isLoading: roleLoading } = useRole();
-  if (roleLoading) {
+  if (loading || roleLoading) {
     return <Loading />;
   }
   console.log(role);
