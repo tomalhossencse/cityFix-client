@@ -10,6 +10,7 @@ import Swal from "sweetalert2";
 import toast from "react-hot-toast";
 import { FaRocket } from "react-icons/fa6";
 import Loading from "../../Components/Loading/Loading";
+import axios from "axios";
 
 const AddIssue = () => {
   const { user, loading } = useContext(AuthContext);
@@ -73,30 +74,45 @@ const AddIssue = () => {
     return districts;
   };
 
-  const handleAddIssue = (data) => {
-    const { accountStatus } = userDetails;
-    if (accountStatus === "blocked") {
-      return toast.error("Your Account is Blocked By Admin");
-    }
-    // console.log(data);
-    data.createAt = new Date();
-    data.trackingId = GenerateTrackingId();
-    data.status = "pending";
-    data.priority = "normal";
-    data.upvoteCount = 0;
-    data.timeline = [
-      {
-        status: "pending",
-        message: "Issue reported",
-        updatedBy: {
-          role: "citizen",
-          name: user?.displayName,
-          email: user?.email,
+  const handleAddIssue = async (data) => {
+    try {
+      const { accountStatus } = userDetails;
+      if (accountStatus === "blocked") {
+        return toast.error("Your Account is Blocked By Admin");
+      }
+
+      const issueImg = data.photoURL[0];
+      const formData = new FormData();
+      formData.append("image", issueImg);
+
+      const img_API_URL_Key = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_img_API_URL_Key
+      }`;
+
+      // Upload image
+      const imgRes = await axios.post(img_API_URL_Key, formData);
+      const photoURL = imgRes.data.data.url;
+      data.photo = photoURL;
+
+      data.createAt = new Date();
+      data.trackingId = GenerateTrackingId();
+      data.status = "pending";
+      data.priority = "normal";
+      data.upvoteCount = 0;
+      data.timeline = [
+        {
+          status: "pending",
+          message: "Issue reported",
+          updatedBy: {
+            role: "citizen",
+            name: user?.displayName,
+            email: user?.email,
+          },
+          createdAt: new Date(),
         },
-        createdAt: new Date(),
-      },
-    ];
-    axiosSecure.post("/issues", data).then((res) => {
+      ];
+
+      const res = await axiosSecure.post("/issues", data);
       if (res.data.insertedId) {
         navigate("/dashboard/my-issues");
         Swal.fire({
@@ -107,8 +123,12 @@ const AddIssue = () => {
           timer: 1500,
         });
       }
-    });
+    } catch (error) {
+      console.error(error);
+      toast.error("Failed to report the issue. Please try again.");
+    }
   };
+
   if (loading || isLoading || dashboardLoading) {
     return <Loading />;
   }
@@ -157,18 +177,16 @@ const AddIssue = () => {
                     <p className="text-red-500 py-2">Issue Title Required!</p>
                   )}
                 </div>
-                <div className="">
-                  <legend className="fieldset-legend"> Photo Url</legend>
+                {/* photo */}
+                <div>
+                  <label className="label font-semibold">Issue Photo</label>
                   <input
-                    type="text"
-                    className="input w-full md:input-md input-sm"
-                    placeholder="Issue photo url"
-                    {...register("photo", { required: true })}
+                    type="file"
+                    {...register("photoURL", { required: true })}
+                    className="file-input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                   />
-                  {errors.photo?.type === "required" && (
-                    <p className="text-red-500 py-2">
-                      Issue Photo url Required!
-                    </p>
+                  {errors.photoURL?.type === "required" && (
+                    <p className="text-red-500">Profile Photo is Required</p>
                   )}
                 </div>
                 {/* email */}

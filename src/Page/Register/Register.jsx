@@ -10,6 +10,8 @@ import { updateProfile } from "firebase/auth";
 import { auth } from "../../Firebase/firebase.config";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import SocialSign from "../../Components/SocialSign/SocialSign";
+import { FaEyeSlash } from "react-icons/fa6";
+import axios from "axios";
 
 const Register = () => {
   const { signUp } = useContext(AuthContext);
@@ -21,42 +23,64 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-  const handleSumitForm = (data) => {
-    const { email, password, photoURL, name: displayName } = data;
-    // console.log(data);
-    signUp(email, password)
-      .then(() => {
-        updateProfile(auth.currentUser, { displayName, photoURL }).then(() => {
-          const userInfo = {
-            email,
-            displayName,
-            photoURL,
-            createdAt: new Date(),
-            role: "citizen",
-            accountStatus: "active",
-            planType: "free",
-            isSubscribed: false,
-          };
-          axiosSecure.post("/users", userInfo);
-          navigate("/dashboard");
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Register Successfull!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        });
-      })
-      .catch((error) => {
-        Swal.fire({
-          position: "top-end",
-          icon: "error",
-          title: error.message,
-          showConfirmButton: false,
-          timer: 1500,
-        });
+
+  const handleSubmitForm = async (data) => {
+    try {
+      const { email, password, name: displayName } = data;
+      const profileImg = data.photoURL[0];
+      await signUp(email, password);
+
+      const formData = new FormData();
+      formData.append("image", profileImg);
+
+      const img_API_URL_Key = `https://api.imgbb.com/1/upload?key=${
+        import.meta.env.VITE_img_API_URL_Key
+      }`;
+
+      const imgRes = await axios.post(img_API_URL_Key, formData);
+
+      const photoURL = imgRes.data.data.url;
+
+      await updateProfile(auth.currentUser, {
+        displayName,
+        photoURL,
       });
+
+      const userInfo = {
+        email,
+        displayName,
+        photoURL,
+        createdAt: new Date(),
+        role: "citizen",
+        accountStatus: "active",
+        planType: "free",
+        isSubscribed: false,
+      };
+
+      const dbRes = await axiosSecure.post("/users", userInfo);
+
+      if (dbRes.data.insertedId) {
+        console.log("User created in the database");
+      }
+
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "User Created Successfully!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+
+      navigate(location?.state || "/dashboard");
+    } catch (error) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: error.message || "Something went wrong!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
   };
 
   return (
@@ -70,7 +94,7 @@ const Register = () => {
         </p>
 
         <div className="card-body">
-          <form onSubmit={handleSubmit(handleSumitForm)} className="space-y-4">
+          <form onSubmit={handleSubmit(handleSubmitForm)} className="space-y-4">
             {/* name */}
             <div>
               <label className="label">Name</label>
@@ -97,17 +121,16 @@ const Register = () => {
               )}
             </div>
 
-            {/* photourl */}
+            {/* photo */}
             <div>
-              <label className="label">PhotoURL</label>
+              <label className="label font-semibold">Photo</label>
               <input
-                type="text"
-                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
-                placeholder="PhotoURL"
+                type="file"
                 {...register("photoURL", { required: true })}
+                className="file-input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
               />
               {errors.photoURL?.type === "required" && (
-                <p className="text-red-500">Photo Required!</p>
+                <p className="text-red-500">Profile Photo is Required</p>
               )}
             </div>
 
@@ -115,19 +138,37 @@ const Register = () => {
               <label className="label font-semibold">Password</label>
               <input
                 type={show ? "text" : "password"}
-                className={`input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary `}
+                {...register("password", {
+                  required: true,
+                  minLength: 8,
+                  pattern:
+                    /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&#])[A-Za-z\d@$!%*?&#]{8,}$/,
+                })}
+                className="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-primary"
                 placeholder="Enter your password"
-                {...register("password", { required: true })}
               />
-              {errors.password?.type === "required" && (
-                <p className="text-red-500">Password Password!</p>
-              )}
+
               <span
                 onClick={() => setShow(!show)}
                 className="absolute top-[34px] right-6 cursor-pointer z-50 text-gray-500"
               >
                 {show ? <IoEyeOff size={16} /> : <FaEye size={16} />}
               </span>
+
+              {errors.password?.type === "required" && (
+                <p className="text-red-500">Password is Required</p>
+              )}
+              {errors.password?.type === "minLength" && (
+                <p className="text-red-500">
+                  Password must be 8 characters or longers
+                </p>
+              )}
+              {errors.password?.type === "pattern" && (
+                <p className="text-red-500">
+                  Password must contain at least one uppercase letter, one
+                  lowercase letter, one number, and one special character.
+                </p>
+              )}
             </div>
 
             <div className="flex justify-end">
