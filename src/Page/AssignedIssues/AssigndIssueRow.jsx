@@ -10,6 +10,7 @@ import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { GrUserWorker } from "react-icons/gr";
 import { FaPersonRunning } from "react-icons/fa6";
+import { FcHighPriority, FcLowPriority } from "react-icons/fc";
 const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
@@ -36,6 +37,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
     upvoteCount,
     category,
     district,
+    priority,
     trackingId,
   } = issue;
 
@@ -68,18 +70,41 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           <span>{CapitalizeFirstLetter(status)} </span>
         </div>
       </td>
-
+      <td>
+        <div
+          className={`flex gap-1 items-center justify-start ${
+            priority === "normal" ? "text-primary" : "text-red-500"
+          }`}
+        >
+          <span>
+            {priority === "normal" ? (
+              <FcLowPriority size={20} />
+            ) : (
+              <FcHighPriority size={20} />
+            )}
+          </span>
+          <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
+        </div>
+      </td>
       <td>
         <div
           tabIndex={0}
-          className="collapse collapse-arrow bg-base-100 border-base-200 border"
+          className="collapse  bg-base-100 border-base-200 border"
         >
           <div
             className={`${
-              status === "closed" ? "btn-small" : "btn-small-red"
+              status === "closed"
+                ? "btn-small"
+                : status === "rejected"
+                ? "btn-small-red"
+                : "btn-small-blue"
             } collapse-title font-semibold text-primary`}
           >
-            {status === "closed" ? "Closed" : "Change Status"}
+            {status === "closed"
+              ? "Closed"
+              : status === "rejected"
+              ? "Rejected"
+              : "Change Status"}
           </div>
           <div className="collapse-content text-md text-accent">
             {status === "pending" && (

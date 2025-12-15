@@ -67,47 +67,49 @@ const MyIssues = () => {
   return (
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div>
+        <div className="flex justify-between items-center mb-4">
           <div className="flex px-4 section-title">
             My Issues : ({issues.length})
           </div>
           {/* status filter */}
 
-          <select
-            className="select select-bordered w-[120px] md:w-[180px]"
-            {...register("status")}
-            defaultValue={""}
-          >
-            <option value={""}>All (Status)</option>
-            {statusCollection.map((status, index) => (
-              <option key={index}>{status}</option>
-            ))}
-          </select>
+          <div className="space-x-4">
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("status")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Status)</option>
+              {statusCollection.map((status, index) => (
+                <option key={index}>{status}</option>
+              ))}
+            </select>
 
-          {/* priority filter */}
+            {/* priority filter */}
 
-          <select
-            className="select select-bordered w-[120px] md:w-[180px]"
-            {...register("priority")}
-            defaultValue={""}
-          >
-            <option value={""}>All (Priority)</option>
-            {priorityCollection.map((priority, index) => (
-              <option key={index}>{priority}</option>
-            ))}
-          </select>
-          {/* category filter */}
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("priority")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Priority)</option>
+              {priorityCollection.map((priority, index) => (
+                <option key={index}>{priority}</option>
+              ))}
+            </select>
+            {/* category filter */}
 
-          <select
-            className="select select-bordered w-[120px] md:w-[180px]"
-            {...register("category")}
-            defaultValue={""}
-          >
-            <option value={""}>All (Category)</option>
-            {categoriesCollections.map((cat, index) => (
-              <option key={index}>{cat}</option>
-            ))}
-          </select>
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("category")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Category)</option>
+              {categoriesCollections.map((cat, index) => (
+                <option key={index}>{cat}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="table border-2 border-base-200 table-zebra">

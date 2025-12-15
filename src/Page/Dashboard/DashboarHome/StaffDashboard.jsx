@@ -20,7 +20,7 @@ const StaffDashboard = () => {
     queryKey: ["dashboard", user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(
-        `/StaffDashboard/stats?email=${user?.email}`
+        `/staffDashboard/stats?email=${user?.email}`
       );
       return res.data;
     },

@@ -30,6 +30,9 @@ body{
 .btn-yellow{
   @apply btn bg-warning text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-primary;
 }
+.btn-red{
+  @apply btn bg-red-600 text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-primary;
+}
 .btn-primary-rounded{
   @apply btn bg-primary rounded-xl px-8 py-6 text-xl font-bold text-secondary-content hover:bg-black hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
 }
@@ -53,6 +56,9 @@ body{
 }
 .btn-small-blue{
   @apply btn btn-sm bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+}
+.btn-blue{
+  @apply btn w-full bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
 }
 .btn-small-full{
   @apply btn w-full  font-bold bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent

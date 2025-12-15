@@ -6,22 +6,71 @@ import Swal from "sweetalert2";
 import AssignStaffRow from "../AllIssuesDashboard/AssignStaffRow";
 import { AuthContext } from "../../Context/AuthContext";
 import AssigndIssueRow from "./AssigndIssueRow";
+import { useForm } from "react-hook-form";
 const AssignedIssues = () => {
+  const statusCollection = [
+    "pending",
+    "rejected",
+    "in-progress",
+    "working",
+    "resolved",
+    "closed",
+  ];
+  const categoriesCollections = [
+    "Road & Potholes",
+    "Streetlights",
+    "Water Leakage",
+    "Garbage & Waste",
+    "Drainage",
+    "Footpath & Sidewalk",
+    "Electricity",
+    "Public Safety",
+    "Traffic Signal",
+    "Other",
+  ];
+
+  const priorityCollection = ["normal", "high"];
   const assignModelRef = useRef();
   const [selectedIssue, setSelectedIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { user } = useContext(AuthContext);
+
+  const { register, watch } = useForm();
+  const status = watch("status");
+  const priority = watch("priority");
+  const category = watch("category");
+
   const {
     data: issues = [],
-    refetch,
     isLoading,
+    refetch,
   } = useQuery({
-    queryKey: ["issues", user?.email],
+    queryKey: ["issues", user?.email, status, priority, category],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/issues/sttafs?email=${user?.email}`);
+      const res = await axiosSecure.get("/issues/sttafs", {
+        params: {
+          email: user?.email,
+          status,
+          priority,
+          category,
+        },
+      });
       return res.data;
     },
+    enabled: !!user?.email,
   });
+
+  // const {
+  //   data: issues = [],
+  //   refetch,
+  //   isLoading,
+  // } = useQuery({
+  //   queryKey: ["issues", user?.email],
+  //   queryFn: async () => {
+  //     const res = await axiosSecure.get(`/issues/sttafs?email=${user?.email}`);
+  //     return res.data;
+  //   },
+  // });
 
   const { data: sttafs = [] } = useQuery({
     queryKey: [
@@ -108,9 +157,48 @@ const AssignedIssues = () => {
   return (
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div>
+        <div className="flex justify-between items-center mb-4">
           <div className="flex px-4 section-title">
             Assigned issues : ({issues.length})
+          </div>
+          {/* status filter */}
+
+          <div className="space-x-5">
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("status")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Status)</option>
+              {statusCollection.map((status, index) => (
+                <option key={index}>{status}</option>
+              ))}
+            </select>
+
+            {/* priority filter */}
+
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("priority")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Priority)</option>
+              {priorityCollection.map((priority, index) => (
+                <option key={index}>{priority}</option>
+              ))}
+            </select>
+            {/* category filter */}
+
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("category")}
+              defaultValue={""}
+            >
+              <option value={""}>All (Category)</option>
+              {categoriesCollections.map((cat, index) => (
+                <option key={index}>{cat}</option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="overflow-x-auto">
@@ -123,6 +211,7 @@ const AssignedIssues = () => {
                 <th>Tracking Id</th>
                 <th>Created Time</th>
                 <th>Status</th>
+                <th>Priority</th>
                 <th>Actions</th>
               </tr>
             </thead>
