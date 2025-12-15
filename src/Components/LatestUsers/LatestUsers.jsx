@@ -3,7 +3,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import { DateFormat } from "../../Utility/FormateDate";
-const LatestPayments = () => {
+const LatestUsers = () => {
   const axiosSecure = useAxiosSecure();
   const { data: payments = [], isLoading } = useQuery({
     queryKey: ["payments"],
@@ -77,4 +77,4 @@ const LatestPayments = () => {
   );
 };
 
-export default LatestPayments;
+export default LatestUsers;
