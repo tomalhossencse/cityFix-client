@@ -124,7 +124,7 @@ const AdminDashboard = () => {
           <div>
             <p className="text-xl font-semibold text-accent">Total Payments</p>
             <h1 className="text-4xl font-black  ">
-              BDT {stats?.issues?.totalPayments}
+              {stats?.issues?.totalPayments} BDT
             </h1>
             <p></p>
           </div>
