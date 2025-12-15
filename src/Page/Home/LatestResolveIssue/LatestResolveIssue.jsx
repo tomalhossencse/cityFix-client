@@ -40,7 +40,7 @@ const LatestResolveIssue = () => {
   });
 
   return (
-    <Container className="mt-12 min-h-screen px-6">
+    <Container className="mt-12  px-6">
       <div className="section-title">Latest Resolve Issues</div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:p-0 p-4 my-12">
