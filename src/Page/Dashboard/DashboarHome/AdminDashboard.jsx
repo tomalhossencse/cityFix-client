@@ -12,6 +12,9 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import AllIssuesDashboard from "../../AllIssuesDashboard/AllIssuesDashboard";
+import LatestDashboardIssues from "../../../Components/LatestDashboardIssues/LatestDashboardIssues";
+import LatestPayments from "../../../Components/LatestPayments/LatestPayments";
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
 
@@ -155,6 +158,8 @@ const AdminDashboard = () => {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      <LatestDashboardIssues />
+      <LatestPayments />
     </div>
   );
 };

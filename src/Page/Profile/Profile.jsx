@@ -52,20 +52,20 @@ const Profile = () => {
       const imgRes = await axios.post(img_API_URL_Key, formData);
 
       const photoURL = imgRes.data.data.url;
+      const updateInfo = { displayName, photoURL };
+      await updateProfile(auth.currentUser, updateInfo);
 
-      await updateProfile(auth.currentUser, {
-        displayName,
-        photoURL,
-      });
-
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "User Created Successfully!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-      setShow(!show);
+      const res = await axiosSecure.patch(`/users/${user?.email}`, updateInfo);
+      if (res.data.modifiedCount) {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "User Created Successfully!",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        setShow(!show);
+      }
     } catch (error) {
       Swal.fire({
         position: "top-end",
@@ -110,6 +110,7 @@ const Profile = () => {
       userId: _id,
       email,
       displayName,
+      photoURL,
       isSubscribed: true,
       planType: "premium",
     };

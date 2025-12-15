@@ -3,10 +3,10 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
-import IssueRowDashboard from "./IssueRowDashboard";
-import AssignStaffRow from "./AssignStaffRow";
 import Swal from "sweetalert2";
-const AllIssuesDashboard = () => {
+import IssueRowDashboard from "../../Page/AllIssuesDashboard/IssueRowDashboard";
+import AssignStaffRow from "../../Page/AllIssuesDashboard/AssignStaffRow";
+const LatestPayments = () => {
   const modelRef = useRef();
   const assignModelRef = useRef();
   const [editIssue, setEditIssue] = useState(null);
@@ -19,7 +19,7 @@ const AllIssuesDashboard = () => {
   } = useQuery({
     queryKey: ["allIssues"],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/allIssues`);
+      const res = await axiosSecure.get(`/latestIssues`);
       return res.data;
     },
   });
@@ -125,9 +125,7 @@ const AllIssuesDashboard = () => {
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
         <div>
-          <div className="flex px-4 section-title">
-            All Issues : ({issues.length})
-          </div>
+          <div className="flex px-4 section-title">Latest Issues</div>
         </div>
         <div className="overflow-x-auto">
           <table className="table border-2 border-base-200 table-zebra">
@@ -144,7 +142,7 @@ const AllIssuesDashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {issues.map((issue, index) => (
+              {issues.slice(0, 4).map((issue, index) => (
                 <IssueRowDashboard
                   handleReject={handleReject}
                   setEditIssue={setEditIssue}
@@ -214,4 +212,4 @@ const AllIssuesDashboard = () => {
   );
 };
 
-export default AllIssuesDashboard;
+export default LatestPayments;
