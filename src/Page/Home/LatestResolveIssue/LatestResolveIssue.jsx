@@ -10,7 +10,7 @@ const LatestResolveIssue = () => {
   const { data: issues = [] } = useQuery({
     queryKey: [`issues`],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/latestIssues?status=resolved`);
+      const res = await axiosSecure.get(`/latest-issues?status=resolved`);
       return res.data;
     },
   });

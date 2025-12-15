@@ -16,7 +16,7 @@ const FeaturesSection = () => {
     return <Loading />;
   }
   return (
-    <div className="py-8 from-blue-50 via-white to-purple-50">
+    <div className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="section-title">Latest Features</h2>
 
@@ -24,7 +24,7 @@ const FeaturesSection = () => {
           {features.map((feature) => (
             <div
               key={feature.id}
-              className="bg-white p-8 rounded-2xl shadow-md hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-2"
+              className="bg-base-100 border-2 border-accent/20 p-8 rounded-2xl shadow-md hover:shadow-2xl transition-transform duration-300 transform hover:-translate-y-2"
             >
               <div className="flex justify-center mb-5">
                 <div className="w-20 h-20 p-4 bg-purple-100 rounded-full flex items-center justify-center">

@@ -16,7 +16,6 @@ const Navbar = () => {
   const handleTheme = (checked) => {
     setTheme(checked ? "dark" : "light");
   };
-  // console.log(user);
 
   const links = (
     <>
@@ -29,12 +28,6 @@ const Navbar = () => {
       <li className="mr-4">
         <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
-      {/* <li className="mr-4">
-        <NavLink to="/register">Register</NavLink>
-      </li>
-      <li className="mr-4">
-        <NavLink to="/login">Login</NavLink>
-      </li> */}
 
       <li className="mr-4">
         <label className="flex cursor-pointer gap-2">
@@ -105,7 +98,7 @@ const Navbar = () => {
               </div>
               <ul
                 tabIndex="-1"
-                className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
+                className="menu navbar-end menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
               >
                 {links}
               </ul>
