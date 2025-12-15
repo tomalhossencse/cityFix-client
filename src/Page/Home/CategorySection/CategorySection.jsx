@@ -1,7 +1,6 @@
 import React from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-
 const CategorySection = () => {
   const axiosSecure = useAxiosSecure();
   const { data: categories = [] } = useQuery({
