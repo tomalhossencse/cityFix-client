@@ -19,9 +19,7 @@ const AdminDashboard = () => {
   const { data: stats = [], isLoading } = useQuery({
     queryKey: ["dashboard", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(
-        `/dashboard/stats?email=${user?.email}`
-      );
+      const res = await axiosSecure.get(`/adminDashboard/stats`);
       return res.data;
     },
   });
