@@ -1,15 +1,19 @@
 import React from "react";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Components/Loading/Loading";
 const CategorySection = () => {
   const axiosSecure = useAxiosSecure();
-  const { data: categories = [] } = useQuery({
+  const { data: categories = [], isLoading } = useQuery({
     queryKey: [`category`],
     queryFn: async () => {
       const res = await axiosSecure.get(`/category`);
       return res.data;
     },
   });
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div className="my-12 md:p-0 p-8">
       <h2 className="section-title">Category</h2>

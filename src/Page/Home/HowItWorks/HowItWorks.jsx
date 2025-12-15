@@ -1,63 +1,66 @@
 import React from "react";
-
-const howItWorksSteps = [
-  {
-    id: 1,
-    title: "Report an Issue",
-    image: "https://cdn-icons-png.flaticon.com/512/1828/1828919.png",
-    description:
-      "Submit your issue with details, location, and photos using our platform.",
-  },
-  {
-    id: 2,
-    title: "Issue Verification",
-    image: "https://cdn-icons-png.flaticon.com/512/190/190411.png",
-    description:
-      "Authorities review and verify the reported issue for accuracy.",
-  },
-  {
-    id: 3,
-    title: "Assigned to Staff",
-    image: "https://cdn-icons-png.flaticon.com/512/1077/1077063.png",
-    description:
-      "The issue is assigned to the responsible department or staff.",
-  },
-  {
-    id: 4,
-    title: "Issue Resolved",
-    image: "https://cdn-icons-png.flaticon.com/512/845/845646.png",
-    description:
-      "The issue is resolved and the status is updated in real-time.",
-  },
-];
+import useAxiosSecure from "../../../Hook/useAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 
 const HowItWorks = () => {
+  const axiosSecure = useAxiosSecure();
+  const { data: howItWorksSteps = [] } = useQuery({
+    queryKey: [`howItWorksSteps`],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/howItWorksSteps`);
+      return res.data;
+    },
+  });
   return (
-    <div className="my-16 md:p-0 p-8">
-      <h2 className="section-title text-center">How It Works</h2>
+    <section className="py-8 from-base-100 to-base-200">
+      <div className="max-w-7xl mx-auto px-6">
+        {/* Title */}
+        <div className="text-center mb-14">
+          <h2 className="section-title">How It Works</h2>
+        </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto mt-10">
-        {howItWorksSteps.map((step) => (
-          <div
-            key={step.id}
-            className="flex flex-col justify-center items-center py-6 px-4 space-y-3
-            rounded-xl border-2 border-gray-100 
-            transition transform duration-300 ease-in-out
-            shadow-sm hover:border-primary hover:scale-105 hover:shadow-md"
-          >
-            <img src={step.image} alt={step.title} className="w-20" />
+        {/* Steps */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+          {howItWorksSteps.map((step) => (
+            <div
+              key={step.id}
+              className="relative group bg-base-100 rounded-2xl p-8
+              border border-gray-100 shadow-sm
+              hover:shadow-xl hover:-translate-y-2
+              transition-all duration-300"
+            >
+              {/* Step Number */}
+              <div
+                className="absolute -top-4 -right-4 w-10 h-10 rounded-full
+                bg-primary text-white flex items-center justify-center
+                font-bold shadow-md"
+              >
+                {step.id}
+              </div>
 
-            <h3 className="text-lg font-semibold text-accent text-center">
-              {step.title}
-            </h3>
+              {/* Icon */}
+              <div className="flex justify-center mb-6">
+                <div
+                  className="w-20 h-20 rounded-full bg-primary/10
+                  flex items-center justify-center group-hover:scale-110
+                  transition-transform duration-300"
+                >
+                  <img src={step.image} alt={step.title} className="w-10" />
+                </div>
+              </div>
 
-            <p className="text-accent text-sm text-center">
-              {step.description}
-            </p>
-          </div>
-        ))}
+              {/* Content */}
+              <h3 className="text-xl font-semibold text-center text-accent">
+                {step.title}
+              </h3>
+              <p className="text-sm text-center text-accent mt-3">
+                {step.description}
+              </p>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 

@@ -15,47 +15,45 @@ const Footer = () => {
             <div className="col-span-2">
               <button
                 onClick={() => navigate("/")}
-                className="text-xl cursor-pointer  font-medium pb-6"
+                className="text-xl cursor-pointer font-medium pb-6"
               >
-                SkillSwap
+                CityFix
               </button>
               <p className="text-white">
-                An interactive platform for individuals to offer, learn, and
-                trade skills within their local area. Whether it’s guitar
-                lessons, language exchange, coding help, or yoga training —
-                users can browse listings, rate experiences, and connect with
-                local skill providers.
+                CityFix is a platform for citizens to report local issues, track
+                progress, and see resolutions in real-time. From road repairs to
+                streetlight outages, we make your city better together.
               </p>
             </div>
-            <div className=" col-span-1">
+            <div className="col-span-1">
               <h1 className="text-xl font-medium pb-6">Company</h1>
               <ul className="flex flex-col gap-4">
                 <a className="text-white" href="#">
-                  About Us
+                  About CityFix
                 </a>
                 <a className="text-white" href="#">
                   Our Mission
                 </a>
                 <a className="text-white" href="#">
-                  Contact Saled
+                  Contact Us
                 </a>
               </ul>
             </div>
-            <div className=" col-span-1">
+            <div className="col-span-1">
               <h1 className="text-xl font-medium pb-6">Services</h1>
               <ul className="flex flex-col gap-4">
                 <a className="text-white" href="#">
-                  Products & Services
+                  Report an Issue
                 </a>
                 <a className="text-white" href="#">
-                  Customer Stories
+                  Track Progress
                 </a>
                 <a className="text-white" href="#">
-                  Download Apps
+                  View Resolved Issues
                 </a>
               </ul>
             </div>
-            <div className=" col-span-1">
+            <div className="col-span-1">
               <h1 className="text-xl font-medium pb-6">Information</h1>
               <ul className="flex flex-col gap-4">
                 <a className="text-white" href="#">
@@ -65,42 +63,42 @@ const Footer = () => {
                   Terms & Conditions
                 </a>
                 <a className="text-white" href="#">
-                  Join Us
+                  Join CityFix
                 </a>
               </ul>
             </div>
-            <div className=" col-span-1">
+            <div className="col-span-1">
               <h1 className="text-xl font-medium pb-6">Social Links</h1>
               <ul className="flex flex-col gap-4">
                 <li className="flex gap-2 items-center">
                   <FaSquareXTwitter className="text-white text-xl" />
                   <a className="text-white" href="#">
-                    @CS — SkillSwap
+                    @CityFix
                   </a>
                 </li>
                 <li className="flex gap-2 items-center">
                   <FaLinkedin className="text-white text-xl" />
                   <a className="text-white" href="#">
-                    @CS — SkillSwap
+                    @CityFix
                   </a>
                 </li>
                 <li className="flex gap-2 items-center">
                   <FaFacebookSquare className="text-white text-xl" />
                   <a className="text-white" href="#">
-                    @CS — SkillSwap
+                    @CityFix
                   </a>
                 </li>
                 <li className="flex gap-2 items-center">
                   <IoMdMail className="text-white text-xl" />
                   <a className="text-white" href="#">
-                    support@cst.com
+                    support@cityfix.com
                   </a>
                 </li>
               </ul>
             </div>
           </div>
           <div className="text-center">
-            © 2025 SkillSwap – A Local Skill Exchange Platform. All rights
+            © 2025 CityFix – A Civic Issue Reporting Platform. All rights
             reserved.
           </div>
         </div>
