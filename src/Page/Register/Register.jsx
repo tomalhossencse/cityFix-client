@@ -12,6 +12,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import SocialSign from "../../Components/SocialSign/SocialSign";
 import { FaEyeSlash } from "react-icons/fa6";
 import axios from "axios";
+import { GenerateTrackingId } from "../../Utility/GenerateTrackingId";
 
 const Register = () => {
   const { signUp } = useContext(AuthContext);
@@ -50,6 +51,7 @@ const Register = () => {
         email,
         displayName,
         photoURL,
+        trackingId: GenerateTrackingId(),
         createdAt: new Date(),
         role: "citizen",
         accountStatus: "active",

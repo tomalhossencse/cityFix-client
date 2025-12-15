@@ -43,7 +43,7 @@ const AllIssuesDashboard = () => {
   }
 
   const handleAssignSttaf = async (staff) => {
-    console.log(staff);
+    // console.log(staff);
     try {
       const { number, email, photo, _id, sttafName } = staff;
       const updateData = {

@@ -3,12 +3,18 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import { DateFormat } from "../../Utility/FormateDate";
-const LatestPayments = () => {
+import { useForm } from "react-hook-form";
+import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
+const Payments = () => {
+  const purposeCollections = ["issue", "profile"];
   const axiosSecure = useAxiosSecure();
+  const { register, watch } = useForm();
+  const purpose = watch("purpose");
+
   const { data: payments = [], isLoading } = useQuery({
-    queryKey: ["payments"],
+    queryKey: [`payments`, purpose],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/latestPayments`);
+      const res = await axiosSecure.get(`/payments?purpose=${purpose}`);
       return res.data;
     },
   });
@@ -21,8 +27,22 @@ const LatestPayments = () => {
   return (
     <>
       <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div>
-          <div className="flex px-4 section-title">Latest Payments</div>
+        <div className="flex justify-between items-center mb-4">
+          <div className="flex px-4 section-title">
+            All Payments : {payments?.length}
+          </div>
+          <div>
+            <select
+              className="select select-bordered w-[120px] md:w-[180px]"
+              {...register("purpose")}
+              defaultValue={""}
+            >
+              <option value={""}>All</option>
+              {purposeCollections.map((status, index) => (
+                <option key={index}>{status}</option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="overflow-x-auto">
           <table className="table border-2 border-base-200 table-zebra">
@@ -49,7 +69,7 @@ const LatestPayments = () => {
                     />
                     <div>
                       <p className="font-semibold text-[16px]">
-                        {pay?.issueTitle || pay?.customer_name}
+                        {pay.issueTitle || pay?.customer_name}
                       </p>
                       <p className="font-semibold text-primary">
                         {pay?.customer_email}
@@ -57,7 +77,7 @@ const LatestPayments = () => {
                     </div>
                   </td>
                   <td>
-                    <p>{pay?.transactionId}</p>
+                    <p className="text-xs">{pay?.transactionId}</p>
                   </td>
                   <td>{DateFormat(pay?.paidAt)}</td>
                   <td>
@@ -76,4 +96,4 @@ const LatestPayments = () => {
   );
 };
 
-export default LatestPayments;
+export default Payments;

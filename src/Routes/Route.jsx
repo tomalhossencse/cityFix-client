@@ -21,6 +21,7 @@ import AdminRoute from "./AdminRoute";
 import CitizenRoute from "./CitizenRoute";
 import AssignedIssues from "../Page/AssignedIssues/AssignedIssues";
 import StaffRoute from "./StaffRoute";
+import Payments from "../Page/Payments/Payments";
 
 export const router = createBrowserRouter([
   {
@@ -126,6 +127,14 @@ export const router = createBrowserRouter([
         element: (
           <AdminRoute>
             <ManageStaffs />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "payments",
+        element: (
+          <AdminRoute>
+            <Payments />
           </AdminRoute>
         ),
       },

@@ -16,6 +16,7 @@ const StaffDashboard = () => {
   const { user } = useContext(AuthContext);
 
   const axiosSecure = useAxiosSecure();
+
   const { data: stats = [], isLoading } = useQuery({
     queryKey: ["dashboard", user?.email],
     queryFn: async () => {

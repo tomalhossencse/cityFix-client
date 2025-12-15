@@ -3,6 +3,7 @@ import { AiOutlineIssuesClose } from "react-icons/ai";
 import {
   MdOutlineAssignmentReturned,
   MdOutlineDashboardCustomize,
+  MdPayments,
 } from "react-icons/md";
 import { RiCheckboxMultipleFill, RiMenu2Line } from "react-icons/ri";
 import { Link, NavLink, Outlet } from "react-router";
@@ -22,7 +23,7 @@ const DashboardLayout = () => {
   if (loading || roleLoading) {
     return <Loading />;
   }
-  console.log(role);
+  // console.log(role);
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -213,6 +214,23 @@ const DashboardLayout = () => {
                       <span className="is-drawer-close:hidden">
                         Manage Sttafs
                       </span>
+                    </NavLink>
+                  </li>
+
+                  {/*  Payments */}
+                  <li className="p-2">
+                    <NavLink
+                      to={"/dashboard/payments"}
+                      className={({ isActive }) =>
+                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
+     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
+                      }
+                      data-tip="Payments"
+                    >
+                      {/* report icon */}
+                      <MdPayments size={20} />
+
+                      <span className="is-drawer-close:hidden">Payments</span>
                     </NavLink>
                   </li>
                 </>

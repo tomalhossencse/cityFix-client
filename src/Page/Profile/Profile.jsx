@@ -37,6 +37,10 @@ const Profile = () => {
     formState: { errors },
   } = useForm();
 
+  if (isLoading) {
+    return <Loading />;
+  }
+
   const handleSubmitForm = async (data) => {
     try {
       const { name: displayName } = data;
@@ -76,9 +80,6 @@ const Profile = () => {
       });
     }
   };
-  if (isLoading) {
-    return <Loading />;
-  }
 
   const { isSubscribed, _id } = myuser;
 
