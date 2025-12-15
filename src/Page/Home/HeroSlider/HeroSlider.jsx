@@ -1,5 +1,11 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css/effect-fade";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/scrollbar";
+
 import {
   Navigation,
   Pagination,
@@ -8,10 +14,6 @@ import {
   Autoplay,
   EffectFade,
 } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-fade";
 
 const HeroSlider = () => {
   return (
@@ -31,69 +33,69 @@ const HeroSlider = () => {
         className="bg-accent-content max-w-7xl mx-auto"
       >
         <SwiperSlide>
-          <div className="flex flex-col-reverse md:flex-row items-center justify-between bg-accent-content px-6 md:px-10 pt-6 pb-10">
+          <div className="flex flex-col md:flex-row items-center justify-between bg-accent-content px-6 md:px-10 py-6">
             <div className="md:w-1/2 text-center md:text-left space-y-4">
               <h1 className="text-2xl md:text-3xl lg:4xl font-bold text-accent">
-                Personal Fitness Coaching
+                Keep Our City Clean
               </h1>
               <p className="text-sm md:text-md lg:text-lg text-accent">
-                Custom workout plans and one-on-one coaching sessions focused on
-                fat loss and strength training.
+                Join hands to report garbage and ensure a cleaner, healthier
+                community for everyone.
               </p>
               <button className="px-6 py-3 bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105">
-                Enroll Now
+                Report Garbage Now
               </button>
             </div>
 
             <div className="md:w-1/2 flex justify-center py-8">
               <img
-                src="https://i.ibb.co.com/LXW5V1jc/Asset-1.png"
+                src="https://i.ibb.co.com/0Wb5JZW/garbage.png"
                 className="md:h-[400px] h-[200px]"
               />
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col-reverse md:flex-row items-center justify-between bg-accent-content px-6 md:px-10 pt-6 pb-10">
+          <div className="flex flex-col md:flex-row items-center justify-between bg-accent-content px-6 py-6 md:px-10">
             <div className="md:w-1/2 text-center md:text-left space-y-4">
               <h1 className="text-2xl md:text-3xl lg:4xl font-bold text-accent">
-                Yoga & Fitness
+                Sort Smart, Live Green
               </h1>
               <p className="text-sm md:text-md lg:text-lg text-accent">
-                Relax and strengthen your body through guided yoga sessions.
-                Perfect for beginners seeking balance.
+                Proper recycling keeps our city clean—follow local guidelines to
+                reduce waste and protect the environment.
               </p>
               <button className="px-6 py-3 bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105">
-                View Details
+                View Recycling Guidelines
               </button>
             </div>
 
             <div className="md:w-1/2 flex justify-center py-8">
               <img
-                src="https://i.ibb.co.com/k2SLz9yy/Asset-1.png"
+                src="https://i.ibb.co.com/tTqNhNmB/recycling.png"
                 className="md:h-[400px] h-[200px]"
               />
             </div>
           </div>
         </SwiperSlide>
         <SwiperSlide>
-          <div className="flex flex-col-reverse md:flex-row items-center justify-between bg-accent-content px-6 md:px-10 pt-6 pb-10">
+          <div className="flex flex-col md:flex-row items-center justify-between bg-accent-content px-6 md:px-10 py-6">
             <div className="md:w-1/2 text-center md:text-left space-y-4">
               <h1 className="text-2xl md:text-3xl lg:4xl font-bold text-accent">
-                Home Gardening Tips
+                Plant a Tree, Grow Our Future
               </h1>
               <p className="text-sm md:text-md lg:text-lg text-accent">
-                Get hands-on advice on how to grow herbs, vegetables, and
-                flowers in small home spaces.
+                Join our urban greening initiative to plant trees that purify
+                air, cut energy costs, and beautify neighborhoods.
               </p>
               <button className="px-6 py-3 bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105">
-                Join Now
+                Join a Planting Event
               </button>
             </div>
 
             <div className="md:w-1/2 flex justify-center py-8">
               <img
-                src="https://i.ibb.co.com/hFchg0zx/Asset-1.png"
+                src="https://i.ibb.co.com/gMkqL7zZ/Asset-1.png"
                 className="md:h-[400px] h-[200px]"
               />
             </div>
