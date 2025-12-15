@@ -8,12 +8,6 @@ import Loading from "../Loading/Loading";
 import toast from "react-hot-toast";
 
 const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
-  useEffect(() => {
-    if (issue && modelRef?.current) {
-      modelRef.current.showModal();
-    }
-  }, [issue, modelRef]);
-
   const {
     register,
     handleSubmit,

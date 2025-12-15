@@ -179,7 +179,7 @@ const AddIssue = () => {
                 </div>
                 {/* photo */}
                 <div>
-                  <label className="label font-semibold">Issue Photo</label>
+                  <label className="fieldset-legend">Issue Photo</label>
                   <input
                     type="file"
                     {...register("photoURL", { required: true })}

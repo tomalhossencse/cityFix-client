@@ -2,12 +2,14 @@ import axios from "axios";
 import React, { useContext, useEffect } from "react";
 import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router";
+import Loading from "../Components/Loading/Loading";
 
 const axiosSecure = axios.create({
   baseURL: "http://localhost:5000",
 });
 const useAxiosSecure = () => {
-  const { user, userLogOut } = useContext(AuthContext);
+  const { user, userLogOut, loading } = useContext(AuthContext);
+
   const navigate = useNavigate();
   useEffect(() => {
     // res intercepter
@@ -18,6 +20,10 @@ const useAxiosSecure = () => {
       }
       // req inercepter
     );
+
+    if (loading) {
+      return <Loading />;
+    }
     const ResponseInterceptor = axiosSecure.interceptors.response.use(
       (res) => {
         return res;
