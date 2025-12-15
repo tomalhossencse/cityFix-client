@@ -4,7 +4,7 @@ import { AuthContext } from "../Context/AuthContext";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-  baseURL: "https://city-fix-server.vercel.app",
+  baseURL: `${import.meta.env.VITE_API_URL}`,
 });
 const useAxiosSecure = () => {
   const { user, userLogOut } = useContext(AuthContext);
