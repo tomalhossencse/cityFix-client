@@ -1,34 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
-import { FaSearch } from "react-icons/fa";
 import Container from "../../../Utility/Container";
 import useAxiosSecure from "../../../Hook/useAxiosSecure";
 import IssueCard from "../../Allissues/IssueCard";
 
 const LatestResolveIssue = () => {
-  const [searchText, setSearchText] = useState("");
-  const statusCollection = [
-    "pending",
-    "rejected",
-    "in-progress",
-    "working",
-    "resolved",
-    "closed",
-  ];
-  const categoriesCollections = [
-    "Road & Potholes",
-    "Streetlights",
-    "Water Leakage",
-    "Garbage & Waste",
-    "Drainage",
-    "Footpath & Sidewalk",
-    "Electricity",
-    "Public Safety",
-    "Traffic Signal",
-    "Other",
-  ];
-
   const axiosSecure = useAxiosSecure();
 
   const { data: issues = [] } = useQuery({

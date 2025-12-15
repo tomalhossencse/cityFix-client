@@ -43,7 +43,7 @@ const CommunityStats = () => {
             </div>
             <div className="flex flex-col justify-between items-center">
               <h3 className="text-3xl font-semibold text-primary">
-                {stats?.issues?.total}
+                {stats?.issues?.totalUsers}
               </h3>
               <p className="text-xs text-accent font-semibold">Total Users</p>
             </div>

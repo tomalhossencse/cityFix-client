@@ -5,6 +5,7 @@ import CategorySection from "./CategorySection/CategorySection";
 import HowItWorks from "./HowItWorks/HowItWorks";
 import CommunityStats from "./CommunityStats/CommunityStats";
 import JoinCleanDrive from "./JoinCleanDrive/JoinCleanDrive";
+import FeaturesSection from "./FeaturesSection/FeaturesSection";
 
 const Home = () => {
   return (
@@ -12,6 +13,7 @@ const Home = () => {
       <HeroSlider />
       <LatestResolveIssue />
       <CategorySection />
+      <FeaturesSection />
       <HowItWorks />
       <CommunityStats />
       <JoinCleanDrive />

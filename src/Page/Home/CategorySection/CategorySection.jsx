@@ -15,7 +15,7 @@ const CategorySection = () => {
     return <Loading />;
   }
   return (
-    <div className="my-12 md:p-0 p-8">
+    <div className="mb-10 md:p-0 p-8">
       <h2 className="section-title">Category</h2>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 max-w-7xl mx-auto mt-8">

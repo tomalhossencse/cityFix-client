@@ -10,6 +10,7 @@ import { AuthContext } from "../../Context/AuthContext";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
+import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 const IssueCard = ({ issue }) => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
@@ -80,7 +81,7 @@ const IssueCard = ({ issue }) => {
               priority === "normal" ? "bg-primary" : "bg-red-500"
             }`}
           >
-            {priority.toUpperCase()}
+            {CapitalizeFirstLetter(priority)}
           </span>
         </li>
         <li className="flex items-center justify-center gap-1">
