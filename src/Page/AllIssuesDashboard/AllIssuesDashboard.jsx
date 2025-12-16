@@ -123,7 +123,7 @@ const AllIssuesDashboard = () => {
   //   console.log(issues);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
+      <div className="md:p-8 p-2 bg-base-100 m-8 rounded-xl">
         <div>
           <div className="flex px-4 section-title">
             All Issues : ({issues.length})

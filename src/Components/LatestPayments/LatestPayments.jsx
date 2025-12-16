@@ -20,7 +20,7 @@ const LatestPayments = () => {
   //   console.log(payments);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
+      <div className="md:p-8 bg-base-100 md:m-8 rounded-xl">
         <div>
           <div className="flex px-4 section-title">Latest Payments</div>
         </div>
@@ -34,40 +34,46 @@ const LatestPayments = () => {
                 <th>Transaction Id</th>
                 <th>Paid Time</th>
                 <th>Status</th>
-                <th>Amount</th>
+                <th>Amount(BDT)</th>
               </tr>
             </thead>
             <tbody>
               {payments.map((pay, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td className="flex items-center justify-start gap-4   ">
-                    <img
-                      src={pay?.custormer_photo}
-                      className="w-16 rounded-md"
-                      alt=""
-                    />
-                    <div>
-                      <p className="font-semibold text-[16px]">
-                        {pay?.issueTitle || pay?.customer_name}
-                      </p>
-                      <p className="font-semibold text-primary">
-                        {pay?.customer_email}
-                      </p>
+
+                  <td>
+                    <div className="flex items-center gap-3 min-w-[250px]">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-10 w-10">
+                          <img
+                            src={pay?.custormer_photo}
+                            className="object-cover"
+                          />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-semibold">
+                          {pay?.issueTitle || pay?.customer_name}
+                        </div>
+                        <p className="font-semibold text-primary">
+                          {pay?.customer_email}
+                        </p>
+                      </div>
                     </div>
                   </td>
                   <td>
                     <p>{pay?.transactionId}</p>
                   </td>
-                  <td>{DateFormat(pay?.paidAt)}</td>
+                  <td className="whitespace-nowrap">
+                    {DateFormat(pay?.paidAt)}
+                  </td>
                   <td>
                     <button className="btn-small-red">
                       {pay?.paymentStatus}
                     </button>
                   </td>
-                  <td className="   text-lg font-semibold">
-                    {pay?.amount} BDT
-                  </td>
+                  <td className="   text-lg font-semibold">{pay?.amount}</td>
                 </tr>
               ))}
             </tbody>

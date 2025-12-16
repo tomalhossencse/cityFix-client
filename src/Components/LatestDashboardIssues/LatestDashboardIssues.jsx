@@ -123,7 +123,7 @@ const LatestDashboardIssues = () => {
   //   console.log(issues);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
+      <div className="md:p-8  bg-base-100 md:m-8  rounded-xl">
         <div>
           <div className="flex px-4 section-title">Latest Issues</div>
         </div>

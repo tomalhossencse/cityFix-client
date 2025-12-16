@@ -9,10 +9,11 @@ const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
     <tr>
       <th>{index + 1}</th>
       {/* user */}
+
       <td className="flex items-center justify-start gap-4">
-        <img src={sttaf.photo} className="w-8 rounded-full" alt="" />
+        <img src={sttaf.photo} className="md:w-8 w-6 rounded-full" alt="" />
         <div>
-          <p className="font-semibold text-[14px]">
+          <p className="font-semibold text-[14px] whitespace-nowrap">
             {CapitalizeFirstLetter(sttaf?.sttafName)}
           </p>
           {/* <p className="font-semibold text-sm text-primary">{sttaf.email}</p> */}

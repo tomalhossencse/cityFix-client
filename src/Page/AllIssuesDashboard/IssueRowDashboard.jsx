@@ -56,16 +56,23 @@ const IssueRowDashboard = ({
   return (
     <tr>
       <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4   ">
-        <img src={photo} className="w-16 rounded-md" alt="" />
-        <div>
-          <p className="font-semibold text-[16px]">{issueTitle}</p>
-          <p className="font-semibold text-primary">
-            {category} ({upvoteCount})
-          </p>
+      <td>
+        <div className="flex items-center gap-3 min-w-[250px]">
+          <div className="avatar">
+            <div className="mask mask-squircle h-10 w-10">
+              <img src={photo} className="object-cover" />
+            </div>
+          </div>
+          <div>
+            <div className="font-semibold">{issueTitle}</div>
+            <p className="font-semibold text-primary">
+              {category} ({upvoteCount})
+            </p>
+          </div>
         </div>
       </td>
-      <td>
+
+      <td className="whitespace-nowrap">
         <div>
           <p>{trackingId}</p>
           <p>
@@ -99,7 +106,7 @@ const IssueRowDashboard = ({
           <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
         </div>
       </td>
-      <td className="space-x-2">
+      <td className="space-x-2 whitespace-nowrap">
         {assignedStaff || status === "rejected" ? (
           <button
             disabled

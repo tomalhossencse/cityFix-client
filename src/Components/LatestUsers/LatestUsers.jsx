@@ -21,7 +21,7 @@ const LatestUsers = () => {
   //   console.log(users);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
+      <div className="md:p-8 bg-base-100 md:m-8 rounded-xl">
         <div>
           <div className="flex px-4 section-title">Latest Users</div>
         </div>
@@ -42,22 +42,24 @@ const LatestUsers = () => {
               {users.slice(0, 4).map((user, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td className="flex items-center justify-start gap-4   ">
-                    <img
-                      src={user?.photoURL}
-                      className="w-12 rounded-full"
-                      alt=""
-                    />
-                    <div>
-                      <p className="font-semibold text-[16px]">
-                        {user.displayName}
-                      </p>
-                      <p className="font-semibold text-primary">
-                        {user?.email}
-                      </p>
+                  <td>
+                    <div className="flex items-center gap-3 min-w-[250px]">
+                      <div className="avatar">
+                        <div className="mask mask-squircle h-10 w-10">
+                          <img src={user?.photoURL} className="object-cover" />
+                        </div>
+                      </div>
+                      <div>
+                        <div className="font-semibold">{user.displayName}</div>
+                        <p className="font-semibold text-primary">
+                          {user?.email}
+                        </p>
+                      </div>
                     </div>
                   </td>
-                  <td>{DateFormat(user?.createdAt)}</td>
+                  <td className="whitespace-nowrap">
+                    {DateFormat(user?.createdAt)}
+                  </td>
                   <td className="text-md text-primary">
                     <p>{CapitalizeFirstLetter(user?.role)}</p>
                   </td>
