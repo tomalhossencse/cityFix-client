@@ -10,12 +10,12 @@ This system aims to improve city service delivery by enhancing transparency, red
 
 ### 🔑 Key Access & Deployment Information
 
-| Field              | Value                                                |
-| :----------------- | :--------------------------------------------------- |
-| **Website Name**   | Public Infrastructure Issue Reporting System (PIRS)  |
-| **Admin Email**    | `rahim@gmail.com` (Use this for initial Admin login) |
-| **Admin Password** | `#Rahim123`                                          |
-| **Live Site URL**  | `[https://cityfixbd.netlify.app]`                    |
+| Field              | Value                                                       |
+| :----------------- | :---------------------------------------------------------- |
+| **Website Name**   | CityFix Public Infrastructure Issue Reporting System (PIRS) |
+| **Admin Email**    | `rahim@gmail.com` (Use this for initial Admin login)        |
+| **Admin Password** | `#Rahim123`                                                 |
+| **Live Site URL**  | `[https://cityfixbd.netlify.app]`                           |
 
 ---
 
