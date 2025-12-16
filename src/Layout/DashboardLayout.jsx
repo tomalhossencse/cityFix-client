@@ -16,6 +16,7 @@ import { IoPersonAdd } from "react-icons/io5";
 import useRole from "../Hook/useRole";
 import Loading from "../Components/Loading/Loading";
 import { Toaster } from "react-hot-toast";
+import Theme from "../Components/Theme/Theme";
 
 const DashboardLayout = () => {
   const { user, loading } = useContext(AuthContext);
@@ -41,6 +42,9 @@ const DashboardLayout = () => {
             </label>
 
             <div className="flex items-center justify-start mr-[10%]">
+              <div>
+                <Theme />
+              </div>
               <div>
                 <User />
               </div>

@@ -65,10 +65,6 @@ export const router = createBrowserRouter([
         path: "premuim-success",
         Component: PremuimSuccess,
       },
-      {
-        path: "*",
-        Component: ErrorPage,
-      },
     ],
   },
   {
@@ -144,5 +140,9 @@ export const router = createBrowserRouter([
         ),
       },
     ],
+  },
+  {
+    path: "*",
+    Component: ErrorPage,
   },
 ]);

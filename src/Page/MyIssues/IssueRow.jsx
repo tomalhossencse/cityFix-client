@@ -80,7 +80,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   return (
     <tr>
       <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4">
+      <td className="flex items-center justify-start gap-4   ">
         <img src={photo} className="w-16 rounded-md" alt="" />
         <div>
           <p className="font-semibold text-[16px]">{issueTitle}</p>
@@ -146,7 +146,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
         </div>
       </td>
 
-      <td className="space-x-2">
+      <td className="space-x-2   ">
         {status === "pending" && (
           <button
             onClick={() => {

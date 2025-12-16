@@ -61,7 +61,7 @@ const Payments = () => {
               {payments.map((pay, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td className="flex items-center justify-start gap-4">
+                  <td className="flex items-center justify-start gap-4   ">
                     <img
                       src={pay?.custormer_photo}
                       className="w-16 rounded-md"
@@ -85,7 +85,9 @@ const Payments = () => {
                       {pay?.paymentStatus}
                     </button>
                   </td>
-                  <td className="text-lg font-semibold">{pay?.amount} BDT</td>
+                  <td className="text-lg font-semibold   ">
+                    {pay?.amount} BDT
+                  </td>
                 </tr>
               ))}
             </tbody>

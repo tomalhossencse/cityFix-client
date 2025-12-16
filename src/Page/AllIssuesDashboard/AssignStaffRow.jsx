@@ -9,7 +9,7 @@ const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
     <tr>
       <th>{index + 1}</th>
       {/* user */}
-      <td className="flex items-center justify-start gap-4 whitespace-nowrap">
+      <td className="flex items-center justify-start gap-4">
         <img src={sttaf.photo} className="w-8 rounded-full" alt="" />
         <div>
           <p className="font-semibold text-[14px]">
@@ -18,7 +18,7 @@ const AssignStaffRow = ({ sttaf, index, handleAssignSttaf }) => {
           {/* <p className="font-semibold text-sm text-primary">{sttaf.email}</p> */}
         </div>
       </td>
-      <td className="text-[12px]">
+      <td className="text-[12px]   ">
         {sttaf?.district}, {sttaf?.region}
       </td>
       <td>

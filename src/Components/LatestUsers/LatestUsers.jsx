@@ -42,7 +42,7 @@ const LatestUsers = () => {
               {users.slice(0, 4).map((user, index) => (
                 <tr key={index}>
                   <td>{index + 1}</td>
-                  <td className="flex items-center justify-start gap-4">
+                  <td className="flex items-center justify-start gap-4   ">
                     <img
                       src={user?.photoURL}
                       className="w-12 rounded-full"

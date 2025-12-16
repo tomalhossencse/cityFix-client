@@ -1,11 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import Container from "../../Utility/Container";
+import Navbar from "../../Components/Navbar/Navbar";
+import Footer from "../../Components/Footer/Footer";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
   return (
     <div>
+      <Navbar />
       <Container>
         <div className="flex flex-col justify-center items-center p-4 space-y-4 my-14">
           <img
@@ -27,6 +30,7 @@ const ErrorPage = () => {
           </button>
         </div>
       </Container>
+      <Footer />
     </div>
   );
 };

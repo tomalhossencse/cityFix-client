@@ -40,7 +40,7 @@ const SttafsRow = ({ sttaf, index, refetch, setEditStaff, modelUpdateRef }) => {
   return (
     <tr>
       <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4">
+      <td className="flex items-center justify-start gap-4   ">
         <img src={photo} className="w-14 rounded-full" alt="" />
         <div>
           <p className="font-semibold text-[16px]">{sttafName}</p>

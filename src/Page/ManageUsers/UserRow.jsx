@@ -81,7 +81,7 @@ const UserRow = ({ user, index, refetch }) => {
     <tr>
       <th>{index + 1}</th>
       {/* user */}
-      <td className="flex items-center justify-start gap-4">
+      <td className="flex items-center justify-start gap-4   ">
         <img src={photoURL} className="w-12 rounded-full" alt="" />
         <div>
           <p className="font-semibold text-[16px]">
@@ -154,7 +154,7 @@ const UserRow = ({ user, index, refetch }) => {
           </div>
         )}
       </td>
-      <td className="space-x-2">
+      <td className="space-x-2   ">
         {accountStatus === "active" ? (
           <button
             className="btn-small-red hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
