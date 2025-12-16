@@ -10,12 +10,12 @@ This system aims to improve city service delivery by enhancing transparency, red
 
 ### 🔑 Key Access & Deployment Information
 
-| Field              | Value                                                  |
-| :----------------- | :----------------------------------------------------- |
-| **Website Name**   | Public Infrastructure Issue Reporting System (PIRS)    |
-| **Admin Email**    | `admin@example.com` (Use this for initial Admin login) |
-| **Admin Password** | `admin123`                                             |
-| **Live Site URL**  | `[INSERT LIVE SITE URL HERE]`                          |
+| Field              | Value                                                |
+| :----------------- | :--------------------------------------------------- |
+| **Website Name**   | Public Infrastructure Issue Reporting System (PIRS)  |
+| **Admin Email**    | `rahim@gmail.com` (Use this for initial Admin login) |
+| **Admin Password** | `#Rahim123`                                          |
+| **Live Site URL**  | `[https://cityfixbd.netlify.app]`                    |
 
 ---
 
@@ -61,9 +61,9 @@ git clone [https://github.com/tomalhossencse/cityFix-client]
 cd cityFix-client
 ```
 
-#### 1. Clone Server the Repository
+#### 2. Clone Server the Repository
 
 ```bash
 git clone [https://github.com/tomalhossencse/cityFix-server]
-cd cityFix-client
+cd cityFix-servre
 ```
