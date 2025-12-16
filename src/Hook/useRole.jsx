@@ -12,6 +12,7 @@ const useRole = () => {
       const res = await axiosSecure.get(`/users/${user?.email}/role`);
       return res.data.role;
     },
+    enabled: !!user?.email,
   });
   return { role, isLoading };
 };

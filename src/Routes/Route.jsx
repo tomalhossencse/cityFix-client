@@ -22,6 +22,7 @@ import CitizenRoute from "./CitizenRoute";
 import AssignedIssues from "../Page/AssignedIssues/AssignedIssues";
 import StaffRoute from "./StaffRoute";
 import Payments from "../Page/Payments/Payments";
+import ErrorPage from "../Page/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ export const router = createBrowserRouter([
       {
         path: "premuim-success",
         Component: PremuimSuccess,
+      },
+      {
+        path: "*",
+        Component: ErrorPage,
       },
     ],
   },

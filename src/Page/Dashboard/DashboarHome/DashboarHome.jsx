@@ -3,8 +3,12 @@ import useRole from "../../../Hook/useRole";
 import CitizenDashboard from "./CitizenDashboard";
 import StaffDashboard from "./StaffDashboard";
 import AdminDashboard from "./AdminDashboard";
+import Loading from "../../../Components/Loading/Loading";
 const DashboardHome = () => {
-  const { role } = useRole();
+  const { role, isLoading } = useRole();
+  if (isLoading) {
+    return <Loading />;
+  }
   return (
     <div>
       {role === "staff" ? (
