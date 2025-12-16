@@ -62,7 +62,7 @@ const IssueCard = ({ issue }) => {
     }
 
     const res = await axiosSecure.post("/upvotes", upvoteData);
-    if (res?.data?.insertedId) {
+    if (res.data.insertedId) {
       refetch();
       toast.success("Upvote Successfully!");
     }
