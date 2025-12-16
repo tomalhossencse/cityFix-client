@@ -9,24 +9,28 @@ const axiosSecure = axios.create({
 const useAxiosSecure = () => {
   const { user, userLogOut } = useContext(AuthContext);
   const navigate = useNavigate();
+
   useEffect(() => {
     // res intercepter
     const RequestInterceptor = axiosSecure.interceptors.request.use(
       (config) => {
-        config.headers.Authorization = `Bearer ${user?.accessToken}`;
+        if (user?.accessToken) {
+          config.headers.Authorization = `Bearer ${user?.accessToken}`;
+        }
         return config;
       }
-      // req inercepter
     );
+
     const ResponseInterceptor = axiosSecure.interceptors.response.use(
       (res) => {
         return res;
       },
-      (error) => {
-        console.log(error);
-        const errorStatus = error.status;
+      async (error) => {
+        // console.log(error);
+        const errorStatus = error.response?.status;
+
         if (errorStatus === 401 || errorStatus === 403) {
-          userLogOut().then(() => {
+          await userLogOut().then(() => {
             navigate("/login");
           });
         }
