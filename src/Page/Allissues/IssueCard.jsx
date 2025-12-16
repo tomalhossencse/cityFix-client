@@ -53,7 +53,7 @@ const IssueCard = ({ issue }) => {
       upvoteAt: new Date(),
     };
     if (!user) {
-      navigate("/login");
+      return navigate("/login");
     }
 
     if (upvoteData?.citzenEmail === upvoteData?.upvoterEmail) {
