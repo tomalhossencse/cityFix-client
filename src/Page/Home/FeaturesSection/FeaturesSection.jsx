@@ -35,7 +35,7 @@ const FeaturesSection = () => {
                   />
                 </div>
               </div>
-              <h3 className="text-xl font-semibold text-accent mb-3 text-center">
+              <h3 className="md:text-xl text-md font-semibold text-accent mb-3 text-center">
                 {feature.title}
               </h3>
               <p className="text-accent text-center">{feature.description}</p>

@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import Loading from "../../Components/Loading/Loading";
 import { DateFormat } from "../../Utility/FormateDate";
 import { useForm } from "react-hook-form";
-import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
+import DownlaodPdf from "../../Components/pdf/DownloadPdf";
 const Payments = () => {
   const purposeCollections = ["issue", "profile"];
   const axiosSecure = useAxiosSecure();
@@ -92,6 +92,9 @@ const Payments = () => {
               ))}
             </tbody>
           </table>
+        </div>
+        <div className="max-w-5xl mx-auto my-10 px-6">
+          <DownlaodPdf payments={payments} />
         </div>
       </div>
     </>

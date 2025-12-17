@@ -52,59 +52,71 @@ const StaffDashboard = () => {
   return (
     <div className="m-8">
       <h1 className="section-title my-4">Your Dashboard Overview</h1>
-      <div className="grid grid-cols-3 gap-4">
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  gap-4">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Assigned</p>
-            <h1 className="text-4xl font-black">{assignedCount}</h1>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Assigned
+            </p>
+            <h1 className="md:text-4xl text-2xl font-black">{assignedCount}</h1>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Today Tasks</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Today
+            </p>
             <h1 className="text-4xl font-black  ">{todaysTasksCount}</h1>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Pending</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Pending
+            </p>
             <h1 className="text-4xl font-black  ">{pendingCount}</h1>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Working</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Working
+            </p>
             <h1 className="text-4xl font-black  ">{workingCount}</h1>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Resloved</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Resloved
+            </p>
             <h1 className="text-4xl font-black  ">{resolvedCount}</h1>
           </div>
         </div>
 
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+            <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Closed</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Closed
+            </p>
             <h1 className="text-4xl font-black  ">{closedCount}</h1>
           </div>
         </div>

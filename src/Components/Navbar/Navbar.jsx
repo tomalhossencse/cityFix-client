@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { NavLink } from "react-router";
-
 import Container from "../../Utility/Container";
-
 import User from "../User/User";
 import Theme from "../Theme/Theme";
 

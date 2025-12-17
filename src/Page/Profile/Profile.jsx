@@ -12,8 +12,6 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import { updateProfile } from "firebase/auth";
 import { auth } from "../../Firebase/firebase.config";
-import { IoEyeOff } from "react-icons/io5";
-import SocialSign from "../../Components/SocialSign/SocialSign";
 
 const Profile = () => {
   const axiosSecure = useAxiosSecure();
@@ -26,7 +24,7 @@ const Profile = () => {
   const { data: myuser, isLoading } = useQuery({
     queryKey: ["users", user?.email],
     queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${email}`);
+      const res = await axiosSecure.get(`/users/${user?.email}`);
       return res.data;
     },
   });

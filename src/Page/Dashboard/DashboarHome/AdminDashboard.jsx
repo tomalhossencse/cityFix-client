@@ -49,30 +49,34 @@ const AdminDashboard = () => {
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total submitted</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total submitted
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.total}
             </h1>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={16} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Pending Issues</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Pending Issues
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.pending}
             </h1>
             <p></p>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">
+            <p className="md:text-xl text-md font-semibold text-accent">
               Total In-Procesing
             </p>
             <h1 className="md:text-4xl text-2xl font-black">
@@ -81,60 +85,70 @@ const AdminDashboard = () => {
             <p></p>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Working</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total Working
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.working}
             </h1>
             <p></p>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Resloved</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total Resloved
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.resloved}
             </h1>
           </div>
         </div>
 
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Closed</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total Closed
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.closed}
             </h1>
             <p></p>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Rejected</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total Rejected
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.rejected}
             </h1>
             <p></p>
           </div>
         </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md p-6">
+        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
           <div className="bg-gray-100 p-2 rounded-full">
             <FaRegUser size={20} />
           </div>
           <div>
-            <p className="text-xl font-semibold text-accent">Total Payments</p>
+            <p className="md:text-xl text-md font-semibold text-accent">
+              Total Payments
+            </p>
             <h1 className="md:text-4xl text-2xl font-black">
               {stats?.issues?.totalPayments} BDT
             </h1>

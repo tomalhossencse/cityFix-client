@@ -35,7 +35,6 @@ import Swal from "sweetalert2";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import toast from "react-hot-toast";
-import IssuesNotFoundPage from "../IssuesNotFoundPage/IssuesNotFoundPage";
 
 const IssueDetails = () => {
   const { user, loading } = useContext(AuthContext);
@@ -47,7 +46,6 @@ const IssueDetails = () => {
   const {
     data: issue,
     isLoading,
-    isError,
     refetch,
   } = useQuery({
     queryKey: ["issues", id],
@@ -56,7 +54,6 @@ const IssueDetails = () => {
       return res.data;
     },
     enabled: !!id,
-    retry: false,
   });
 
   const { data: userDetails } = useQuery({
@@ -77,10 +74,6 @@ const IssueDetails = () => {
   });
 
   if (isLoading || loading) return <Loading />;
-
-  if (isError || !issue) {
-    return <IssuesNotFoundPage />;
-  }
 
   const {
     issueTitle,
