@@ -66,8 +66,8 @@ const MyIssues = () => {
   //   console.log(issues);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div className="flex justify-between items-center mb-4">
+      <div className="md:p-8 p-2 bg-base-100 m-8 rounded-xl">
+        <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
           <div className="flex px-4 section-title">
             My Issues : ({issues.length})
           </div>
@@ -143,6 +143,7 @@ const MyIssues = () => {
 
           {editIssue && (
             <IssueEdit
+              setEditIssue={setEditIssue}
               isLoading={isLoading}
               issue={editIssue}
               modelRef={modelRef}

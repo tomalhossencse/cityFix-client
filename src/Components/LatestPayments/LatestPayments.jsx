@@ -43,7 +43,7 @@ const LatestPayments = () => {
                   <td>{index + 1}</td>
 
                   <td>
-                    <div className="flex items-center gap-3 min-w-[250px]">
+                    <div className="flex items-center gap-3 max-w-[250px]">
                       <div className="avatar">
                         <div className="mask mask-squircle h-10 w-10">
                           <img

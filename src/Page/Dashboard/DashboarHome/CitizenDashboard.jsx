@@ -41,102 +41,114 @@ const CitizenDashboard = () => {
   return (
     <div className="m-8">
       <h1 className="section-title my-4">Your Dashboard Overview</h1>
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  gap-4">
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total submitted
+              submitted
             </p>
-            <h1 className="text-4xl font-black">{stats?.issues?.total}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.total}
+            </h1>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Pending Issues
+              Issues
             </p>
-            <h1 className="text-4xl font-black  ">{stats?.issues?.pending}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.pending}
+            </h1>
             <p></p>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total In-Procesing
+              Procesing
             </p>
-            <h1 className="text-4xl font-black  ">
+            <h1 className="text-2xl md:text-4xl  font-black">
               {stats?.issues?.procesing}
             </h1>
             <p></p>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total Working
+              Working
             </p>
-            <h1 className="text-4xl font-black  ">{stats?.issues?.working}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.working}
+            </h1>
             <p></p>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total Resloved
+              Resloved
             </p>
-            <h1 className="text-4xl font-black  ">{stats?.issues?.resloved}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.resloved}
+            </h1>
           </div>
         </div>
 
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total Closed
+              Closed
             </p>
-            <h1 className="text-4xl font-black  ">{stats?.issues?.closed}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.closed}
+            </h1>
             <p></p>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total Rejected
+              Rejected
             </p>
-            <h1 className="text-4xl font-black  ">{stats?.issues?.rejected}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.rejected}
+            </h1>
             <p></p>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={32} />
+          <div className="bg-gray-100 p-2 rounded-full">
+            <FaRegUser size={20} />
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Total Payments
+              Payments
             </p>
-            <h1 className="text-4xl font-black  ">
-              BDT {stats?.issues?.totalPayments}
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {stats?.issues?.totalPayments}
             </h1>
             <p></p>
           </div>

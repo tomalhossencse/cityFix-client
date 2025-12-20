@@ -19,17 +19,19 @@ const SocialSign = () => {
           role: "citizen",
           accountStatus: "active",
           planType: "free",
+
           isSubscribed: false,
         };
 
-        axiosSecure.post("/users", userInfo);
-        navigate("/dashboard");
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Login Successfull!",
-          showConfirmButton: false,
-          timer: 1500,
+        axiosSecure.post("/users", userInfo).then(() => {
+          navigate("/dashboard");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Login Successfull!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
         });
       })
       .catch((error) => {

@@ -72,7 +72,9 @@ const StaffDashboard = () => {
             <p className="md:text-xl text-md font-semibold text-accent">
               Today
             </p>
-            <h1 className="text-4xl font-black  ">{todaysTasksCount}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {todaysTasksCount}
+            </h1>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
@@ -83,7 +85,7 @@ const StaffDashboard = () => {
             <p className="md:text-xl text-md font-semibold text-accent">
               Pending
             </p>
-            <h1 className="text-4xl font-black  ">{pendingCount}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">{pendingCount}</h1>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
@@ -94,7 +96,7 @@ const StaffDashboard = () => {
             <p className="md:text-xl text-md font-semibold text-accent">
               Working
             </p>
-            <h1 className="text-4xl font-black  ">{workingCount}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">{workingCount}</h1>
           </div>
         </div>
         <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
@@ -105,7 +107,9 @@ const StaffDashboard = () => {
             <p className="md:text-xl text-md font-semibold text-accent">
               Resloved
             </p>
-            <h1 className="text-4xl font-black  ">{resolvedCount}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">
+              {resolvedCount}
+            </h1>
           </div>
         </div>
 
@@ -117,7 +121,7 @@ const StaffDashboard = () => {
             <p className="md:text-xl text-md font-semibold text-accent">
               Closed
             </p>
-            <h1 className="text-4xl font-black  ">{closedCount}</h1>
+            <h1 className="text-2xl md:text-4xl  font-black">{closedCount}</h1>
           </div>
         </div>
       </div>

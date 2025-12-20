@@ -1,12 +1,14 @@
 import React from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
+import { DateFormat } from "../../Utility/FormateDate";
 
 const DownlaodPdf = ({ payments }) => {
   const downlaodReport = () => {
-    const doc = new jsPDF();
+    const doc = new jsPDF({ orientation: "landscape" });
     const columns = [
       "No.",
+      "Name",
       "Email",
       "Transaction Id",
       "Paid Time",
@@ -15,9 +17,10 @@ const DownlaodPdf = ({ payments }) => {
     ];
     const rows = payments.map((pay, index) => [
       index + 1,
+      pay.customer_name,
       pay.customer_email,
       pay.transactionId,
-      pay.paidAt,
+      DateFormat(pay.paidAt),
       pay.paymentStatus,
       pay.amount,
     ]);

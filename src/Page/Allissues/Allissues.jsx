@@ -76,7 +76,7 @@ const Allissues = () => {
   if (isError) return <div>An error occurred while fetching issues.</div>;
 
   return (
-    <Container className="mt-24 min-h-screen px-6">
+    <Container className="mt-24 min-h-screen md:px-6 px-2">
       <div className="section-title">All Public Issues</div>
 
       <div className="grid gap-4 mb-6 md:flex grid-cols-3 md:mt-8 justify-center items-center">

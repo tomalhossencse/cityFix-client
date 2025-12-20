@@ -7,7 +7,13 @@ import Swal from "sweetalert2";
 import Loading from "../Loading/Loading";
 import toast from "react-hot-toast";
 
-const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
+const IssueEdit = ({
+  issue,
+  modelRef,
+  refetch,
+  loading: issueLoading,
+  setEditIssue,
+}) => {
   const {
     register,
     handleSubmit,
@@ -297,7 +303,9 @@ const IssueEdit = ({ issue, modelRef, refetch, loading: issueLoading }) => {
         <div className="modal-action">
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn-small">Close</button>
+            <button onClick={() => setEditIssue(null)} className="btn-small">
+              Close
+            </button>
           </form>
         </div>
       </div>

@@ -16,7 +16,7 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { FaPersonRunning } from "react-icons/fa6";
-const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
+const IssueRow = ({ issue, index, refetch, setEditIssue }) => {
   const axiosSecure = useAxiosSecure();
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
@@ -80,23 +80,30 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   return (
     <tr>
       <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4   ">
-        <img src={photo} className="w-16 rounded-md" alt="" />
+      <td
+        className="flex justify-start
+        items-center gap-3 min-w-[250px]"
+      >
         <div>
-          <p className="font-semibold text-[16px]">{issueTitle}</p>
+          <img src={photo} className="mask mask-squircle h-10 w-10" alt="" />
+        </div>
+        <div>
+          <p className="font-semibold">{issueTitle}</p>
           <p className="font-semibold text-primary">
             {category} ({upvoteCount})
           </p>
         </div>
       </td>
-      <td>{trackingId}</td>
-      <td>{DateFormat(createAt)}</td>
+      <td className="whitespace-nowrap">{trackingId}</td>
+      <td className="whitespace-nowrap">{DateFormat(createAt)}</td>
       <td>
         <div
           className={`flex items-center text-md font-bold justify-start gap-1 ${statusColor[status]}`}
         >
           <span>{statusIcon[status]}</span>
-          <span>{CapitalizeFirstLetter(status)} </span>
+          <span className="space-x-2 whitespace-nowrap">
+            {CapitalizeFirstLetter(status)}{" "}
+          </span>
         </div>
       </td>
 
@@ -146,12 +153,11 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
         </div>
       </td>
 
-      <td className="space-x-2   ">
+      <td className="space-x-2 whitespace-nowrap">
         {status === "pending" && (
           <button
             onClick={() => {
               setEditIssue(issue);
-              modelRef.current.showModal();
             }}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >

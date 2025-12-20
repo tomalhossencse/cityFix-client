@@ -1,8 +1,13 @@
 import React, { useContext } from "react";
-import { MdHowToVote } from "react-icons/md";
+import {
+  MdCancel,
+  MdHowToVote,
+  MdLockOutline,
+  MdOutlinePendingActions,
+  MdOutlineTaskAlt,
+} from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
-import { HiCalendarDateRange } from "react-icons/hi2";
-import { FaArrowRightLong } from "react-icons/fa6";
+import { FaArrowRightLong, FaPersonRunning } from "react-icons/fa6";
 import { IoTime } from "react-icons/io5";
 import { Link, useNavigate } from "react-router";
 import { DateFormat } from "../../Utility/FormateDate";
@@ -11,10 +16,27 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 const IssueCard = ({ issue }) => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
+  const statusColor = {
+    pending: "bg-yellow-600",
+    rejected: "bg-red-500",
+    "in-progress": "bg-blue-600",
+    working: "bg-pink-600",
+    resolved: "bg-green-600",
+    closed: "bg-gray-500",
+  };
+  const statusIcon = {
+    pending: <MdOutlinePendingActions size={16} />,
+    rejected: <MdCancel size={16} />,
+    "in-progress": <AiOutlineLoading3Quarters size={16} />,
+    working: <FaPersonRunning size={16} />,
+    resolved: <MdOutlineTaskAlt size={16} />,
+    closed: <MdLockOutline size={16} />,
+  };
   const {
     issueTitle,
     createAt,
@@ -24,6 +46,7 @@ const IssueCard = ({ issue }) => {
     priority,
     status,
     _id,
+    category,
   } = issue;
 
   const { data: upvotes = [], refetch } = useQuery({
@@ -69,7 +92,7 @@ const IssueCard = ({ issue }) => {
   };
   return (
     <div
-      className="flex flex-col justify-between bg-base-200 p-6 rounded-xl space-y-4 shadow-md 
+      className="flex flex-col justify-between bg-base-200 md:p-6 p-4 rounded-xl space-y-4 shadow-md 
             transform transition duration-600 ease-in-out 
             hover:scale-105 hover:bg-base-100 hover:-translate-y-1"
     >
@@ -108,13 +131,15 @@ const IssueCard = ({ issue }) => {
             </div>
             <p>{DateFormat(createAt)}</p>
           </div>
-
-          <li className="flex items-center justify-center gap-1">
-            <span>
-              <HiCalendarDateRange />
-            </span>
-            <span>{status.toUpperCase()}</span>
-          </li>
+        </div>
+        <div className="flex justify-between">
+          <div className="bg-green-200  rounded-3xl px-2">{category}</div>
+          <div
+            className={`flex items-center justify-center gap-1 text-white rounded-2xl px-2 ${statusColor[status]}`}
+          >
+            <span>{statusIcon[status]}</span>
+            <span>{CapitalizeFirstLetter(status)}</span>
+          </div>
         </div>
         <ul className="flex justify-between text-accent">
           <Link
