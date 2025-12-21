@@ -41,14 +41,14 @@ const DashboardLayout = () => {
               <RiMenu2Line size="22" />
             </label>
 
-            <div className="flex items-center justify-start mr-[10%]">
+            <div className="flex items-center justify-start space-x-10 mr-[10%]">
               <div>
                 <Theme />
               </div>
               <div>
                 <User />
               </div>
-              <div>
+              <div className="md:block hidden">
                 <p className="text-primary text-xl font-bold">
                   {CapitalizeFirstLetter(user.displayName)}
                 </p>
