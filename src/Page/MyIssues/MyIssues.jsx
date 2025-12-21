@@ -6,39 +6,37 @@ import Loading from "../../Components/Loading/Loading";
 import IssueRow from "./IssueRow";
 import IssueEdit from "../../Components/IssueEdit/IssueEdit";
 import { useForm } from "react-hook-form";
-
+const STATUS_OPTIONS = [
+  "pending",
+  "rejected",
+  "in-progress",
+  "working",
+  "resolved",
+  "closed",
+];
+const PRIORITY_OPTIONS = ["normal", "high"];
+const CATEGORY_OPTIONS = [
+  "Road & Potholes",
+  "Streetlights",
+  "Water Leakage",
+  "Garbage & Waste",
+  "Drainage",
+  "Footpath & Sidewalk",
+  "Electricity",
+  "Public Safety",
+  "Traffic Signal",
+  "Other",
+];
 const MyIssues = () => {
-  const statusCollection = [
-    "pending",
-    "rejected",
-    "in-progress",
-    "working",
-    "resolved",
-    "closed",
-  ];
-  const categoriesCollections = [
-    "Road & Potholes",
-    "Streetlights",
-    "Water Leakage",
-    "Garbage & Waste",
-    "Drainage",
-    "Footpath & Sidewalk",
-    "Electricity",
-    "Public Safety",
-    "Traffic Signal",
-    "Other",
-  ];
-
-  const priorityCollection = ["normal", "high"];
   const { user } = useContext(AuthContext);
-  const modelRef = useRef();
-  const [editIssue, setEditIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
   const { register, watch } = useForm();
 
-  const status = watch("status");
-  const priority = watch("priority");
-  const category = watch("category");
+  const [editIssue, setEditIssue] = useState(null);
+  const modelRef = useRef();
+
+  const filters = watch(["status", "priority", "category"]);
+  const [status, priority, category] = filters;
 
   const {
     data: issues = [],
@@ -63,50 +61,48 @@ const MyIssues = () => {
   if (isLoading) {
     return <Loading />;
   }
-  //   console.log(issues);
+
   return (
     <>
-      <div className="md:p-8 p-2 bg-base-100 m-8 rounded-xl">
+      <div className="p-4 md:p-8 bg-base-100 m-4 md:m-8 rounded-xl shadow-sm">
         <div className="flex flex-wrap justify-between items-center mb-4 gap-4">
-          <div className="flex px-4 section-title">
-            My Issues : ({issues.length})
-          </div>
+          <h2 className="text-xl font-bold">My Issues ({issues.length})</h2>
           {/* status filter */}
 
-          <div className="space-x-4">
+          <div className="flex flex-wrap gap-2">
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered select-sm"
               {...register("status")}
-              defaultValue={""}
             >
-              <option value={""}>All (Status)</option>
-              {statusCollection.map((status, index) => (
-                <option key={index}>{status}</option>
+              <option value="">All Status</option>
+              {STATUS_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
               ))}
             </select>
 
-            {/* priority filter */}
-
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered select-sm"
               {...register("priority")}
-              defaultValue={""}
             >
-              <option value={""}>All (Priority)</option>
-              {priorityCollection.map((priority, index) => (
-                <option key={index}>{priority}</option>
+              <option value="">All Priority</option>
+              {PRIORITY_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
               ))}
             </select>
-            {/* category filter */}
 
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered select-sm"
               {...register("category")}
-              defaultValue={""}
             >
-              <option value={""}>All (Category)</option>
-              {categoriesCollections.map((cat, index) => (
-                <option key={index}>{cat}</option>
+              <option value="">All Categories</option>
+              {CATEGORY_OPTIONS.map((opt) => (
+                <option key={opt} value={opt}>
+                  {opt}
+                </option>
               ))}
             </select>
           </div>
@@ -116,12 +112,12 @@ const MyIssues = () => {
             {/* head */}
             <thead className="bg-base-200">
               <tr>
-                <th></th>
+                <th>#</th>
                 <th>Issue Title</th>
                 <th>Tracking Id</th>
-                <th>Created Time</th>
+                <th>Created</th>
                 <th>Status</th>
-                <th>Staff Info</th>
+                <th>Staff</th>
                 <th>Priority</th>
                 <th>Actions</th>
               </tr>
@@ -129,27 +125,31 @@ const MyIssues = () => {
             <tbody>
               {issues.map((issue, index) => (
                 <IssueRow
+                  modelRef={modelRef}
                   setEditIssue={setEditIssue}
                   key={issue._id}
                   issue={issue}
                   index={index}
-                  modelRef={modelRef}
                   refetch={refetch}
-                  setIs
                 />
               ))}
             </tbody>
           </table>
+          <div>
+            {issues.length === 0 && (
+              <p className="text-center py-10 text-gray-400">
+                No issues found matching filters.
+              </p>
+            )}
+          </div>
 
-          {editIssue && (
-            <IssueEdit
-              setEditIssue={setEditIssue}
-              isLoading={isLoading}
-              issue={editIssue}
-              modelRef={modelRef}
-              refetch={refetch}
-            />
-          )}
+          <IssueEdit
+            setEditIssue={setEditIssue}
+            isLoading={isLoading}
+            issue={editIssue}
+            modelRef={modelRef}
+            refetch={refetch}
+          />
         </div>
       </div>
     </>

@@ -16,8 +16,9 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { FaPersonRunning } from "react-icons/fa6";
-const IssueRow = ({ issue, index, refetch, setEditIssue }) => {
+const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   const axiosSecure = useAxiosSecure();
+
   const statusIcon = {
     pending: <MdOutlinePendingActions size={20} />,
     rejected: <MdCancel size={20} />,
@@ -78,7 +79,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue }) => {
     });
   };
   return (
-    <tr>
+    <tr className="hover">
       <th>{index + 1}</th>
       <td
         className="flex justify-start
@@ -110,31 +111,23 @@ const IssueRow = ({ issue, index, refetch, setEditIssue }) => {
       {/* sttaf info */}
 
       <td>
-        {assignedStaff ? (
-          <>
-            <div
-              tabIndex={0}
-              className="collapse collapse-arrow bg-base-100 border-base-200 border"
-            >
-              <div className="collapse-title font-semibold text-primary">
-                {CapitalizeFirstLetter(assignedStaff?.status)}
-              </div>
-              <div className="collapse-content text-md text-accent">
-                <p className="text-[14px]">{assignedStaff?.staffName}</p>
-                <p>{assignedStaff?.sttafContact}</p>
-              </div>
-            </div>
-          </>
-        ) : (
-          <div
-            tabIndex={0}
-            className="collapse collapse-arrow bg-base-100 border-base-200 border"
-          >
-            <div className="collapse-title font-semibold text-red-500">
-              Not Assigned
-            </div>
+        <div className="collapse collapse-arrow bg-base-100 border border-base-200 min-w-[150px]">
+          <input type="checkbox" className="peer" />
+          <div className="collapse-title p-2 text-sm font-semibold">
+            {assignedStaff ? (
+              CapitalizeFirstLetter(assignedStaff.status)
+            ) : (
+              <span className="text-red-500">Not Assigned</span>
+            )}
           </div>
-        )}
+          {assignedStaff && (
+            <div className="collapse-content text-xs">
+              <p>{assignedStaff.staffName}</p>
+              <p>{assignedStaff.staffContact}</p>{" "}
+              {/* Fixed typo from sttafContact */}
+            </div>
+          )}
+        </div>
       </td>
       <td>
         <div
@@ -157,7 +150,10 @@ const IssueRow = ({ issue, index, refetch, setEditIssue }) => {
         {status === "pending" && (
           <button
             onClick={() => {
-              setEditIssue(issue);
+              if (modelRef?.current) {
+                // modelRef.current.showModal();
+                setEditIssue(issue);
+              }
             }}
             className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
           >

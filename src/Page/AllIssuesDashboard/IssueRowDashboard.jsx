@@ -57,7 +57,7 @@ const IssueRowDashboard = ({
     <tr>
       <th>{index + 1}</th>
       <td>
-        <div className="flex items-center gap-3 max-w-[250px]">
+        <div className="flex items-center gap-3 min-w-[250px]">
           <div className="avatar">
             <div className="mask mask-squircle h-10 w-10">
               <img src={photo} className="object-cover" />

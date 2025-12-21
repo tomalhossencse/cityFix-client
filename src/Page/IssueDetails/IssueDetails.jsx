@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from "react";
+import React, { useContext, useRef, useState } from "react";
 import { BiSolidCategoryAlt } from "react-icons/bi";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { FcHighPriority } from "react-icons/fc";
@@ -39,6 +39,7 @@ import toast from "react-hot-toast";
 const IssueDetails = () => {
   const { user, loading } = useContext(AuthContext);
   const modelRef = useRef();
+  const [editIssue, setEditIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -294,7 +295,12 @@ const IssueDetails = () => {
           <div className="flex flex-wrap gap-6 items-center justify-center text-accent mt-3">
             {user.email === email && status === "pending" && (
               <div
-                onClick={() => modelRef.current.showModal()}
+                onClick={() => {
+                  if (modelRef?.current) {
+                    // modelRef.current.showModal();
+                    setEditIssue(issue);
+                  }
+                }}
                 className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
               >
                 <span>
@@ -413,7 +419,13 @@ const IssueDetails = () => {
         </ul>
       </div>
 
-      <IssueEdit issue={issue} modelRef={modelRef} refetch={refetch} />
+      <IssueEdit
+        setEditIssue={setEditIssue}
+        isLoading={isLoading}
+        issue={editIssue}
+        modelRef={modelRef}
+        refetch={refetch}
+      />
     </Container>
   );
 };

@@ -13,7 +13,7 @@ import {
   YAxis,
 } from "recharts";
 const CitizenDashboard = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
 
   const axiosSecure = useAxiosSecure();
   const { data: stats = [], isLoading } = useQuery({
@@ -25,10 +25,9 @@ const CitizenDashboard = () => {
       return res.data;
     },
   });
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading />;
   }
-
   const chartData = [
     { name: "Pending", count: stats?.issues?.pending || 0 },
     { name: "Processing", count: stats?.issues?.procesing || 0 },
