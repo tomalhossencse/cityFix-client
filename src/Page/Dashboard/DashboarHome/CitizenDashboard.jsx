@@ -60,7 +60,7 @@ const CitizenDashboard = () => {
           </div>
           <div>
             <p className="md:text-xl text-md font-semibold text-accent">
-              Issues
+              Pending
             </p>
             <h1 className="text-2xl md:text-4xl  font-black">
               {stats?.issues?.pending}
