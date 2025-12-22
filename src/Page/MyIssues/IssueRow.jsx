@@ -79,7 +79,7 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
     });
   };
   return (
-    <tr className="hover">
+    <tr>
       <th>{index + 1}</th>
       <td
         className="flex justify-start

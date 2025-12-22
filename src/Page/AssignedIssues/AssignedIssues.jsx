@@ -60,18 +60,6 @@ const AssignedIssues = () => {
     enabled: !!user?.email,
   });
 
-  // const {
-  //   data: issues = [],
-  //   refetch,
-  //   isLoading,
-  // } = useQuery({
-  //   queryKey: ["issues", user?.email],
-  //   queryFn: async () => {
-  //     const res = await axiosSecure.get(`/issues/sttafs?email=${user?.email}`);
-  //     return res.data;
-  //   },
-  // });
-
   const { data: sttafs = [] } = useQuery({
     queryKey: [
       "sttafs-filter",
@@ -156,16 +144,15 @@ const AssignedIssues = () => {
   };
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex px-4 section-title">
-            Assigned issues : ({issues.length})
-          </div>
+      <div className="p-4 md:p-8 bg-base-100 m-4 md:m-8 rounded-xl shadow-sm">
+        <div className="md:flex p-4 justify-between items-center mb-4 space-y-4">
+          <h2 className="text-xl font-bold">Assigned issues : ({issues.length})</h2>
+
           {/* status filter */}
 
-          <div className="space-x-5">
+          <div className="flex justify-center flex-wrap gap-2">
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered  md:w-[180px]"
               {...register("status")}
               defaultValue={""}
             >
@@ -178,7 +165,7 @@ const AssignedIssues = () => {
             {/* priority filter */}
 
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered  md:w-[180px]"
               {...register("priority")}
               defaultValue={""}
             >
@@ -190,7 +177,7 @@ const AssignedIssues = () => {
             {/* category filter */}
 
             <select
-              className="select select-bordered w-[120px] md:w-[180px]"
+              className="select select-bordered  md:w-[180px]"
               {...register("category")}
               defaultValue={""}
             >

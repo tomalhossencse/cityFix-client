@@ -44,16 +44,19 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
   return (
     <tr>
       <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4   ">
-        <img src={photo} className="w-16 rounded-md" alt="" />
+      <td className="flex justify-start
+        items-center gap-3 min-w-[250px]">
+      <div>
+          <img src={photo} className="mask mask-squircle h-10 w-10" alt="" />
+      </div>
         <div>
-          <p className="font-semibold text-[16px]">{issueTitle}</p>
+          <p className="font-semibold">{issueTitle}</p>
           <p className="font-semibold text-primary">
             {category} ({upvoteCount})
           </p>
         </div>
       </td>
-      <td>
+      <td className="whitespace-nowrap">
         <div>
           <p>{trackingId}</p>
           <p>
@@ -61,8 +64,8 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           </p>
         </div>
       </td>
-      <td>{DateFormat(createAt)}</td>
-      <td>
+      <td className="whitespace-nowrap">{DateFormat(createAt)}</td>
+      <td className="whitespace-nowrap">
         <div
           className={`flex items-center text-md font-bold justify-start gap-1 ${statusColor[status]}`}
         >
@@ -70,7 +73,7 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           <span>{CapitalizeFirstLetter(status)} </span>
         </div>
       </td>
-      <td>
+      <td className="whitespace-nowrap">
         <div
           className={`flex gap-1 items-center justify-start ${
             priority === "normal" ? "text-primary" : "text-red-500"
@@ -86,10 +89,10 @@ const AssigndIssueRow = ({ issue, index, handleChangeStatus }) => {
           <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
         </div>
       </td>
-      <td>
+      <td className="whitespace-nowrap">
         <div
           tabIndex={0}
-          className="collapse  bg-base-100 border-base-200 border"
+          className="collapse collapse-arrow bg-base-100 border border-base-200 min-w-[150px]"
         >
           <div
             className={`${
