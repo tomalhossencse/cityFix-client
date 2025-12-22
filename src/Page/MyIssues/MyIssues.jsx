@@ -71,7 +71,7 @@ const MyIssues = () => {
 
           <div className="flex flex-wrap gap-2">
             <select
-              className="select select-bordered select-sm  md:w-[180px]"
+              className="select select-bordered   md:w-[180px]"
               {...register("status")}
             >
               <option value="">All Status</option>
@@ -83,7 +83,7 @@ const MyIssues = () => {
             </select>
 
             <select
-              className="select select-bordered select-sm  md:w-[180px]"
+              className="select select-bordered   md:w-[180px]"
               {...register("priority")}
             >
               <option value="">All Priority</option>
@@ -95,7 +95,7 @@ const MyIssues = () => {
             </select>
 
             <select
-              className="select select-bordered select-sm  md:w-[180px]"
+              className="select select-bordered   md:w-[180px]"
               {...register("category")}
             >
               <option value="">All Categories</option>
