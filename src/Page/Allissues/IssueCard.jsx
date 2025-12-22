@@ -17,6 +17,7 @@ import toast from "react-hot-toast";
 import { useQuery } from "@tanstack/react-query";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import Loading from "../../Components/Loading/Loading";
 const IssueCard = ({ issue }) => {
   const { user } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
@@ -49,47 +50,60 @@ const IssueCard = ({ issue }) => {
     category,
   } = issue;
 
-  const { data: upvotes = [], refetch } = useQuery({
-    queryKey: ["upvotes", issue?._id],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/upvotes/${issue._id}`);
-      return res.data;
-    },
-  });
+ const { data: upvotes = [], refetch } = useQuery({
+  queryKey: ["upvotes", issue?._id],
+  enabled: !!issue?._id,
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/upvotes/${issue._id}`);
+    return res.data;
+  },
+});
 
-  const { data: userDetails } = useQuery({
-    queryKey: ["users", user?.email],
-    queryFn: async () => {
-      const res = await axiosSecure.get(`/users/${user?.email}`);
-      return res.data;
-    },
-  });
+const { data: userDetails } = useQuery({
+  queryKey: ["users", user?.email],
+  enabled: !!user?.email,
+  queryFn: async () => {
+    const res = await axiosSecure.get(`/users/${user.email}`);
+    return res.data;
+  },
+});
 
-  const handleUpvoteCount = async (issue) => {
-    if (userDetails?.accountStatus === "blocked") {
-      return toast.error("Your Account is Blocked By Admin");
-    }
-    const upvoteData = {
-      issueId: issue?._id,
-      upvoterEmail: user?.email,
-      citzenEmail: issue?.email,
-      upvoteAt: new Date(),
-    };
-    if (!user) {
-      return navigate("/login");
-    }
 
-    if (upvoteData?.citzenEmail === upvoteData?.upvoterEmail) {
-      toast.error("You can’t upvote your own issue.");
-      return;
-    }
+ const handleUpvoteCount = async (issue) => {
+  if (!user) {
+    return navigate("/login");
+  }
 
-    const res = await axiosSecure.post("/upvotes", upvoteData);
-    if (res.data.insertedId) {
-      refetch();
-      toast.success("Upvote Successfully!");
-    }
+  if (userDetails?.accountStatus === "blocked") {
+    return toast.error("Your account is blocked by admin");
+  }
+
+  if (user.email === issue.email) {
+    return toast.error("You can’t upvote your own issue");
+  }
+
+  const upvoteData = {
+    issueId: issue._id,
+    citzenEmail: user.email, 
+    upvoteAt: new Date(),
   };
+
+  try {
+    const res = await axiosSecure.post("/upvotes", upvoteData);
+
+    if (res.data?.insertedId) {
+      refetch();
+      toast.success("Upvoted successfully!");
+    }
+  } catch (error) {
+    if (error.response?.status === 409) {
+      toast.error("You already upvoted this issue");
+    } else {
+      toast.error("Something went wrong");
+    }
+  }
+};
+
   return (
     <div
       className="flex flex-col justify-between bg-base-200 md:p-6 p-4 rounded-xl space-y-4 shadow-md 
