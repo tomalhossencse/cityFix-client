@@ -32,8 +32,11 @@ const AllIssuesDashboard = () => {
     ],
     enabled: !!selectedIssue,
     queryFn: async () => {
+      const district = encodeURIComponent(selectedIssue?.district);
+      const category = encodeURIComponent(selectedIssue?.category);
+      const region = encodeURIComponent(selectedIssue?.region);
       const res = await axiosSecure.get(
-        `/sttafs-filter?district=${selectedIssue?.district}&category=${selectedIssue?.category}`
+        `/sttafs-filter?district=${district}&category=${category}&region=${region}`,
       );
       return res.data;
     },
@@ -63,7 +66,7 @@ const AllIssuesDashboard = () => {
 
       const res = await axiosSecure.patch(
         `/issues/${selectedIssue._id}/timeline`,
-        updateData
+        updateData,
       );
 
       if (res.data.modifiedCount) {
