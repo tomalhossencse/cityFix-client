@@ -29,6 +29,7 @@ const AllIssuesDashboard = () => {
       "sttafs-filter",
       selectedIssue?.district,
       selectedIssue?.category,
+      selectedIssue?.region,
     ],
     enabled: !!selectedIssue,
     queryFn: async () => {
@@ -62,7 +63,7 @@ const AllIssuesDashboard = () => {
         message: `Staff : ${sttafName} assigned to this issue`,
         role: "admin",
       };
-      console.log(updateData);
+      // console.log(updateData);
 
       const res = await axiosSecure.patch(
         `/issues/${selectedIssue._id}/timeline`,

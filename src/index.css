@@ -1,87 +1,77 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: light --default
-  , dark --prefersdark;
+  themes:
+    light --default,
+    dark --prefersdark;
 }
 
 @plugin "daisyui/theme" {
   name: "light";
   default: true;
-  --color-primary: #4CAF4F;
-  --color-secondary: #FFFF00;
-  --color-base-300 : #e7e7e7;
-  --color-accent: #4D4D4D;
-  --color-accent-content :#F5F7FA;
-   --color-warning: #F59E0B;
-  --color-warning-content: #1F2937;
-   --color-success: #00D390;
-  --color-success-content: #052E2B;
+  --color-primary: #4caf4f;
+  --color-secondary: #ff0000;
+  --color-base-300: #e7e7e7;
+  --color-accent: #4d4d4d;
+  --color-accent-content: #f5f7fa;
+  --color-warning: #f59e0b;
+  --color-warning-content: #1f2937;
+  --color-success: #00d390;
+  --color-success-content: #052e2b;
 }
 
-
-body{
-    font-family: "Urbanist", sans-serif;
+body {
+  font-family: "Urbanist", sans-serif;
 }
-.btn-primary{
+.btn-primary {
   @apply btn bg-primary text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-warning;
 }
-.btn-yellow{
+.btn-yellow {
   @apply btn bg-warning text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-primary;
 }
-.btn-red{
+.btn-red {
   @apply btn bg-red-600 text-base-100 rounded-3xl px-8 py-6 text-xl font-bold  hover:bg-primary;
 }
-.btn-primary-rounded{
+.btn-primary-rounded {
   @apply btn bg-primary rounded-xl px-8 py-6 text-xl font-bold text-secondary-content hover:bg-black hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
 }
-.btn-primary-rounded-small{
+.btn-primary-rounded-small {
   @apply btn bg-primary rounded-md text-lg font-bold text-secondary-content hover:bg-base-100 hover:border-primary hover:border-2 shadow-md hover:shadow-xl;
 }
-.btn-outline{
- @apply btn btn-outline  rounded-3xl px-6 font-bold text-primary hover:bg-primary hover:text-base-100
+.btn-outline {
+  @apply btn btn-outline  rounded-3xl px-6 font-bold text-primary hover:bg-primary hover:text-base-100;
 }
-.btn-outline-small{
- @apply w-full btn btn-outline  rounded-3xl font-semibold text-primary hover:bg-primary hover:text-secondary-content
+.btn-outline-small {
+  @apply w-full btn btn-outline  rounded-3xl font-semibold text-primary hover:bg-primary hover:text-secondary-content;
 }
-.btn-small{
-  @apply btn btn-sm bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+.btn-small {
+  @apply btn btn-sm bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent;
 }
-.btn-small-black{
-  @apply btn btn-sm bg-accent text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent/70
+.btn-small-black {
+  @apply btn btn-sm bg-accent text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent/70;
 }
-.btn-small-red{
-  @apply btn btn-sm bg-red-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+.btn-small-red {
+  @apply btn btn-sm bg-red-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent;
 }
-.btn-small-blue{
-  @apply btn btn-sm bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+.btn-small-blue {
+  @apply btn btn-sm bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent;
 }
-.btn-blue{
-  @apply btn w-full bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+.btn-blue {
+  @apply btn w-full bg-blue-600 text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent;
 }
-.btn-small-full{
-  @apply btn w-full  font-bold bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent
+.btn-small-full {
+  @apply btn w-full  font-bold bg-primary text-white rounded-md shadow-md transition-transform hover:scale-105 hover:text-base-100 hover:bg-accent;
 }
-.btn-small-2{
-  @apply btn btn-sm hover:bg-primary
+.btn-small-2 {
+  @apply btn btn-sm hover:bg-primary;
 }
-.btn-full{
-  @apply btn w-full bg-primary text-base-100 rounded-md shadow-md hover:bg-accent transition-transform hover:scale-105 hover:text-base-100
-}
-.navbar .active {
-  @apply text-base-100 font-bold bg-primary rounded-2xl
+.btn-full {
+  @apply btn w-full bg-primary text-base-100 rounded-md shadow-md hover:bg-accent transition-transform hover:scale-105 hover:text-base-100;
 }
 
-.glass-card {
-  background: rgba(255, 255, 255, 0.14);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  /* overflow: hidden; */
-}
-.section-title{
-  @apply md:text-3xl text-center text-2xl font-bold  text-accent py-2 rounded-4xl  mb-4
+.section-title {
+  @apply md:text-3xl text-center text-2xl font-bold  text-accent py-2 rounded-4xl  mb-4;
 }
 html {
   scroll-behavior: smooth;
