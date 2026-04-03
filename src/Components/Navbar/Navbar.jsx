@@ -39,7 +39,7 @@ const Navbar = () => {
   return (
     <nav className="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/10 backdrop-blur-md bg-base-100/70">
       <Container>
-        <div className="navbar min-h-[16]">
+        <div className="navbar min-h-16">
           <div className="navbar-start">
             {/* mobile menu */}
             <div className="dropdown">

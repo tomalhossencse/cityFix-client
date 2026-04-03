@@ -6,16 +6,17 @@ import Loading from "../../../Components/Loading/Loading";
 import Container from "../../../Utility/Container";
 
 const CommunityStats = () => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const { data: stats = [], isLoading } = useQuery({
     queryKey: ["dashboard", user?.email],
+    enabled: !!user?.email && !loading,
     queryFn: async () => {
       const res = await axiosSecure.get(`/adminDashboard/stats`);
       return res.data;
     },
   });
-  if (isLoading) {
+  if (isLoading || loading) {
     return <Loading />;
   }
   return (

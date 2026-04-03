@@ -19,7 +19,7 @@ import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import Loading from "../../Components/Loading/Loading";
 const IssueCard = ({ issue }) => {
-  const { user } = useContext(AuthContext);
+  const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
   const statusColor = {
@@ -50,59 +50,58 @@ const IssueCard = ({ issue }) => {
     category,
   } = issue;
 
- const { data: upvotes = [], refetch } = useQuery({
-  queryKey: ["upvotes", issue?._id],
-  enabled: !!issue?._id,
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/upvotes/${issue._id}`);
-    return res.data;
-  },
-});
+  const { data: upvotes = [], refetch } = useQuery({
+    queryKey: ["upvotes", issue?._id],
+    enabled: !!issue?._id,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/upvotes/${issue._id}`);
+      return res.data;
+    },
+  });
 
-const { data: userDetails } = useQuery({
-  queryKey: ["users", user?.email],
-  enabled: !!user?.email,
-  queryFn: async () => {
-    const res = await axiosSecure.get(`/users/${user.email}`);
-    return res.data;
-  },
-});
+  const { data: userDetails } = useQuery({
+    queryKey: ["users", user?.email],
+    enabled: !!user?.email && !loading,
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/users/${user.email}`);
+      return res.data;
+    },
+  });
 
+  const handleUpvoteCount = async (issue) => {
+    if (!user) {
+      return navigate("/login");
+    }
 
- const handleUpvoteCount = async (issue) => {
-  if (!user) {
-    return navigate("/login");
-  }
+    if (userDetails?.accountStatus === "blocked") {
+      return toast.error("Your account is blocked by admin");
+    }
 
-  if (userDetails?.accountStatus === "blocked") {
-    return toast.error("Your account is blocked by admin");
-  }
+    if (user.email === issue.email) {
+      return toast.error("You can’t upvote your own issue");
+    }
 
-  if (user.email === issue.email) {
-    return toast.error("You can’t upvote your own issue");
-  }
+    const upvoteData = {
+      issueId: issue._id,
+      citzenEmail: user.email,
+      upvoteAt: new Date(),
+    };
 
-  const upvoteData = {
-    issueId: issue._id,
-    citzenEmail: user.email, 
-    upvoteAt: new Date(),
+    try {
+      const res = await axiosSecure.post("/upvotes", upvoteData);
+
+      if (res.data?.insertedId) {
+        refetch();
+        toast.success("Upvoted successfully!");
+      }
+    } catch (error) {
+      if (error.response?.status === 409) {
+        toast.error("You already upvoted this issue");
+      } else {
+        toast.error("Something went wrong");
+      }
+    }
   };
-
-  try {
-    const res = await axiosSecure.post("/upvotes", upvoteData);
-
-    if (res.data?.insertedId) {
-      refetch();
-      toast.success("Upvoted successfully!");
-    }
-  } catch (error) {
-    if (error.response?.status === 409) {
-      toast.error("You already upvoted this issue");
-    } else {
-      toast.error("Something went wrong");
-    }
-  }
-};
 
   return (
     <div
@@ -147,7 +146,9 @@ const { data: userDetails } = useQuery({
           </div>
         </div>
         <div className="flex justify-between">
-          <div className="bg-green-200  rounded-3xl px-2">{category}</div>
+          <div className="bg-green-200 dark:text-black  rounded-3xl px-2">
+            {category}
+          </div>
           <div
             className={`flex items-center justify-center gap-1 text-white rounded-2xl px-2 ${statusColor[status]}`}
           >
