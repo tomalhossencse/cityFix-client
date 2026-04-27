@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from "react";
+import { IoSunny, IoMoon } from "react-icons/io5";
 
 const Theme = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+  const [isDark, setIsDark] = useState(theme === "dark");
+
   useEffect(() => {
     const html = document.querySelector("html");
     html.setAttribute("data-theme", theme);
@@ -9,44 +12,38 @@ const Theme = () => {
   }, [theme]);
 
   const handleTheme = (checked) => {
+    setIsDark(checked);
     setTheme(checked ? "dark" : "light");
   };
+
   return (
-    <div>
-      <label className="flex cursor-pointer gap-2">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <circle cx="12" cy="12" r="5" />
-          <path d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
-        </svg>
+    <div className="flex items-center">
+      <label
+        className="flex items-center cursor-pointer gap-3 px-3 py-2 rounded-lg hover:bg-base-300/30 transition-colors duration-200"
+        title="Toggle dark/light theme"
+      >
+        {/* Sun Icon */}
+        <IoSunny
+          className={`text-lg transition-all duration-300 ${
+            isDark ? "text-base-content/50 opacity-50" : "text-yellow-500"
+          }`}
+        />
+
+        {/* Toggle Switch */}
         <input
           onChange={(e) => handleTheme(e.target.checked)}
           type="checkbox"
-          defaultChecked={localStorage.getItem("theme") === "dark"}
-          className="toggle theme-controller"
+          checked={isDark}
+          className="toggle toggle-sm toggle-primary transition-all duration-300"
+          aria-label="Toggle theme"
         />
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="20"
-          height="20"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        >
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
+
+        {/* Moon Icon */}
+        <IoMoon
+          className={`text-lg transition-all duration-300 ${
+            isDark ? "text-blue-400" : "text-base-content/50 opacity-50"
+          }`}
+        />
       </label>
     </div>
   );

@@ -8,6 +8,7 @@ import { FaUser } from "react-icons/fa";
 const User = () => {
   const navigate = useNavigate();
   const { user, userLogOut } = useContext(AuthContext);
+
   const handleLogout = () => {
     userLogOut()
       .then(() => {
@@ -15,7 +16,7 @@ const User = () => {
         Swal.fire({
           position: "top-end",
           icon: "success",
-          title: "Logout Successfull!",
+          title: "Logout Successful!",
           showConfirmButton: false,
           timer: 1500,
         });
@@ -23,63 +24,81 @@ const User = () => {
       .catch((error) => {
         Swal.fire({
           position: "top-end",
-          icon: "success",
+          icon: "error",
           title: error.message,
           showConfirmButton: false,
           timer: 1500,
         });
       });
   };
+
   return (
-    <div className="navbar-end gap-6">
+    <div className="navbar-end gap-3">
       {user ? (
         <div className="dropdown dropdown-end z-50">
-          <div
+          <button
             tabIndex={0}
             role="button"
-            className="btn btn-ghost btn-circle avatar"
+            className="btn btn-ghost btn-circle avatar hover:ring-2 hover:ring-primary/50 transition-all duration-300"
+            aria-label="User menu"
           >
-            <div className="w-10 border-2 border-gray-300 rounded-full">
+            <div className="w-10 border-2 border-primary/50 rounded-full overflow-hidden">
               <img
-                alt="Tailwind CSS Navbar component"
+                alt="User avatar"
                 referrerPolicy="no-referrer"
                 src={
                   user.photoURL ||
                   "https://img.icons8.com/3d-fluent/100/user-2.png"
                 }
+                className="w-full h-full object-cover"
               />
             </div>
-          </div>
-          <ul
-            tabIndex="-1"
-            className="menu  menu-sm dropdown-content bg-base-100 rounded-box z-50 mt-3 w-52 p-2 shadow"
+          </button>
+
+          {/* Dropdown Menu */}
+          <div
+            tabIndex={0}
+            className="dropdown-content menu bg-base-100/95 backdrop-blur-lg rounded-lg shadow-xl border border-base-300/50 mt-3 w-56 p-2 z-50"
           >
-            <div className="pb-3 border-b border-b-gray-200">
-              <li className="text-sm font-bold">{user?.displayName}</li>
-              <li className="text-xs">{user?.email}</li>
+            {/* User Info Section */}
+            <div className="px-4 py-3 border-b border-base-300/50">
+              <p className="text-sm font-bold text-base-content truncate">
+                {user?.displayName || "User"}
+              </p>
+              <p className="text-xs text-base-content/70 truncate">
+                {user?.email}
+              </p>
             </div>
-            <li className="mt-3">
-              <Link to={"/dashboard/profile"}>
-                <FaUser /> Profile
+
+            {/* Menu Items */}
+            <li className="mt-2">
+              <Link
+                to="/dashboard/profile"
+                className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-primary/10 transition-colors duration-200"
+              >
+                <FaUser className="text-primary text-lg" />
+                <span>View Profile</span>
               </Link>
             </li>
+
             <li>
               <button
                 onClick={handleLogout}
-                className="btn-xs bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-black transition-transform hover:scale-105"
+                className="flex items-center gap-3 px-3 py-2 rounded-md bg-error/10 text-error hover:bg-error/20 transition-all duration-200 font-medium"
               >
-                <IoLogOut /> Logout
+                <IoLogOut className="text-lg" />
+                <span>Logout</span>
               </button>
             </li>
-          </ul>
+          </div>
         </div>
       ) : (
         <Link
-          to={"/login"}
-          className="btn btn-sm bg-primary rounded-md shadow-md hover:bg-accent transition-transform hover:scale-105  text-white"
+          to="/login"
+          className="btn btn-sm bg-primary hover:bg-primary-focus text-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 font-medium gap-2"
         >
-          {" "}
-          <IoLogIn /> Login
+          <IoLogIn className="text-lg" />
+          <span>Login</span>
         </Link>
       )}
     </div>

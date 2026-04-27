@@ -1,52 +1,131 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router";
 import Container from "../../Utility/Container";
 import User from "../User/User";
 import Theme from "../Theme/Theme";
+import { FaHome, FaExclamationTriangle, FaChartLine } from "react-icons/fa";
 
 const Navbar = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Handle scroll effect for navbar
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const navLinkStyles = ({ isActive }) =>
-    `relative px-3 py-2 transition-all duration-300 font-medium hover:text-primary ${
+    `relative px-3 py-2 transition-all duration-300 font-medium flex items-center gap-2 group ${
+      isActive ? "text-primary" : "text-base-content/80 hover:text-primary"
+    }`;
+
+  const mobileNavLinkStyles = ({ isActive }) =>
+    `flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-all duration-300 ${
       isActive
-        ? "text-primary after:content-[''] after:absolute after:bottom-0 after:left-0 after:w-full after:h-0.5 after:bg-primary"
-        : "text-base-content/80"
+        ? "bg-primary/10 text-primary"
+        : "text-base-content/80 hover:bg-base-300/50"
     }`;
 
   const links = (
     <>
-      <li className="mx-1">
-        <NavLink className={navLinkStyles} to="/">
-          Home
+      <li>
+        <NavLink
+          className={navLinkStyles}
+          to="/"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaHome className="text-lg" />
+          <span>Home</span>
+          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
         </NavLink>
       </li>
-      <li className="mx-1">
-        <NavLink className={navLinkStyles} to="/all-issues">
-          All Issues
+      <li>
+        <NavLink
+          className={navLinkStyles}
+          to="/all-issues"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaExclamationTriangle className="text-lg" />
+          <span>All Issues</span>
+          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
         </NavLink>
       </li>
-      <li className="mx-1">
-        <NavLink className={navLinkStyles} to="/dashboard">
-          Dashboard
+      <li>
+        <NavLink
+          className={navLinkStyles}
+          to="/dashboard"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaChartLine className="text-lg" />
+          <span>Dashboard</span>
+          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
         </NavLink>
       </li>
+    </>
+  );
 
-      <li className="ml-4 flex items-center">
+  const mobileLinks = (
+    <>
+      <li>
+        <NavLink
+          className={mobileNavLinkStyles}
+          to="/"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaHome className="text-lg" />
+          <span>Home</span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={mobileNavLinkStyles}
+          to="/all-issues"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaExclamationTriangle className="text-lg" />
+          <span>All Issues</span>
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          className={mobileNavLinkStyles}
+          to="/dashboard"
+          onClick={() => setIsMobileMenuOpen(false)}
+        >
+          <FaChartLine className="text-lg" />
+          <span>Dashboard</span>
+        </NavLink>
+      </li>
+      <div className="divider my-2"></div>
+      <li className="px-3 py-2">
         <Theme />
       </li>
     </>
   );
 
   return (
-    <nav className="fixed top-0 w-full z-50 transition-all duration-300 border-b border-white/10 backdrop-blur-md bg-base-100/70">
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-base-100/95 backdrop-blur-xl shadow-lg border-b border-base-300/50"
+          : "bg-base-100/80 backdrop-blur-lg border-b border-white/10"
+      }`}
+    >
       <Container>
-        <div className="navbar min-h-16">
-          <div className="navbar-start">
-            {/* mobile menu */}
-            <div className="dropdown">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost lg:hidden focus:bg-transparent active:bg-transparent"
+        <div className="navbar min-h-20 px-4 lg:px-6">
+          {/* Navbar Start - Logo and Mobile Menu */}
+          <div className="navbar-start gap-4">
+            {/* Mobile Menu Toggle */}
+            <div className="lg:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 active:bg-transparent focus:bg-transparent"
+                aria-label="Toggle navigation menu"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -59,40 +138,57 @@ const Navbar = () => {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth="2"
-                    d="M4 6h16M4 12h8m-8 6h16"
+                    d="M4 6h16M4 12h16M4 18h16"
                   />
                 </svg>
-              </div>
-              <ul
-                tabIndex={0}
-                className="menu menu-sm dropdown-content bg-base-100/90 backdrop-blur-lg rounded-2xl z-1 mt-3 w-52 p-4 shadow-xl border border-white/10 "
-              >
-                {links}
-              </ul>
+              </button>
             </div>
 
-            {/* logo */}
-            <NavLink to={"/"} className="flex items-center gap-2 group">
+            {/* Logo */}
+            <NavLink
+              to="/"
+              className="flex items-center gap-2 group hover:no-underline"
+            >
               <img
                 className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
                 src="https://i.ibb.co.com/vxJsgvYj/Asset-1.png"
                 alt="CityFix Logo"
               />
-              <span className="font-extrabold  text-2xl tracking-tight bg-linear-to-r from-primary to-secondary bg-clip-text text-transparent">
+              <span className="font-extrabold text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden sm:inline">
                 CityFix
               </span>
             </NavLink>
           </div>
 
-          {/* desktop menu */}
+          {/* Navbar Center - Desktop Menu */}
           <div className="navbar-center hidden lg:flex">
-            <ul className="menu menu-horizontal px-1 gap-2">{links}</ul>
+            <ul className="menu menu-horizontal px-1 gap-2 flex-nowrap">
+              {links}
+            </ul>
           </div>
-          <div className="navbar-end">
+
+          {/* Navbar End - User and Theme */}
+          <div className="navbar-end gap-3 lg:gap-4">
+            {/* Desktop Theme Toggle */}
+            <div className="hidden md:flex items-center">
+              <Theme />
+            </div>
+            {/* User Menu */}
             <User />
           </div>
         </div>
       </Container>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden border-t border-base-300/50 bg-base-100/95 backdrop-blur-lg">
+          <Container>
+            <ul className="menu menu-vertical px-4 py-4 space-y-2">
+              {mobileLinks}
+            </ul>
+          </Container>
+        </div>
+      )}
     </nav>
   );
 };
