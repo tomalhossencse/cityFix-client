@@ -4,194 +4,161 @@ import Container from "../../Utility/Container";
 import User from "../User/User";
 import Theme from "../Theme/Theme";
 import { FaHome, FaExclamationTriangle, FaChartLine } from "react-icons/fa";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  // Handle scroll effect for navbar
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const navLinkStyles = ({ isActive }) =>
-    `relative px-4 py-2 transition-all duration-300 font-semibold flex items-center gap-2 group text-sm md:text-base ${
-      isActive ? "text-primary" : "text-base-content/80 hover:text-primary"
+    `relative px-4 py-2 transition-all duration-300 font-bold flex items-center gap-2 group text-sm md:text-base uppercase tracking-wider ${
+      isActive ? "text-primary" : "text-base-content/70 hover:text-primary"
     }`;
 
   const mobileNavLinkStyles = ({ isActive }) =>
-    `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 ${
+    `flex items-center gap-4 px-5 py-4 rounded-2xl font-bold transition-all duration-300 ${
       isActive
-        ? "bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg"
-        : "text-base-content/80 hover:bg-base-300/50"
+        ? "bg-primary text-primary-content shadow-lg shadow-primary/20"
+        : "text-base-content/80 hover:bg-base-200"
     }`;
 
-  const links = (
-    <>
-      <li>
-        <NavLink
-          className={navLinkStyles}
-          to="/"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaHome className="text-lg" />
-          <span>Home</span>
-          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={navLinkStyles}
-          to="/all-issues"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaExclamationTriangle className="text-lg" />
-          <span>Issues</span>
-          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={navLinkStyles}
-          to="/dashboard"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaChartLine className="text-lg" />
-          <span>Dashboard</span>
-          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
-        </NavLink>
-      </li>
-    </>
-  );
-
-  const mobileLinks = (
-    <>
-      <li>
-        <NavLink
-          className={mobileNavLinkStyles}
-          to="/"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaHome className="text-lg" />
-          <span>Home</span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={mobileNavLinkStyles}
-          to="/all-issues"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaExclamationTriangle className="text-lg" />
-          <span>All Issues</span>
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          className={mobileNavLinkStyles}
-          to="/dashboard"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <FaChartLine className="text-lg" />
-          <span>Dashboard</span>
-        </NavLink>
-      </li>
-      <div className="divider my-3 h-0.5 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
-      <li className="px-4 py-2">
-        <Theme />
-      </li>
-    </>
-  );
+  const navLinks = [
+    { to: "/", label: "Home", icon: <FaHome /> },
+    { to: "/all-issues", label: "Issues", icon: <FaExclamationTriangle /> },
+    { to: "/dashboard", label: "Dashboard", icon: <FaChartLine /> },
+  ];
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
         isScrolled
-          ? "bg-gradient-to-r from-base-100 to-base-100 backdrop-blur-xl shadow-xl border-b border-primary/20"
-          : "bg-gradient-to-r from-base-100/90 to-base-100/80 backdrop-blur-lg border-b border-primary/10"
+          ? "bg-base-100/80 backdrop-blur-xl shadow-2xl py-0 border-b border-primary/20"
+          : "bg-transparent py-2"
       }`}
     >
       <Container>
-        <div className="navbar min-h-20 px-4 lg:px-6 gap-4">
-          {/* Navbar Start - Logo and Mobile Menu */}
-          <div className="navbar-start gap-2 md:gap-4 flex-1">
-            {/* Mobile Menu Toggle */}
-            <div className="lg:hidden">
+        <div className="navbar min-h-[72px] px-0">
+          {/* --- Navbar Start --- */}
+          <div className="navbar-start">
+            <div className="lg:hidden mr-2">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="btn btn-ghost btn-circle btn-sm hover:bg-primary/10 active:bg-transparent focus:bg-transparent transition-colors duration-300"
-                aria-label="Toggle navigation menu"
+                className="btn btn-ghost btn-circle hover:bg-primary/10 transition-colors"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+                <motion.div
+                  animate={isMobileMenuOpen ? "open" : "closed"}
+                  className="flex flex-col gap-1.5 items-center justify-center"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
+                  <motion.span
+                    variants={{
+                      closed: { rotate: 0, y: 0 },
+                      open: { rotate: 45, y: 7 },
+                    }}
+                    className="w-6 h-0.5 bg-current rounded-full"
                   />
-                </svg>
+                  <motion.span
+                    variants={{ closed: { opacity: 1 }, open: { opacity: 0 } }}
+                    className="w-6 h-0.5 bg-current rounded-full"
+                  />
+                  <motion.span
+                    variants={{
+                      closed: { rotate: 0, y: 0 },
+                      open: { rotate: -45, y: -7 },
+                    }}
+                    className="w-6 h-0.5 bg-current rounded-full"
+                  />
+                </motion.div>
               </button>
             </div>
 
-            {/* Logo */}
-            <NavLink
-              to="/"
-              className="flex items-center gap-2 group hover:no-underline flex-shrink-0"
-            >
+            <NavLink to="/" className="flex items-center gap-3 group">
               <div className="relative">
                 <img
-                  className="h-10 w-auto transition-all duration-300 group-hover:scale-110 drop-shadow-md"
+                  className="h-10 w-auto transition-transform duration-500 group-hover:rotate-12 group-hover:scale-110"
                   src="https://i.ibb.co.com/vxJsgvYj/Asset-1.png"
                   alt="CityFix Logo"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+                <div className="absolute inset-0 bg-primary blur-2xl opacity-0 group-hover:opacity-30 transition-opacity" />
               </div>
-              <span className="font-extrabold text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-primary via-blue-600 to-secondary bg-clip-text text-transparent hidden sm:inline drop-shadow-sm">
+              <span className="font-black text-2xl tracking-tighter bg-gradient-to-r from-primary to-blue-500 bg-clip-text text-transparent hidden sm:inline">
                 CityFix
               </span>
             </NavLink>
           </div>
 
-          {/* Navbar Center - Desktop Menu */}
-          <div className="navbar-center hidden lg:flex flex-1 justify-center">
-            <ul className="menu menu-horizontal px-1 gap-2 flex-nowrap">
-              {links}
+          {/* --- Navbar Center (Desktop) --- */}
+          <div className="navbar-center hidden lg:flex">
+            <ul className="flex items-center gap-2">
+              {navLinks.map((link) => (
+                <li key={link.to}>
+                  <NavLink className={navLinkStyles} to={link.to}>
+                    <span className="text-lg opacity-80">{link.icon}</span>
+                    <span>{link.label}</span>
+                    {/* Modern underline effect */}
+                    <motion.div
+                      layoutId="activeTab"
+                      className="absolute bottom-0 left-0 w-full h-0.5 bg-primary rounded-full scale-x-0 group-hover:scale-x-100 transition-transform origin-left"
+                    />
+                  </NavLink>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* Navbar End - User and Theme */}
-          <div className="navbar-end gap-2 md:gap-4 flex-1 justify-end">
-            {/* Desktop Theme Toggle */}
-            <div className="hidden md:flex items-center">
+          {/* --- Navbar End --- */}
+          <div className="navbar-end gap-3">
+            <div className="hidden md:block">
               <Theme />
             </div>
-            {/* User Menu */}
+            <div className="h-10 w-[1px] bg-base-content/10 hidden md:block" />
             <User />
           </div>
         </div>
       </Container>
 
-      {/* Mobile Menu Dropdown */}
-      {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-primary/20 bg-gradient-to-b from-base-100 to-base-100/95 backdrop-blur-lg shadow-lg">
-          <Container>
-            <ul className="menu menu-vertical px-4 py-4 space-y-2">
-              {mobileLinks}
-            </ul>
-          </Container>
-        </div>
-      )}
+      {/* --- Mobile Menu (Motion) --- */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            className="lg:hidden bg-base-100/95 backdrop-blur-2xl border-t border-primary/10 overflow-hidden"
+          >
+            <Container>
+              <ul className="flex flex-col gap-2 p-6">
+                {navLinks.map((link) => (
+                  <motion.li
+                    key={link.to}
+                    initial={{ x: -20, opacity: 0 }}
+                    animate={{ x: 0, opacity: 1 }}
+                  >
+                    <NavLink
+                      className={mobileNavLinkStyles}
+                      to={link.to}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      <span className="text-xl">{link.icon}</span>
+                      <span className="text-lg">{link.label}</span>
+                    </NavLink>
+                  </motion.li>
+                ))}
+                <div className="divider opacity-50" />
+                <div className="flex justify-between items-center px-4 md:hidden">
+                  <span className="font-bold opacity-70">Switch Theme</span>
+                  <Theme />
+                </div>
+              </ul>
+            </Container>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

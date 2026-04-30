@@ -83,7 +83,7 @@ const HeroSlider = () => {
   ];
 
   return (
-    <div className="mt-20 max-w-[1400px] mx-auto px-4 group relative">
+    <div className="w-full max-w-[1440px] mx-auto pt-24 md:pt-28 px-4 group relative">
       <div className="overflow-hidden rounded-[3rem] shadow-2xl border border-base-300">
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectFade]}
