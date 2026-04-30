@@ -20,14 +20,14 @@ const Navbar = () => {
   }, []);
 
   const navLinkStyles = ({ isActive }) =>
-    `relative px-3 py-2 transition-all duration-300 font-medium flex items-center gap-2 group ${
+    `relative px-4 py-2 transition-all duration-300 font-semibold flex items-center gap-2 group text-sm md:text-base ${
       isActive ? "text-primary" : "text-base-content/80 hover:text-primary"
     }`;
 
   const mobileNavLinkStyles = ({ isActive }) =>
-    `flex items-center gap-3 px-3 py-2 rounded-lg font-medium transition-all duration-300 ${
+    `flex items-center gap-3 px-4 py-3 rounded-xl font-semibold transition-all duration-300 ${
       isActive
-        ? "bg-primary/10 text-primary"
+        ? "bg-gradient-to-r from-primary to-blue-600 text-white shadow-lg"
         : "text-base-content/80 hover:bg-base-300/50"
     }`;
 
@@ -41,7 +41,7 @@ const Navbar = () => {
         >
           <FaHome className="text-lg" />
           <span>Home</span>
-          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
+          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
         </NavLink>
       </li>
       <li>
@@ -51,8 +51,8 @@ const Navbar = () => {
           onClick={() => setIsMobileMenuOpen(false)}
         >
           <FaExclamationTriangle className="text-lg" />
-          <span>All Issues</span>
-          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
+          <span>Issues</span>
+          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
         </NavLink>
       </li>
       <li>
@@ -63,7 +63,7 @@ const Navbar = () => {
         >
           <FaChartLine className="text-lg" />
           <span>Dashboard</span>
-          <span className="absolute bottom-0 left-3 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-12"></span>
+          <span className="absolute bottom-0 left-3 w-0 h-1 bg-gradient-to-r from-primary to-secondary transition-all duration-300 group-hover:w-12 rounded-full"></span>
         </NavLink>
       </li>
     </>
@@ -101,8 +101,8 @@ const Navbar = () => {
           <span>Dashboard</span>
         </NavLink>
       </li>
-      <div className="divider my-2"></div>
-      <li className="px-3 py-2">
+      <div className="divider my-3 h-0.5 bg-gradient-to-r from-primary/20 to-secondary/20"></div>
+      <li className="px-4 py-2">
         <Theme />
       </li>
     </>
@@ -112,19 +112,19 @@ const Navbar = () => {
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-base-100/95 backdrop-blur-xl shadow-lg border-b border-base-300/50"
-          : "bg-base-100/80 backdrop-blur-lg border-b border-white/10"
+          ? "bg-gradient-to-r from-base-100 to-base-100 backdrop-blur-xl shadow-xl border-b border-primary/20"
+          : "bg-gradient-to-r from-base-100/90 to-base-100/80 backdrop-blur-lg border-b border-primary/10"
       }`}
     >
       <Container>
-        <div className="navbar min-h-20 px-4 lg:px-6">
+        <div className="navbar min-h-20 px-4 lg:px-6 gap-4">
           {/* Navbar Start - Logo and Mobile Menu */}
-          <div className="navbar-start gap-4">
+          <div className="navbar-start gap-2 md:gap-4 flex-1">
             {/* Mobile Menu Toggle */}
             <div className="lg:hidden">
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="btn btn-ghost btn-circle btn-sm hover:bg-base-300/50 active:bg-transparent focus:bg-transparent"
+                className="btn btn-ghost btn-circle btn-sm hover:bg-primary/10 active:bg-transparent focus:bg-transparent transition-colors duration-300"
                 aria-label="Toggle navigation menu"
               >
                 <svg
@@ -147,28 +147,31 @@ const Navbar = () => {
             {/* Logo */}
             <NavLink
               to="/"
-              className="flex items-center gap-2 group hover:no-underline"
+              className="flex items-center gap-2 group hover:no-underline flex-shrink-0"
             >
-              <img
-                className="h-10 w-auto transition-transform duration-300 group-hover:scale-110"
-                src="https://i.ibb.co.com/vxJsgvYj/Asset-1.png"
-                alt="CityFix Logo"
-              />
-              <span className="font-extrabold text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent hidden sm:inline">
+              <div className="relative">
+                <img
+                  className="h-10 w-auto transition-all duration-300 group-hover:scale-110 drop-shadow-md"
+                  src="https://i.ibb.co.com/vxJsgvYj/Asset-1.png"
+                  alt="CityFix Logo"
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary rounded-full blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
+              </div>
+              <span className="font-extrabold text-xl sm:text-2xl tracking-tight bg-gradient-to-r from-primary via-blue-600 to-secondary bg-clip-text text-transparent hidden sm:inline drop-shadow-sm">
                 CityFix
               </span>
             </NavLink>
           </div>
 
           {/* Navbar Center - Desktop Menu */}
-          <div className="navbar-center hidden lg:flex">
+          <div className="navbar-center hidden lg:flex flex-1 justify-center">
             <ul className="menu menu-horizontal px-1 gap-2 flex-nowrap">
               {links}
             </ul>
           </div>
 
           {/* Navbar End - User and Theme */}
-          <div className="navbar-end gap-3 lg:gap-4">
+          <div className="navbar-end gap-2 md:gap-4 flex-1 justify-end">
             {/* Desktop Theme Toggle */}
             <div className="hidden md:flex items-center">
               <Theme />
@@ -181,7 +184,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Dropdown */}
       {isMobileMenuOpen && (
-        <div className="lg:hidden border-t border-base-300/50 bg-base-100/95 backdrop-blur-lg">
+        <div className="lg:hidden border-t border-primary/20 bg-gradient-to-b from-base-100 to-base-100/95 backdrop-blur-lg shadow-lg">
           <Container>
             <ul className="menu menu-vertical px-4 py-4 space-y-2">
               {mobileLinks}

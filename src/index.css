@@ -76,3 +76,45 @@ body {
 html {
   scroll-behavior: smooth;
 }
+/* index.css */
+
+/* Hide default swiper navigation */
+.professional-swiper .swiper-button-next,
+.professional-swiper .swiper-button-prev {
+  @apply hidden !important;
+}
+
+/* Custom Navigation Button Base */
+.nav-btn-custom {
+  @apply relative w-14 h-14 flex items-center justify-center rounded-full 
+         bg-base-100/40 backdrop-blur-md border border-base-content/10 
+         text-base-content overflow-hidden transition-all duration-500 shadow-lg;
+}
+
+/* The liquid hover background */
+.nav-btn-custom::before {
+  content: "";
+  @apply absolute inset-0 bg-primary scale-0 rounded-full transition-transform duration-500 ease-out z-0;
+}
+
+.nav-btn-custom:hover::before {
+  @apply scale-100;
+}
+
+/* Icon styling to stay above the hover background */
+.nav-btn-custom svg {
+  @apply relative z-10 transition-all duration-300;
+}
+
+.nav-btn-custom:hover svg {
+  @apply text-primary-content scale-125;
+}
+
+/* Modern Pill Pagination */
+.professional-swiper .swiper-pagination-bullet {
+  @apply w-2 h-2 bg-primary opacity-20 transition-all duration-500 !important;
+}
+
+.professional-swiper .swiper-pagination-bullet-active {
+  @apply w-10 rounded-full opacity-100 !important;
+}

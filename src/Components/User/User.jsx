@@ -58,10 +58,10 @@ const User = () => {
           {/* Dropdown Menu */}
           <div
             tabIndex={0}
-            className="dropdown-content menu bg-base-100/95 backdrop-blur-lg rounded-lg shadow-xl border border-base-300/50 mt-3 w-56 p-2 z-50"
+            className="dropdown-content menu bg-base-100/95 backdrop-blur-lg rounded-xl shadow-xl border border-primary/20 mt-3 w-56 p-2 z-50"
           >
             {/* User Info Section */}
-            <div className="px-4 py-3 border-b border-base-300/50">
+            <div className="px-4 py-3 border-b border-primary/20">
               <p className="text-sm font-bold text-base-content truncate">
                 {user?.displayName || "User"}
               </p>
@@ -74,7 +74,7 @@ const User = () => {
             <li className="mt-2">
               <Link
                 to="/dashboard/profile"
-                className="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-primary/10 transition-colors duration-200"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-primary/10 transition-colors duration-200"
               >
                 <FaUser className="text-primary text-lg" />
                 <span>View Profile</span>
@@ -84,7 +84,7 @@ const User = () => {
             <li>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 px-3 py-2 rounded-md bg-error/10 text-error hover:bg-error/20 transition-all duration-200 font-medium"
+                className="flex items-center gap-3 px-3 py-2 rounded-lg bg-error/10 text-error hover:bg-error/20 transition-all duration-200 font-medium"
               >
                 <IoLogOut className="text-lg" />
                 <span>Logout</span>
@@ -95,7 +95,7 @@ const User = () => {
       ) : (
         <Link
           to="/login"
-          className="btn btn-sm bg-primary hover:bg-primary-focus text-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 font-medium gap-2"
+          className="btn btn-sm bg-gradient-to-r from-primary to-blue-600 hover:from-primary-focus hover:to-blue-700 text-white rounded-lg shadow-md transition-all duration-300 hover:shadow-lg hover:scale-105 font-semibold gap-2"
         >
           <IoLogIn className="text-lg" />
           <span>Login</span>

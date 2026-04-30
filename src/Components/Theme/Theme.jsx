@@ -19,13 +19,15 @@ const Theme = () => {
   return (
     <div className="flex items-center">
       <label
-        className="flex items-center cursor-pointer gap-3 px-3 py-2 rounded-lg hover:bg-base-300/30 transition-colors duration-200"
+        className="flex items-center cursor-pointer gap-3 px-4 py-2 rounded-xl hover:bg-primary/10 transition-colors duration-200 group"
         title="Toggle dark/light theme"
       >
         {/* Sun Icon */}
         <IoSunny
-          className={`text-lg transition-all duration-300 ${
-            isDark ? "text-base-content/50 opacity-50" : "text-yellow-500"
+          className={`text-lg transition-all duration-300 group-hover:scale-110 ${
+            isDark
+              ? "text-base-content/50 opacity-50"
+              : "text-amber-500 drop-shadow-md"
           }`}
         />
 
@@ -40,8 +42,10 @@ const Theme = () => {
 
         {/* Moon Icon */}
         <IoMoon
-          className={`text-lg transition-all duration-300 ${
-            isDark ? "text-blue-400" : "text-base-content/50 opacity-50"
+          className={`text-lg transition-all duration-300 group-hover:scale-110 ${
+            isDark
+              ? "text-cyan-400 drop-shadow-md"
+              : "text-base-content/50 opacity-50"
           }`}
         />
       </label>
