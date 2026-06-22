@@ -45,14 +45,14 @@ const SocialSign = () => {
       });
   };
   return (
-    <button
+    <button type="button"
       onClick={googleSignin}
-      className="btn bg-white text-gray-700 border border-gray-300 hover:bg-gray-100 w-full flex items-center justify-center gap-2"
+      className="flex-center gap-2 w-full py-3 border border-app-border hover:border-app-orange bg-white  text-app-green font-medium rounded-xl  transition-colors disabled:opacity-50 active:scale-95"
     >
       <svg
         aria-label="Google logo"
-        width="18"
-        height="18"
+        width="22"
+        height="22"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 512 512"
       >

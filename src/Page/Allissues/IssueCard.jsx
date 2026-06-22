@@ -16,6 +16,7 @@ import { DateFormat } from "../../Utility/FormateDate";
 import { CapitalizeFirstLetter } from "../../Utility/CapitalizeFirstLetter";
 import { AuthContext } from "../../Context/AuthContext";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
+import { ClockIcon, MapPinIcon, ThumbsUp, Timer } from "lucide-react";
 
 const STATUS_CONFIG = {
   pending: {
@@ -50,32 +51,18 @@ const STATUS_CONFIG = {
   },
 };
 
+const StatusConfig = STATUS_CONFIG[status] || STATUS_CONFIG.pending;
+
+
 const IssueCard = ({ issue }) => {
   const { user, loading } = useContext(AuthContext);
   const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
-  const statusColor = {
-    pending: "bg-yellow-600",
-    rejected: "bg-red-500",
-    "in-progress": "bg-blue-600",
-    working: "bg-pink-600",
-    resolved: "bg-green-600",
-    closed: "bg-gray-500",
-  };
-  const statusIcon = {
-    //   pending: <MdOutlinePendingActions size={16} />,
-    //   rejected: <MdCancel size={16} />,
-    //   "in-progress": <AiOutlineLoading3Quarters size={16} />,
-    //   working: <FaPersonRunning size={16} />,
-    //   resolved: <MdOutlineTaskAlt size={16} />,
-    //   closed: <MdLockOutline size={16} />,
-  };
   const {
     issueTitle,
     createAt,
     photo,
     district,
-    region,
     priority,
     status,
     _id,
@@ -146,78 +133,84 @@ const IssueCard = ({ issue }) => {
   };
 
   return (
-    <div
-      className="flex flex-col justify-between bg-base-200 md:p-6 p-4 rounded-xl space-y-4 shadow-md 
-            transform transition duration-600 ease-in-out 
-            hover:scale-105 hover:bg-base-100 hover:-translate-y-1"
-    >
-      <ul className="flex justify-between text-accent">
-        <li className="flex items-center justify-center gap-1">
-          <span className="text-primary"></span>
-          <span
-            className={`rounded-4xl bg-primary px-2 text-base-100 ${
-              priority === "normal" ? "bg-primary" : "bg-red-500"
-            }`}
-          >
-            {CapitalizeFirstLetter(priority)}
-          </span>
-        </li>
-        <li className="flex items-center justify-center gap-1">
-          <span>
-            <CiLocationOn />
-          </span>
-          <span>
-            {district}, {region}
-          </span>
-        </li>
-      </ul>
-      <div className="w-full h-[250px]">
-        <img className="rounded-xl w-full h-full object-cover" src={photo} />
-      </div>
-      <div className="px-2 space-y-4">
-        {/* issueTitle */}
-        <div className="text-xl font-bold text-primary">{issueTitle}</div>
+    <div onClick={() => navigate(`/all-issues/${_id}`)} className="bg-white rounded-xl overflow-hidden shadow hover:shadow-md transition-all duration-300 group animate-fade-in cursor-pointer">
 
-        {/* create time*/}
-        <div className="flex justify-between items-center">
-          <div className="rounded-md text-accent flex gap-2 py-1 items-center">
-            <div>
-              <IoTime size={24} />
-            </div>
-            <p>{DateFormat(createAt)}</p>
-          </div>
+      {/* Image */}
+      <div className="relative aspect-video overflow-hidden">
+        <img
+          src={photo}
+          className="w-full h-full object-cover  group-hover:scale-[1.07] transition-all duration-300"
+        />
+
+        {/* Priority */}
+        <span
+          className={`absolute top-3 left-3 px-2 py-0.5  rounded-full text-xs  text-white uppercase ${priority === "high"
+            ? "bg-red-500"
+            : "bg-app-orange"
+            }`}
+        >
+          {priority}
+        </span>
+
+        {/* Status */}
+        <div
+          className={`absolute top-3 right-3 flex items-center gap-1 px-1 py-1 rounded-full bg-linear-to-r uppercase ${StatusConfig.color} text-white text-xs`}
+        >
+          {StatusConfig.icon}
+
         </div>
-        <div className="flex justify-between">
-          <div className="bg-green-200 dark:text-black  rounded-3xl px-2">
+      </div>
+
+      {/* issue info */}
+      <div className="p-3.5 text-zinc-700">
+
+        <h3 className="text-sm font-medium leading-snug mb-2 line-clamp-1 ">
+          {issueTitle}
+        </h3>
+
+
+        <div className="flex items-center gap-1 mb-4">
+          <ClockIcon className="size-3 text-app-warning" />
+          <span className="text-xs font-medium text-app-text line-clamp-1">{DateFormat(createAt)}</span>
+        </div>
+
+
+        <div className="flex justify-between items-center mb-4 truncate">
+          <div className="inline-block bg-app-cream px-2 py-1 rounded-full text-xs font-medium text-app-orange">
             {category}
           </div>
-          <div
-            className={`flex items-center justify-center gap-1 text-white rounded-2xl px-2 ${statusColor[status]}`}
-          >
-            <span>{statusIcon[status]}</span>
-            <span>{CapitalizeFirstLetter(status)}</span>
+          <div className="inline-block bg-app-cream px-2 py-1 rounded-full text-xs font-medium text-orange-500">
+            {upvotes.length}
           </div>
         </div>
-        <ul className="flex justify-between text-accent">
-          <Link
-            to={`/all-issues/${_id}`}
-            className="flex items-center justify-center gap-4 text-accent text-md rounded-md transition-transform hover:scale-105 hover:text-primary"
-          >
-            <span>See Details</span>
-            <FaArrowRightLong size={15} />
-          </Link>
+
+
+
+
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-1">
+            <MapPinIcon className="size-4 text-app-warning" />
+            <span className="text-sm font-medium text-app-text">{district}</span>
+          </div>
+
+
+
           <button
-            disabled={user?.email === issue?.email}
-            onClick={() => handleUpvoteCount(issue)}
-            className="btn-outline flex items-center justify-center"
+            onClick={(e) => {
+              e.stopPropagation();
+              handleUpvoteCount(issue);
+            }}
+            disabled={isOwnIssue}
+            className="size-7 rounded-full  bg-app-orange text-white flex-center shrink-0 hover:bg-app-orange-dark transition-colors active:scale-95"
           >
-            <span>
-              <MdHowToVote size={24} />
-            </span>
-            <span className="text-[24px] font-bold">({upvotes?.length})</span>
+            <ThumbsUp className="size-3.5" />
+
           </button>
-        </ul>
+
+        </div>
+
       </div>
+
     </div>
   );
 };

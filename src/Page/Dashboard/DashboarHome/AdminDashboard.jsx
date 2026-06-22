@@ -15,6 +15,8 @@ import {
 import LatestDashboardIssues from "../../../Components/LatestDashboardIssues/LatestDashboardIssues";
 import LatestPayments from "../../../Components/LatestPayments/LatestPayments";
 import LatestUsers from "../../../Components/LatestUsers/LatestUsers";
+import { CheckCircle2, Clock3, CreditCard, FileText, LoaderCircle, Lock, Wrench, XCircle } from "lucide-react";
+import DashboardCard from "../../../Components/shared/DashboardCard";
 
 const AdminDashboard = () => {
   const { user } = useContext(AuthContext);
@@ -33,6 +35,49 @@ const AdminDashboard = () => {
     return <Loading />;
   }
 
+  const cards = [
+    {
+      label: "Submitted",
+      value: stats.issues?.total || 0,
+      icon: <FileText className="size-5" />,
+    },
+    {
+      label: "Pending",
+      value: stats.issues?.pending || 0,
+      icon: <Clock3 className="size-5" />,
+    },
+    {
+      label: "Working",
+      value: stats.issues?.working || 0,
+      icon: <Wrench className="size-5" />,
+    },
+    {
+      label: "Processing",
+      value: stats.issues?.procesing || 0,
+      icon: <LoaderCircle className="size-5" />,
+    },
+    {
+      label: "Resolved",
+      value: stats.issues?.resloved || 0,
+      icon: <CheckCircle2 className="size-5" />,
+    },
+    {
+      label: "Closed",
+      value: stats.issues?.closed || 0,
+      icon: <Lock className="size-5" />,
+    },
+    {
+      label: "Rejected",
+      value: stats.issues?.rejected || 0,
+      icon: <XCircle className="size-5" />,
+    },
+    {
+      label: "Payments",
+      value: stats.issues?.totalPayments || 0,
+      icon: <CreditCard className="size-5" />,
+    },
+  ];
+
   const chartData = [
     { name: "Pending", count: stats?.issues?.pending || 0 },
     { name: "Processing", count: stats?.issues?.processing || 0 },
@@ -43,26 +88,18 @@ const AdminDashboard = () => {
   ];
 
   return (
-    <div className="m-8">
-      <h1 className="section-title my-4">Your Dashboard Overview</h1>
-
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4">
-        <DashboardCard title="Submitted" value={stats?.issues?.total} />
-        <DashboardCard title="Pending" value={stats?.issues?.pending} />
-        <DashboardCard title="Processing" value={stats?.issues?.processing} />
-        <DashboardCard title="Working" value={stats?.issues?.working} />
-        <DashboardCard title="Resolved" value={stats?.issues?.resolved} />
-        <DashboardCard title="Closed" value={stats?.issues?.closed} />
-        <DashboardCard title="Rejected" value={stats?.issues?.rejected} />
-        <DashboardCard
-          title="Payments"
-          value={`${stats?.issues?.totalPayments} BDT`}
-        />
+    <div className="space-y-6">
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          cards.map((card) => (
+            <DashboardCard key={card.label} icon={card.icon} value={card.value} label={card.label} />
+          ))
+        }
       </div>
 
       {/* CHART */}
-      <div className="my-12 p-10 border-t-2 border-accent/10 bg-base-100">
-        <h2 className="text-accent font-bold text-2xl">Stats</h2>
+      <div className="my-12 p-10 rounded-2xl border border-app-border bg-white">
+        <h2 className="text-app-green font-semibold text-2xl">Stats</h2>
 
         <ResponsiveContainer width="100%" height={400}>
           <BarChart data={chartData} layout="vertical">
@@ -86,16 +123,5 @@ const AdminDashboard = () => {
   );
 };
 
-const DashboardCard = ({ title, value }) => (
-  <div className="flex text-accent items-center gap-4 justify-center bg-base-100 rounded-md md:p-6 p-2">
-    <div className="bg-gray-100 p-2 rounded-full">
-      <FaRegUser size={20} />
-    </div>
-    <div>
-      <p className="md:text-xl text-md font-semibold">{title}</p>
-      <h1 className="md:text-4xl text-2xl font-black">{value ?? 0}</h1>
-    </div>
-  </div>
-);
 
 export default AdminDashboard;

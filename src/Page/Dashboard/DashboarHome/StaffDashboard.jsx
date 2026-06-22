@@ -12,6 +12,17 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import {
+  ClipboardList,
+  CalendarDays,
+  Clock,
+  LoaderCircle,
+  BriefcaseBusiness,
+  CheckCircle2,
+  Archive,
+  BarChart3,
+} from "lucide-react";
+import DashboardCard from "../../../Components/shared/DashboardCard";
 const StaffDashboard = () => {
   const { user } = useContext(AuthContext);
 
@@ -29,107 +40,83 @@ const StaffDashboard = () => {
   if (isLoading) {
     return <Loading />;
   }
-  const {
-    assignedCount,
-    pendingCount,
-    inProcessCount,
-    todaysTasksCount,
-    closedCount,
-    resolvedCount,
-    workingCount,
-  } = stats.issues;
+
+  const cards = [
+    {
+      label: "Assigned",
+      value: stats.issues?.assignedCount || 0,
+      icon: <ClipboardList className="size-5" />,
+    },
+
+    {
+      label: "Today",
+      value: stats.issues?.todaysTasksCount || 0,
+      icon: <CalendarDays className="size-5" />,
+    },
+
+    {
+      label: "Pending",
+      value: stats.issues?.pendingCount || 0,
+      icon: <Clock className="size-5" />,
+    },
+
+    {
+      label: "Progress",
+      value: stats.issues?.inProcessCount || 0,
+      icon: <LoaderCircle className="size-5" />,
+    },
+
+    {
+      label: "Working",
+      value: stats.issues?.workingCount || 0,
+      icon: <BriefcaseBusiness className="size-5" />,
+    },
+
+    {
+      label: "Resolved",
+      value: stats.issues?.resolvedCount || 0,
+      icon: <CheckCircle2 className="size-5" />,
+    },
+
+    {
+      label: "Closed",
+      value: stats.issues?.closedCount || 0,
+      icon: <Archive className="size-5" />,
+    },
+
+    {
+      label: "Total",
+      value: stats.issues?.assignedCount || 0,
+      icon: <BarChart3 className="size-5" />,
+    },
+  ];
+
 
   const chartData = [
-    { name: "Assigned", count: assignedCount || 0 },
-    { name: "Today", count: todaysTasksCount || 0 },
-    { name: "Pending", count: pendingCount || 0 },
-    { name: "Progress", count: inProcessCount || 0 },
-    { name: "Working", count: workingCount || 0 },
-    { name: "Resolved", count: resolvedCount || 0 },
-    { name: "Closed", count: closedCount || 0 },
+    { name: "Assigned", count: stats.issues?.assignedCount || 0 },
+    { name: "Today", count: stats.issues?.todaysTasksCount || 0 },
+    { name: "Pending", count: stats.issues?.pendingCount || 0 },
+    { name: "Progress", count: stats.issues?.inProcessCount || 0 },
+    { name: "Working", count: stats.issues?.workingCount || 0 },
+    { name: "Resolved", count: stats.issues?.resolvedCount || 0 },
+    { name: "Closed", count: stats.issues?.closedCount || 0 },
   ];
 
   return (
-    <div className="m-8">
-      <h1 className="section-title my-4">Your Dashboard Overview</h1>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  gap-4">
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Assigned
-            </p>
-            <h1 className="md:text-4xl text-2xl font-black">{assignedCount}</h1>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Today
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {todaysTasksCount}
-            </h1>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Pending
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">{pendingCount}</h1>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Working
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">{workingCount}</h1>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Resloved
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {resolvedCount}
-            </h1>
-          </div>
-        </div>
-
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-4 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Closed
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">{closedCount}</h1>
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* stats cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          cards.map((card) => (
+            <DashboardCard key={card.label} icon={card.icon} value={card.value} label={card.label} />
+          ))
+        }
       </div>
 
       {/* charts of stats */}
 
-      <div className="my-12 p-10  border-t-2 border-accent/10 bg-base-100">
-        <h2 className="text-accent font-bold text-2xl">Stats </h2>
+      <div className="my-12 p-10  border border-app-border rounded-2xl bg-white">
+        <h2 className="text-app-green font-semibold text-2xl">Stats </h2>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

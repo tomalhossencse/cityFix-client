@@ -25,34 +25,30 @@ const AllIssuesDashboard = () => {
   //   console.log(issues);
   return (
     <>
-      <div className="p-8 bg-base-100 m-8 rounded-xl">
-        <div>
-          <div className="flex px-4 section-title">
-            All Users : ({users.length})
-          </div>
+      <div className="bg-white rounded-2xl shadow-sm border border-app-border overflow-hidden">
+        <div className="px-6 py-5 border-b border-app-border">
+          <h2 className="text-xl font-semibold text-zinc-900">All Users : ({users.length})</h2>
         </div>
         <div className="overflow-x-auto">
-          <table className="table border-2 border-base-200 table-zebra">
+          <table className="relative w-full text-left text-sm whitespace-nowrap">
             {/* head */}
-            <thead className="bg-base-200">
+            <thead className="bg-app-cream/50 text-zinc-500 uppercase text-xs font-semibold">
               <tr>
-                <th></th>
-                <th>User</th>
-                <th>Role</th>
-                <th>Created Time</th>
-                <th>Status</th>
-                <th>Plan Type</th>
-                <th>Subscription Info</th>
-                <th>Actions</th>
+                <th className="px-5 py-4">User</th>
+                <th className="px-3 py-4">Role</th>
+                <th className="px-3 py-4">Created Time</th>
+                <th className="px-3 py-4">Status</th>
+                <th className="px-3 py-4">Plan Type</th>
+                <th className="px-3 py-4">Subscription</th>
+                <th className="px-5 py-4">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {users.map((user, index) => (
+            <tbody className="divide-y divide-app-border">
+              {users.map((user) => (
                 <UserRow
                   setEditIssue={setEditIssue}
                   key={user._id}
                   user={user}
-                  index={index}
                   modelRef={modelRef}
                   refetch={refetch}
                 />

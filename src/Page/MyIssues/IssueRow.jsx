@@ -16,23 +16,24 @@ import useAxiosSecure from "../../Hook/useAxiosSecure";
 import { Link } from "react-router";
 import { FaEye } from "react-icons/fa";
 import { FaPersonRunning } from "react-icons/fa6";
+import { CheckCircle2, Clock3, EditIcon, Eye, LoaderCircle, Lock, Wrench, XCircle, XIcon } from "lucide-react";
 const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
   const axiosSecure = useAxiosSecure();
 
   const statusIcon = {
-    pending: <MdOutlinePendingActions size={20} />,
-    rejected: <MdCancel size={20} />,
-    "in-progress": <AiOutlineLoading3Quarters size={20} />,
-    working: <FaPersonRunning size={20} />,
-    resolved: <MdOutlineTaskAlt size={20} />,
-    closed: <MdLockOutline size={20} />,
+    pending: <Clock3 className="size-3" />,
+    rejected: <XCircle className="size-3" />,
+    "in-progress": <LoaderCircle className="size-3" />,
+    working: <Wrench className="size-3" />,
+    resloved: <CheckCircle2 className="size-3" />,
+    closed: <Lock className="size-3" />,
   };
   const statusColor = {
     pending: "text-yellow-600",
     rejected: "text-red-500",
     "in-progress": "text-blue-600",
     working: "text-pink-600",
-    resolved: "text-green-600",
+    resloved: "text-green-600",
     closed: "text-gray-500",
   };
   const {
@@ -44,7 +45,6 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
     status,
     upvoteCount,
     category,
-
     trackingId,
     _id,
     assignedStaff,
@@ -79,106 +79,108 @@ const IssueRow = ({ issue, index, refetch, setEditIssue, modelRef }) => {
     });
   };
   return (
-    <tr>
-      <th>{index + 1}</th>
+    <tr className="hover:bg-zinc-50/50 transition-colors">
       <td
-        className="flex justify-start
-        items-center gap-3 min-w-[250px]"
+        className="px-5 py-4"
       >
-        <div>
-          <img src={photo} className="mask mask-squircle h-10 w-10" alt="" />
+        <div className="flex items-center gap-3">
+          <img src={photo} className="size-12 rounded-lg object-cover" alt={issueTitle} />
+          <div className="max-w-48">
+
+            <p className="font-semibold text-zinc-900 truncate">{issueTitle}</p>
+
+
+            <p className="text-xs text-zinc-500">
+              {category} ({upvoteCount})
+            </p>
+          </div>
+
         </div>
-        <div>
-          <p className="font-semibold">{issueTitle}</p>
-          <p className="font-semibold text-primary">
-            {category} ({upvoteCount})
-          </p>
-        </div>
+
       </td>
-      <td className="whitespace-nowrap">{trackingId}</td>
-      <td className="whitespace-nowrap">{DateFormat(createAt)}</td>
-      <td>
+
+      <td className="px-5 py-4">
+        <p className="font-semibold text-zinc-900">{trackingId}</p>
+        <p className="text-xs text-zinc-500">{DateFormat(createAt)}</p>
+      </td>
+
+      <td className="px-5 py-4">
         <div
-          className={`flex items-center text-md font-bold justify-start gap-1 ${statusColor[status]}`}
+          className={` bg-app-cream rounded-2xl px-2.5 py-0.5 flex items-center text-md font-bold justify-start gap-1 ${statusColor[status]}`}
         >
           <span>{statusIcon[status]}</span>
-          <span className="space-x-2 whitespace-nowrap">
-            {CapitalizeFirstLetter(status)}{" "}
+          <span className="text-xs font-semibold">
+            {CapitalizeFirstLetter(status)}
           </span>
         </div>
       </td>
 
       {/* sttaf info */}
 
-      <td>
-        <div className="collapse collapse-arrow bg-base-100 border border-base-200 min-w-[150px]">
-          <input type="checkbox" className="peer" />
-          <div className="collapse-title p-2 text-sm font-semibold">
+      <td className="px-5 py-4">
+        <div className="relative group inline-block">
+          <div className="flex items-center gap-1 font-semibold text-xs cursor-pointer">
             {assignedStaff ? (
-              CapitalizeFirstLetter(assignedStaff.status)
+              <>
+                <span className="text-app-success bg-app-success/10 px-2.5 py-0.5 rounded-xl">{CapitalizeFirstLetter(assignedStaff.status)}</span>
+              </>
             ) : (
-              <span className="text-red-500">Not Assigned</span>
+              <span className="text-app-error bg-app-error/10 px-2.5 py-0.5 rounded-xl">
+                Not Assigned
+              </span>
             )}
           </div>
+
           {assignedStaff && (
-            <div className="collapse-content text-xs">
-              <p>{assignedStaff.staffName}</p>
-              <p>{assignedStaff.staffContact}</p>{" "}
-              {/* Fixed typo from sttafContact */}
+            <div className="absolute left-0 top-full mt-2 z-20 hidden group-hover:block w-52 rounded-lg border border-app-border bg-white shadow-lg p-3 text-xs">
+              <p className="font-semibold">{assignedStaff.staffName}</p>
+              <p className="text-gray-500">{assignedStaff.staffContact}</p>
             </div>
           )}
         </div>
       </td>
-      <td>
-        <div
-          className={`flex gap-1 items-center justify-start ${
-            priority === "normal" ? "text-primary" : "text-red-500"
-          }`}
-        >
-          <span>
-            {priority === "normal" ? (
-              <FcLowPriority size={20} />
-            ) : (
-              <FcHighPriority size={20} />
-            )}
-          </span>
-          <span className={`font-bold`}>{CapitalizeFirstLetter(priority)}</span>
-        </div>
+
+      <td className="px-5 py-4">
+
+        <span className={`text-xs font-semibold px-2.5 py-0.5 rounded-xl ${priority === "normal" ? "text-app-success bg-app-success/10" : "text-app-error bg-app-error/10"
+          }`}>{CapitalizeFirstLetter(priority)}</span>
+
       </td>
 
-      <td className="space-x-2 whitespace-nowrap">
-        {status === "pending" && (
+      <td className="px-5 py-4 text-right">
+        <div className="flex items-center justify-end gap-2">
+          {status === "pending" && (
+            <Link to={`/dashboard/issues/${issue._id}/edit`}
+              // onClick={() => {
+              //   if (modelRef?.current) {
+              //     // modelRef.current.showModal();
+              //     setEditIssue(issue);
+              //   }
+              // }}
+              className="p-2 text-zinc-500 hover:text-app-orange bg-zinc-100 hover:bg-zinc-50 rounded-lg transition-colors"
+            >
+              <EditIcon className="size-4" />
+            </Link>
+          )}
+
+
+          <Link to={`/all-issues/${_id}`} className="p-2 text-zinc-500 hover:text-app-orange bg-zinc-100 hover:bg-zinc-50 rounded-lg transition-colors">
+
+            <Eye className="size-4" />
+
+
+          </Link>
+
+
           <button
-            onClick={() => {
-              if (modelRef?.current) {
-                // modelRef.current.showModal();
-                setEditIssue(issue);
-              }
-            }}
-            className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
+            onClick={handleDelete}
+            className="p-2 text-zinc-500 hover:text-app-orange bg-zinc-100 hover:bg-zinc-50 rounded-lg transition-colors"
           >
-            <span>
-              <MdEditSquare />
-            </span>
-            <span>Edit</span>
+            <XIcon className="size-4" />
+
           </button>
-        )}
-        <div
-          onClick={handleDelete}
-          className="flex items-center justify-center gap-1 btn-small-red"
-        >
-          <span>
-            <RiDeleteBin5Fill size={16} />
-          </span>
-          <span>Delete</span>
         </div>
 
-        <Link to={`/all-issues/${_id}`}>
-          <button className="btn-small-blue">
-            <FaEye size={15} />
-            <span>View</span>
-          </button>
-        </Link>
       </td>
     </tr>
   );

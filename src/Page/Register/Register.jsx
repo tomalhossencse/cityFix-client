@@ -34,9 +34,8 @@ const Register = () => {
       const formData = new FormData();
       formData.append("image", profileImg);
 
-      const img_API_URL_Key = `https://api.imgbb.com/1/upload?key=${
-        import.meta.env.VITE_img_API_URL_Key
-      }`;
+      const img_API_URL_Key = `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_img_API_URL_Key
+        }`;
 
       const imgRes = await axios.post(img_API_URL_Key, formData);
 

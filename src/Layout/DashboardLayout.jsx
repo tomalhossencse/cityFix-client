@@ -17,256 +17,61 @@ import useRole from "../Hook/useRole";
 import Loading from "../Components/Loading/Loading";
 import { Toaster } from "react-hot-toast";
 import Theme from "../Components/Theme/Theme";
+import Navbar from "../Components/Navbar/Navbar";
+import { ShieldIcon } from "lucide-react";
+import { dashboardLinkData } from "../assets/assets";
+
+
+
 
 const DashboardLayout = () => {
-  const { user, loading } = useContext(AuthContext);
+
+
+  // const { user, loading } = useContext(AuthContext);
   const { role, isLoading: roleLoading } = useRole();
-  if (loading || roleLoading) {
-    return <Loading />;
-  }
-  // console.log(role);
+  // if (roleLoading) {
+  //   return <Loading />;
+  // }
+  const filterLinkData = dashboardLinkData.filter((link) =>
+    link.role.includes(role)
+  )
+
   return (
-    <div>
-      <div className="drawer lg:drawer-open">
-        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content bg-base-200">
-          {/* Navbar */}
-          <nav className="navbar flex justify-between w-full bg-base-100">
-            <label
-              htmlFor="my-drawer-4"
-              aria-label="open sidebar"
-              className="btn btn-square btn-ghost"
-            >
-              {/* Sidebar toggle icon */}
-              <RiMenu2Line size="22" />
-            </label>
+    <div className="h-screen overflow-hidden">
 
-            <div className="flex items-center justify-start space-x-10 mr-[10%]">
-              <div>
-                <Theme />
-              </div>
-              <div>
-                <User />
-              </div>
-              <div className="md:block hidden">
-                <p className="text-primary text-xl font-bold">
-                  {CapitalizeFirstLetter(user.displayName)}
-                </p>
-                <p className="text-[12px]">{user.email}</p>
-              </div>
-            </div>
-          </nav>
-          {/* Page content here  */}
-          <Outlet />
-        </div>
-
-        <div className="drawer-side is-drawer-close:overflow-visible">
-          <label
-            htmlFor="my-drawer-4"
-            aria-label="close sidebar"
-            className="drawer-overlay"
-          ></label>
-          <div className="flex min-h-full is-drawer-open:px-2 is-drawer-close:px-0 items-start flex-col text-accent bg-base-100 is-drawer-close:w-20 is-drawer-open:w-56">
-            {/* Sidebar content here */}
-            <ul className="menu w-full grow">
-              {/* home */}
-              <li className="pb-2">
-                <Link
-                  to={"/"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right flex gap-2"
-                  data-tip="Home"
-                >
-                  {/* Home icon */}
-                  <img
-                    src="https://i.ibb.co.com/vxJsgvYj/Asset-1.png"
-                    className="h-7"
-                    alt=""
-                  />
-                  <span className="is-drawer-close:hidden font-bold text-2xl">
-                    CityFix
-                  </span>
-                </Link>
-              </li>
-              {/* dashboard home */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard"}
-                  end
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="Homepage"
-                >
-                  {/* DashboardHome icon */}
-                  <MdOutlineDashboardCustomize size={20} />
-
-                  <span className="is-drawer-close:hidden">Dashboard</span>
-                </NavLink>
-              </li>
-              {/* -------------Citizen----------------- */}
-
-              {role === "citizen" && (
-                <>
-                  {/* my issues */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/my-issues"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="My Issues "
-                    >
-                      {/* dashboard icon */}
-                      <AiOutlineIssuesClose size={20} />
-
-                      <span className="is-drawer-close:hidden">My Issues </span>
-                    </NavLink>
-                  </li>
-
-                  {/* report issues */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/report-issues"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="Report Issues "
-                    >
-                      {/* report icon */}
-                      <TbReport size={20} />
-
-                      <span className="is-drawer-close:hidden">
-                        Report Issue
-                      </span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
-
-              {/* profile */}
-              <li className="p-2">
-                <NavLink
-                  to={"/dashboard/profile"}
-                  className={({ isActive }) =>
-                    `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                  }
-                  data-tip="My Profile"
-                >
-                  {/* report icon */}
-                  <FaRegUser size={20} />
-
-                  <span className="is-drawer-close:hidden">My Profile</span>
-                </NavLink>
-              </li>
-
-              {/* ----------------Admin dashboard navlink--------------- */}
-
-              {role === "admin" && (
-                <>
-                  {/* All Issues */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/all-issues"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="All Issues"
-                    >
-                      {/* report icon */}
-                      <RiCheckboxMultipleFill size={20} />
-
-                      <span className="is-drawer-close:hidden">All Issues</span>
-                    </NavLink>
-                  </li>
-
-                  {/* Manage Users */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/manage-users"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="Manage Users"
-                    >
-                      {/* report icon */}
-                      <FaUsersCog size={24} />
-                      <span className="is-drawer-close:hidden">
-                        Manage Users
-                      </span>
-                    </NavLink>
-                  </li>
-
-                  {/* Manages Sttaf */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/manage-sttafs"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="Manage Sttafs"
-                    >
-                      {/* report icon */}
-                      <IoPersonAdd size={20} />
-
-                      <span className="is-drawer-close:hidden">
-                        Manage Sttafs
-                      </span>
-                    </NavLink>
-                  </li>
-
-                  {/*  Payments */}
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/payments"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="Payments"
-                    >
-                      {/* report icon */}
-                      <MdPayments size={20} />
-
-                      <span className="is-drawer-close:hidden">Payments</span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
-
-              {/* ------------Staff dashboardlink -------------------- */}
-              {role === "staff" && (
-                <>
-                  <li className="p-2">
-                    <NavLink
-                      to={"/dashboard/assigned-issues"}
-                      className={({ isActive }) =>
-                        `gap-2 is-drawer-close:tooltip is-drawer-close:tooltip-right 
-     ${isActive ? "text-primary font-bold bg-base-200 rounded-md" : ""}`
-                      }
-                      data-tip="Assigned Issues"
-                    >
-                      {/* report icon */}
-                      <MdOutlineAssignmentReturned size={20} />
-
-                      <span className="is-drawer-close:hidden">
-                        Assigned Issues
-                      </span>
-                    </NavLink>
-                  </li>
-                </>
-              )}
-            </ul>
-          </div>
-        </div>
+      {/* navbar */}
+      <div className="max-lg:hidden">
+        <Navbar />
       </div>
-      <Toaster />
+
+      {/* dashboard panal */}
+      <div className="flex flex-col lg:flex-row h-full gap-8 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+        {/* side bar */}
+        <aside className="w-full lg:w-64 shrink-0 bg-white h-fit rounded-2xl p-4 border border-app-border">
+          <div className="pb-4 mb-4 border-b border-app-border">
+            <h2 className="text-lg font-semibold text-app-green flex items-center gap-2 px-2">
+              <ShieldIcon className="size-5 text-green-900" /> Dashboard
+            </h2>
+          </div>
+          <nav className="flex flex-col gap-1.5">
+            {
+              filterLinkData.map((link) => <NavLink key={link.to} to={link.to} end className={({ isActive }) => `
+                flex items-center gap-3 p-2.5 rounded-md text-sm transition-colors  ${isActive ? "bg-app-green text-white" : "text-app-text-light hover:bg-orange-50 hover:text-zinc-900"}
+                `}>
+                <link.icon className="size-4" />  {link.label}
+              </NavLink>)
+            }
+          </nav>
+
+        </aside>
+
+        {/* main content */}
+        <main className="flex-1 overflow-y-auto no-scrollbar pb-20">
+          <Outlet />
+        </main>
+
+      </div>
+
     </div>
   );
 };

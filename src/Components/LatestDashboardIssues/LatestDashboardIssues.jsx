@@ -123,25 +123,26 @@ const LatestDashboardIssues = () => {
   //   console.log(issues);
   return (
     <>
-      <div className="md:p-8  bg-base-100 md:m-8  rounded-xl">
+      <div className="bg-white rounded-2xl shadow-sm border border-app-border overflow-hidden">
         <div>
-          <div className="flex px-4 section-title">Latest Issues</div>
+          <div className="px-6 py-5 border-b border-app-border">
+            <h2 className="text-xl font-semibold text-zinc-900">Latest Issues</h2>
+          </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table border-2 border-base-200 table-zebra">
+          <table className="relative w-full text-left text-sm whitespace-nowrap">
             {/* head */}
-            <thead className="bg-base-200">
+            <thead className="bg-app-cream/50 text-zinc-500 uppercase text-xs font-semibold">
               <tr>
-                <th></th>
-                <th>Issue Title</th>
-                <th>Tracking Id</th>
-                <th>Created Time</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Actions</th>
+                <th className="px-6 py-4">Issue Title</th>
+                <th className="px-6 py-4">Tracking Id</th>
+                <th className="px-6 py-4">Created Time</th>
+                <th className="px-6 py-4">Status</th>
+                <th className="px-6 py-4">Priority</th>
+                <th className="px-6 py-4">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-app-border">
               {issues.slice(0, 4).map((issue, index) => (
                 <IssueRowDashboard
                   handleReject={handleReject}
@@ -186,7 +187,7 @@ const LatestDashboardIssues = () => {
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-app-border">
                     {sttafs.map((sttaf, index) => (
                       <AssignStaffRow
                         handleAssignSttaf={handleAssignSttaf}

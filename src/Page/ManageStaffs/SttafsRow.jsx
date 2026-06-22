@@ -4,7 +4,9 @@ import { MdEditSquare } from "react-icons/md";
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hook/useAxiosSecure";
-const SttafsRow = ({ sttaf, index, refetch, setEditStaff, modelUpdateRef }) => {
+import { EditIcon, XIcon } from "lucide-react";
+import { Link } from "react-router";
+const SttafsRow = ({ sttaf, refetch }) => {
   const axiosSecure = useAxiosSecure();
 
   const { email, photo, sttafName, district, region, createdAt, _id } = sttaf;
@@ -38,42 +40,44 @@ const SttafsRow = ({ sttaf, index, refetch, setEditStaff, modelUpdateRef }) => {
     });
   };
   return (
-    <tr>
-      <th>{index + 1}</th>
-      <td className="flex items-center justify-start gap-4   ">
-        <img src={photo} className="w-14 rounded-full" alt="" />
-        <div>
-          <p className="font-semibold text-[16px]">{sttafName}</p>
-          <p className="font-semibold text-primary">{email}</p>
+    <tr className="hover:bg-zinc-50/50 transition-colors">
+      <td
+        className="px-5 py-4"
+      >
+        <div className="flex items-center gap-3">
+          <img src={photo} className="size-12 rounded-lg object-cover" alt={sttafName} />
+          <div>
+            <p className="font-semibold text-zinc-900 max-w-32 truncate">{sttafName}</p>
+            <p className="text-xs text-zinc-500">
+              {email}
+            </p>
+          </div>
+
         </div>
+
       </td>
-      <td>
+
+      <td className="px-5 py-4 text-sm text-zinc-500">
         {district}, {region}
       </td>
-      <td>{DateFormat(createdAt)}</td>
+      <td className="px-5 py-4 text-sm text-zinc-500">{DateFormat(createdAt)}</td>
 
-      <td className="space-x-2">
-        <button
-          onClick={() => {
-            setEditStaff(sttaf);
-            modelUpdateRef?.current?.showModal();
-          }}
-          className="btn-small-black hover:bg-primary hover:text-white btn-sm flex items-center justify-center gap-1 font-bold text-lg text-blue-600 bg-blue-100 rounded-3xl px-3"
-        >
-          <span>
-            <MdEditSquare />
-          </span>
-          <span>Edit</span>
-        </button>
+      <td className="px-5 py-4">
+        <div className="flex items-center justify-start gap-2">
+          <button
+            onClick={handleDelete}
+            className="p-2 text-zinc-500 hover:text-app-orange bg-zinc-100 hover:bg-zinc-50 rounded-lg transition-colors"
+          >
+            <XIcon className="size-4" />
 
-        <div
-          onClick={handleDelete}
-          className="flex items-center justify-center gap-1 btn-small-red"
-        >
-          <span>
-            <RiDeleteBin5Fill size={16} />
-          </span>
-          <span>Delete</span>
+          </button>
+          <Link
+            to={`/dashboard/staffs/${_id}/edit`}
+            className="p-2 text-zinc-500 hover:text-app-orange bg-zinc-100 hover:bg-zinc-50 rounded-lg transition-colors"
+          >
+            <EditIcon className="size-4" />
+
+          </Link>
         </div>
       </td>
     </tr>

@@ -7,29 +7,11 @@ import AssignStaffRow from "../AllIssuesDashboard/AssignStaffRow";
 import { AuthContext } from "../../Context/AuthContext";
 import AssigndIssueRow from "./AssigndIssueRow";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router";
+import { ChevronDown, PlusIcon } from "lucide-react";
+import { categoriesData, priorityCollection, statusCollection } from "../../assets/assets";
 const AssignedIssues = () => {
-  const statusCollection = [
-    "pending",
-    "rejected",
-    "in-progress",
-    "working",
-    "resolved",
-    "closed",
-  ];
-  const categoriesCollections = [
-    "Road & Potholes",
-    "Streetlights",
-    "Water Leakage",
-    "Garbage & Waste",
-    "Drainage",
-    "Footpath & Sidewalk",
-    "Electricity",
-    "Public Safety",
-    "Traffic Signal",
-    "Other",
-  ];
 
-  const priorityCollection = ["normal", "high"];
   const assignModelRef = useRef();
   const [selectedIssue, setSelectedIssue] = useState(null);
   const axiosSecure = useAxiosSecure();
@@ -84,13 +66,14 @@ const AssignedIssues = () => {
       const statusMessages = {
         assigned: `Staff ${issue.assignedStaff?.staffName} has been assigned to this issue.`,
         "in-progress": `Staff ${issue.assignedStaff?.staffName} is working on this issue.`,
-        resolved: `Issue has been resolved by ${issue.assignedStaff?.staffName}.`,
+        resloved: `Issue has been resolved by ${issue.assignedStaff?.staffName}.`,
         closed: `Issue has been closed.`,
       };
 
       const successTexts = {
         assigned: "Issue assigned successfully",
-        "in-progress": "Work started",
+        "in-progress": "In-progress",
+        working: "Work started",
         resolved: "Issue resolved",
         closed: "Issue closed",
       };
@@ -144,15 +127,14 @@ const AssignedIssues = () => {
   };
   return (
     <>
-      <div className="p-4 md:p-8 bg-base-100 m-4 md:m-8 rounded-xl shadow-sm">
-        <div className="md:flex p-4 justify-between items-center mb-4 space-y-4">
-          <h2 className="text-xl font-bold">Assigned issues : ({issues.length})</h2>
+      <div className="bg-white rounded-2xl shadow-sm border border-app-border overflow-hidden">
+        <div className="px-6 py-5 border-b border-app-border flex items-center justify-between gap-4 flex-wrap">
+          <h2 className="text-xl font-semibold text-zinc-900">Assigned issues</h2>
 
-          {/* status filter */}
-
-          <div className="flex justify-center flex-wrap gap-2">
+          {/* Status */}
+          <div className="relative w-full sm:w-auto">
             <select
-              className="select select-bordered  md:w-[180px]"
+              className="appearance-none w-full sm:w-40 pl-3 pr-8 py-2 text-sm bg-white rounded-xl border border-app-border focus:border-app-green outline-none cursor-pointer"
               {...register("status")}
               defaultValue={""}
             >
@@ -162,10 +144,13 @@ const AssignedIssues = () => {
               ))}
             </select>
 
-            {/* priority filter */}
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-app-text-light pointer-events-none" />
+          </div>
 
+          {/* Priority */}
+          <div className="relative w-full sm:w-auto">
             <select
-              className="select select-bordered  md:w-[180px]"
+              className="appearance-none w-full sm:w-40 pl-3 pr-8 py-2 text-sm bg-white rounded-xl border border-app-border focus:border-app-green outline-none cursor-pointer"
               {...register("priority")}
               defaultValue={""}
             >
@@ -174,45 +159,63 @@ const AssignedIssues = () => {
                 <option key={index}>{priority}</option>
               ))}
             </select>
-            {/* category filter */}
 
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-app-text-light pointer-events-none" />
+          </div>
+
+          {/* Category */}
+          <div className="relative w-full sm:w-auto">
             <select
-              className="select select-bordered  md:w-[180px]"
+              className="appearance-none w-full sm:w-40 pl-3 pr-8 py-2 text-sm bg-white rounded-xl border border-app-border focus:border-app-green outline-none cursor-pointer"
               {...register("category")}
               defaultValue={""}
             >
               <option value={""}>All (Category)</option>
-              {categoriesCollections.map((cat, index) => (
-                <option key={index}>{cat}</option>
+              {categoriesData.map((cat, index) => (
+                <option key={index}>{cat.title}</option>
               ))}
             </select>
+            <ChevronDown className="absolute right-2.5 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-app-text-light pointer-events-none" />
           </div>
+
+          {/* <Link to="/dashboard/issues/new" className="flex items-center gap-2 px-4 py-2 bg-app-green text-white rounded-xl hover:bg-green-950 transition-colors font-medium text-sm">
+            <PlusIcon className="size-4" /> Add Issue
+          </Link> */}
+
+
         </div>
         <div className="overflow-x-auto">
-          <table className="table border-2 border-base-200 table-zebra">
+          <table className="relative w-full text-left text-sm whitespace-nowrap">
             {/* head */}
-            <thead className="bg-base-200">
+            <thead className="bg-app-cream/50 text-zinc-500 uppercase text-xs font-semibold">
               <tr>
-                <th></th>
-                <th>Issue Title</th>
-                <th>Tracking Id</th>
-                <th>Created Time</th>
-                <th>Status</th>
-                <th>Priority</th>
-                <th>Actions</th>
+                <th className="px-6 py-4">Issue Title</th>
+                <th className="px-6 py-4">TnxId/ create</th>
+                <th className="px-6 py-4">Location</th>
+                <th className="px-6 py-4">Status</th>
+                <th className="px-6 py-4">Priority</th>
+                <th className="px-6 py-4 text-right">Actions</th>
               </tr>
             </thead>
-            <tbody>
-              {issues.map((issue, index) => (
-                <AssigndIssueRow
-                  setSelectedIssue={setSelectedIssue}
-                  issue={issue}
-                  handleChangeStatus={handleChangeStatus}
-                  key={issue._id}
-                  index={index}
-                  refetch={refetch}
-                />
-              ))}
+            <tbody className="divide-y divide-app-border">
+              {
+                issues.length === 0 ? (
+                  <tr>
+                    <td colSpan={4} className="px-6 py-8 text-center text-zinc-500">
+                      No issues found matching filters.
+                    </td>
+                  </tr>
+                ) : (issues.map((issue) => (
+                  <AssigndIssueRow
+                    setSelectedIssue={setSelectedIssue}
+                    issue={issue}
+                    handleChangeStatus={handleChangeStatus}
+                    key={issue._id}
+                    refetch={refetch}
+                  />
+                )))
+              }
+
             </tbody>
           </table>
 
@@ -235,7 +238,7 @@ const AssignedIssues = () => {
                       <th>Actions</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody className="divide-y divide-app-border">
                     {sttafs.map((sttaf, index) => (
                       <AssignStaffRow
                         key={sttaf._id}

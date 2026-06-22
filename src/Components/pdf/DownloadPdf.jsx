@@ -2,6 +2,7 @@ import React from "react";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import { DateFormat } from "../../Utility/FormateDate";
+import { Download } from "lucide-react";
 
 const DownlaodPdf = ({ payments }) => {
   const downlaodReport = () => {
@@ -31,9 +32,9 @@ const DownlaodPdf = ({ payments }) => {
     <div>
       <button
         onClick={downlaodReport}
-        className="btn w-full bg-primary text-white font-bold text-md rounded-md shadow-md hover:bg-accent transition-transform hover:scale-105 mt-4 col-span-2"
+        className="flex items-center gap-2 px-4 py-2 bg-app-green text-white rounded-xl hover:bg-green-950 transition-colors font-medium text-sm"
       >
-        Download report
+        <Download className="size-4" />  Report
       </button>
     </div>
   );

@@ -12,6 +12,8 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
+import { CheckCircle2, Clock3, CreditCard, FileText, LoaderCircle, Lock, ShoppingBagIcon, Wrench, XCircle } from "lucide-react";
+import DashboardCard from "../../../Components/shared/DashboardCard";
 const CitizenDashboard = () => {
   const { user, loading } = useContext(AuthContext);
 
@@ -28,6 +30,50 @@ const CitizenDashboard = () => {
   if (isLoading || loading) {
     return <Loading />;
   }
+
+  const cards = [
+    {
+      label: "Total",
+      value: stats.issues?.total || 0,
+      icon: <FileText className="size-5" />,
+    },
+    {
+      label: "Pending",
+      value: stats.issues?.pending || 0,
+      icon: <Clock3 className="size-5" />,
+    },
+    {
+      label: "Working",
+      value: stats.issues?.working || 0,
+      icon: <Wrench className="size-5" />,
+    },
+    {
+      label: "Processing",
+      value: stats.issues?.procesing || 0,
+      icon: <LoaderCircle className="size-5" />,
+    },
+    {
+      label: "Resolved",
+      value: stats.issues?.resloved || 0,
+      icon: <CheckCircle2 className="size-5" />,
+    },
+    {
+      label: "Closed",
+      value: stats.issues?.closed || 0,
+      icon: <Lock className="size-5" />,
+    },
+    {
+      label: "Rejected",
+      value: stats.issues?.rejected || 0,
+      icon: <XCircle className="size-5" />,
+    },
+    {
+      label: "Payments",
+      value: stats.issues?.totalPayments || 0,
+      icon: <CreditCard className="size-5" />,
+    },
+  ];
+
   const chartData = [
     { name: "Pending", count: stats?.issues?.pending || 0 },
     { name: "Processing", count: stats?.issues?.procesing || 0 },
@@ -38,126 +84,20 @@ const CitizenDashboard = () => {
   ];
 
   return (
-    <div className="m-8">
-      <h1 className="section-title my-4">Your Dashboard Overview</h1>
-      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2  gap-4">
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              submitted
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.total}
-            </h1>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Pending
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.pending}
-            </h1>
-            <p></p>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Procesing
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.procesing}
-            </h1>
-            <p></p>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Working
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.working}
-            </h1>
-            <p></p>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Resloved
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.resloved}
-            </h1>
-          </div>
-        </div>
-
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Closed
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.closed}
-            </h1>
-            <p></p>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Rejected
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.rejected}
-            </h1>
-            <p></p>
-          </div>
-        </div>
-        <div className="flex text-accent items-center gap-4 justify-center bg-base-100  rounded-md md:p-6 p-2">
-          <div className="bg-gray-100 p-2 rounded-full">
-            <FaRegUser size={20} />
-          </div>
-          <div>
-            <p className="md:text-xl text-md font-semibold text-accent">
-              Payments
-            </p>
-            <h1 className="text-2xl md:text-4xl  font-black">
-              {stats?.issues?.totalPayments}
-            </h1>
-            <p></p>
-          </div>
-        </div>
+    <div className="space-y-6">
+      {/* stats cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        {
+          cards.map((card) => (
+            <DashboardCard key={card.label} icon={card.icon} value={card.value} label={card.label} />
+          ))
+        }
       </div>
 
       {/* charts of stats */}
 
-      <div className="my-12 p-10  border-t-2 border-accent/10 bg-base-100">
-        <h2 className="text-accent font-bold text-2xl">Stats </h2>
+      <div className="my-12 p-10  border  border-app-border rounded-2xl bg-white">
+        <h2 className="text-app-green font-semibold text-2xl">Stats</h2>
         <ResponsiveContainer width="100%" height={400}>
           <BarChart
             margin={{ top: 20, right: 30, left: 20, bottom: 5 }}

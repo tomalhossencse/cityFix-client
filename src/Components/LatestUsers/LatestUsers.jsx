@@ -18,56 +18,54 @@ const LatestUsers = () => {
     return <Loading />;
   }
 
-  //   console.log(users);
   return (
     <>
-      <div className="md:p-8 bg-base-100 md:m-8 rounded-xl">
+      <div className="bg-white rounded-2xl shadow-sm border border-app-border overflow-hidden">
         <div>
-          <div className="flex px-4 section-title">Latest Users</div>
+          <div className="px-6 py-5 border-b border-app-border">
+            <h2 className="text-xl font-semibold text-zinc-900">Latest Users</h2>
+          </div>
         </div>
         <div className="overflow-x-auto">
-          <table className="table border-2 border-base-200 table-zebra">
+          <table className="w-full text-left text-sm whitespace-nowrap">
             {/* head */}
-            <thead className="bg-base-200">
+            <thead className="bg-app-cream/50 text-zinc-500 uppercase text-xs font-semibold">
               <tr>
-                <th></th>
-                <th>User</th>
-                <th>Create Time</th>
-                <th>Role</th>
-                <th>Plan </th>
-                <th>Status</th>
+                <th className="px-6 py-4">User</th>
+                <th className="px-6 py-4">Create Time</th>
+                <th className="px-6 py-4">Role</th>
+                <th className="px-6 py-4">Plan </th>
+                <th className="px-6 py-4">Status</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-app-border">
               {users.slice(0, 4).map((user, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>
-                    <div className="flex items-center gap-3 min-w-[250px]">
-                      <div className="avatar">
-                        <div className="mask mask-squircle h-10 w-10">
-                          <img src={user?.photoURL} className="object-cover" />
-                        </div>
-                      </div>
-                      <div>
-                        <div className="font-semibold">{user.displayName}</div>
-                        <p className="font-semibold text-primary">
+                  <td className="px-5 py-4">
+                    <div className="flex items-center gap-3">
+                      <img src={user?.photoURL} className="size-12 rounded-lg object-cover" alt='photo' />
+                      <div className="max-w-40 truncate">
+                        <p className="font-semibold text-zinc-900 truncate"> {user?.displayName}</p>
+                        <p className="text-xs text-zinc-500">
                           {user?.email}
                         </p>
                       </div>
                     </div>
                   </td>
-                  <td className="whitespace-nowrap">
-                    {DateFormat(user?.createdAt)}
+
+                  <td className="px-6 py-4">
+                    <p className="text-sm text-app-text-light">{DateFormat(user?.createdAt)}</p>
                   </td>
                   <td className="text-md text-primary">
-                    <p>{CapitalizeFirstLetter(user?.role)}</p>
+                    <p className="font-semibold text-zinc-900">{CapitalizeFirstLetter(user?.role)}</p>
                   </td>
-                  <td>{CapitalizeFirstLetter(user?.planType)}</td>
-                  <td>
-                    <button className="btn-small-red">
+                  <td className="px-6 py-4">
+                    <p className="font-semibold text-zinc-900">{CapitalizeFirstLetter(user?.planType)}</p>
+                  </td>
+                  <td className="px-6 py-4">
+                    <p className="font-semibold text-zinc-900">
                       {CapitalizeFirstLetter(user?.accountStatus)}
-                    </button>
+                    </p>
                   </td>
                 </tr>
               ))}

@@ -1,109 +1,103 @@
-import React from "react";
-import { IoMdMail } from "react-icons/io";
-import { FaFacebookSquare, FaLinkedin } from "react-icons/fa";
-import { FaSquareXTwitter } from "react-icons/fa6";
-import { useNavigate } from "react-router";
-import Container from "../../Utility/Container";
-
+import { BikeIcon } from "lucide-react";
+import { Link } from "react-router";
+import { footerData } from "../../assets/assets";
 const Footer = () => {
-  const navigate = useNavigate();
   return (
-    <div className="bg-primary text-white mt-12 md:px-0 px-6 ">
-      <Container>
-        <div className="py-16">
-          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 justify-between py-16 gap-10 text-sm">
-            <div className="col-span-2">
-              <button
-                onClick={() => navigate("/")}
-                className="text-xl cursor-pointer font-medium pb-6"
-              >
-                CityFix
-              </button>
-              <p className="text-white">
-                CityFix is a platform for citizens to report local issues, track
-                progress, and see resolutions in real-time. From road repairs to
-                streetlight outages, we make your city better together.
-              </p>
-            </div>
-            <div className="col-span-1">
-              <h1 className="text-xl font-medium pb-6">Company</h1>
-              <ul className="flex flex-col gap-4">
-                <a className="text-white" href="#">
-                  About CityFix
+    <footer className="bg-app-green text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        {/* top */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {/* brand */}
+          <div>
+            <Link to="/" className="flex items-center gap-2 mb-4">
+              <BikeIcon className="size-6 text-white" />
+              <span className="text-xl font-semibold">
+                {footerData.brand.name}
+              </span>
+            </Link>
+
+            {/* description */}
+            <p className="text-sm text-white/70 mb-4">
+              {footerData.brand.description}
+            </p>
+
+            {/* social media links */}
+            <div className="flex gap-3">
+              {footerData.brand.socials.map((social, i) => (
+                <a
+                  key={i}
+                  href={social.link}
+                  className="size-9 rounded-lg bg-white/10 flex-center hover:bg-white/20"
+                >
+                  <social.icon className="size-4" />
                 </a>
-                <a className="text-white" href="#">
-                  Our Mission
-                </a>
-                <a className="text-white" href="#">
-                  Contact Us
-                </a>
-              </ul>
-            </div>
-            <div className="col-span-1">
-              <h1 className="text-xl font-medium pb-6">Services</h1>
-              <ul className="flex flex-col gap-4">
-                <a className="text-white" href="#">
-                  Report an Issue
-                </a>
-                <a className="text-white" href="#">
-                  Track Progress
-                </a>
-                <a className="text-white" href="#">
-                  View Resolved Issues
-                </a>
-              </ul>
-            </div>
-            <div className="col-span-1">
-              <h1 className="text-xl font-medium pb-6">Information</h1>
-              <ul className="flex flex-col gap-4">
-                <a className="text-white" href="#">
-                  Privacy Policy
-                </a>
-                <a className="text-white" href="#">
-                  Terms & Conditions
-                </a>
-                <a className="text-white" href="#">
-                  Join CityFix
-                </a>
-              </ul>
-            </div>
-            <div className="col-span-1">
-              <h1 className="text-xl font-medium pb-6">Social Links</h1>
-              <ul className="flex flex-col gap-4">
-                <li className="flex gap-2 items-center">
-                  <FaSquareXTwitter className="text-white text-xl" />
-                  <a className="text-white" href="#">
-                    @CityFix
-                  </a>
-                </li>
-                <li className="flex gap-2 items-center">
-                  <FaLinkedin className="text-white text-xl" />
-                  <a className="text-white" href="#">
-                    @CityFix
-                  </a>
-                </li>
-                <li className="flex gap-2 items-center">
-                  <FaFacebookSquare className="text-white text-xl" />
-                  <a className="text-white" href="#">
-                    @CityFix
-                  </a>
-                </li>
-                <li className="flex gap-2 items-center">
-                  <IoMdMail className="text-white text-xl" />
-                  <a className="text-white" href="#">
-                    support@cityfix.com
-                  </a>
-                </li>
-              </ul>
+              ))}
             </div>
           </div>
-          <div className="text-center">
-            © 2025 CityFix – A Civic Issue Reporting Platform. All rights
-            reserved.
+
+          {/* dynamic section */}
+          {footerData.sections.map((section, i) => (
+            <div key={i}>
+              <h3 className="text-sm font-semibold uppercase mb-4">
+                {section.title}
+              </h3>
+              <ul className="space-y-2.5">
+                {section.links.map((link, i) => (
+                  <li key={i}>
+                    {link.to ? (
+                      <Link
+                        to={link.to}
+                        className="text-sm text-white/70 hover:text-white"
+                      >
+                        {link.label}
+                      </Link>
+                    ) : (
+                      <a
+                        href={link.href}
+                        className="text-sm text-white/70 hover:text-white"
+                      >
+                        {link.label}
+                      </a>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+
+          {/* contact */}
+          <div>
+            <h3 className="text-sm font-semibold uppercase mb-4">Contact Us</h3>
+            <ul className="space-y-3">
+              {footerData.contact.map((item, i) => {
+                const Icon = item.icon;
+                return (
+                  <li key={i} className="flex gap-3 text-sm text-white/70">
+                    <Icon className="size-4 text-white" /> {item.text}
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </div>
-      </Container>
-    </div>
+
+        {/* bottom */}
+        <div className="border-t border-white/10 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <p className="text-xs text-white/50">{footerData.bottom.copyright}</p>
+          <div className="flex gap-4">
+            {footerData.bottom.links.map((link, i) => (
+              <a
+                href={link.href}
+                key={i}
+                className="text-xs text-white/50 hover:text-white/70 "
+              >
+                {link.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

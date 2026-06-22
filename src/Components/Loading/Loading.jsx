@@ -1,9 +1,10 @@
+import { Loader2Icon } from "lucide-react";
 import React from "react";
 import CircleLoader from "react-spinners/CircleLoader";
 const Loading = () => {
   return (
-    <div className="flex justify-center items-center absolute top-1/2 left-1/2">
-      <CircleLoader color="#4CAF4F" size={40} />
+    <div className="flex-center min-h-120 h-full w-full">
+      <Loader2Icon className="animate-spin size-8 text-app-orange" />
     </div>
   );
 };
