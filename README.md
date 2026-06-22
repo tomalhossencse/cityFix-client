@@ -15,7 +15,7 @@ This system aims to improve city service delivery by enhancing transparency, red
 | **Website Name**   | CityFix Public Infrastructure Issue Reporting System (PIRS) |
 | **Admin Email**    | `rahim@gmail.com` (Use this for initial Admin login)        |
 | **Admin Password** | `#Rahim123`                                                 |
-| **Live Site URL**  | `[https://cityfixbd.netlify.app]`                           |
+| **Live Site URL**  | `[https://cityfixbd.vercel.app]`                           |
 
 ---
 
@@ -65,5 +65,5 @@ cd cityFix-client
 
 ```bash
 git clone [https://github.com/tomalhossencse/cityFix-server]
-cd cityFix-servre
+cd cityFix-server
 ```
